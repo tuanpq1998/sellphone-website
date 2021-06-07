@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="nav(tab)" class="board-inner hidden-print">
+	<ul class="nav nav-tabs" id="myTab">
+		<div class="liner"></div>
+		<li th:class="${tab == 1 ? 'active' : null}"><a th:href="${tab == 1 ? '#' : '/gio-hang'}" title=""
+			data-original-title="Giỏ hàng"> <span class="round-tabs one">
+					<i class="fa fa-shopping-cart fa-gio-hang"
+					style="margin-left: -3px" aria-hidden="true"></i>
+			</span>
+		</a></li>
+		<li th:class="${tab == 2 ? 'active' : null}"><a th:href="${tab == 3 ? '/xac-thuc' : '#'}" title=""
+			data-original-title="Xác thực"> <span class="round-tabs two">
+					<i class="fa fa-user fa-gio-hang animated infinite tada"></i>
+			</span>
+		</a></li>
+		<li th:class="${tab == 3 ? 'active' : null}"><a href="#" title="" data-original-title="Đơn hàng"> <span
+				class="round-tabs three"> <i class="fa fa-gift fa-gio-hang"></i>
+			</span>
+		</a></li>
+	</ul>
+</div>

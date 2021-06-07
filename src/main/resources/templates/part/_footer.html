@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<div class="newsletter hidden-print" th:fragment="newsletter">
+		<div class="container">
+			<div class="col-md-6 w3agile_newsletter_left">
+				<h3>Đăng kí nhận tin</h3>
+				<p>Nhận tin về sản phẩm mới nhất, chương trình khuyến mãi nhanh
+					nhất</p>
+			</div>
+			<div class="col-md-6 w3agile_newsletter_right">
+				<form action="#" method="post">
+					<input type="email" name="email" placeholder="Email"
+						required="required"> <input type="submit"
+						value="Subscribe" name="dang_ky_nhan_tin" id="sub" />
+					<p class="help-block" id="sub-ok">Chúng tôi đã ghi nhận thông
+						tin! Cảm ơn bạn đã ghé thăm QLMobile</p>
+				</form>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+<script type="text/javascript">
+	$(function()
+	{
+		$("#sub-ok").hide();
+		$("#sub").click(function()
+		{
+			$("#sub-ok").fadeIn('slow');
+		})
+	});
+</script>
+</div>
+<th:block th:fragment="footer" >
+<div class="footer hidden-print" >
+	<div class="container">
+		<div class="col-md-3 footer-grids ">
+			<a href="."><img th:src="@{/image/logo/ql-mobile.png}"  alt="QLMobile" /></a>
+			<ul>
+				<li>357 Lê Hồng Phong P.2 Q.10</li>
+				<li>Thành phố Hồ Chí Minh.</li>
+				<li><a href="mailto:qlmobile.t3h@gmail.com">qlmobile.t3h@gmail.com</a></li>
+			</ul>
+		</div>
+		<div class="col-md-3 footer-grids fgd1 fgd2">
+			<h4>Kết nối chúng tôi</h4> 
+			<a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+			<hr/>
+		</div>
+		<div class="col-md-3 footer-grids fgd3">	
+			<h4>Sinh viên thực hiện</h4> 
+			<ul>
+				<li>Phạm Quang Tuấn - 20164406</li>
+				<li><a href="admin" style="background-color: #fff; padding:10px 0px; color:#ededed">Admin CMS</a></li>
+			</ul>
+		</div>
+		<div class="col-md-3 footer-grids fgd4">
+			<h4>My Account</h4> 
+			<ul>
+				<li><a href="/dang-nhap">Đăng nhập</a></li>
+				<li><a href="/dang-ky">Đăng ký</a></li>
+				<li><a href="/gio-hang">Giỏ hàng </a></li>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+		<p class="copy-right">© 06/2021 <strong>QLMobile</strong> | Đồ án 3 | Template: Fashion Club. Design by <a href="http://w3layouts.com"> W3layouts.</a></p>
+	</div>
+</div>
+<hr class="colorgraph" style="height: 17px;padding: 0;margin: 10px 0 0;"/>
+
+<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Trở về đầu trang" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
+
+<style type="text/css">
+	.back-to-top {
+		cursor: pointer;
+		position: fixed;
+		bottom: 50px;
+		right: 20px;
+		display:none;
+	}
+</style>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 50) {
+				$('#back-to-top').fadeIn();
+			} else {
+				$('#back-to-top').fadeOut();
+			}
+		});
+        // scroll body to 0px on click
+        $('#back-to-top').click(function () {
+        	$('#back-to-top').tooltip('hide');
+        	$('body,html').animate({
+        		scrollTop: 0
+        	}, 800);
+        	return false;
+        });
+        
+        $('#back-to-top').tooltip('show');
+
+    });
+</script>
+</th:block>

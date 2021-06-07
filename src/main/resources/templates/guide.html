@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<th:block
+	th:replace="part/_head.html :: head(title = 'Hướng dẫn mua hàng')" />
+
+<link rel="stylesheet" th:href="@{/css/css_giohang.css}" type="text/css"
+	media="all" />
+<script type="text/javascript">
+	$(function() {
+		$('a[title]').tooltip();
+	});
+</script>
+
+</head>
+
+<body>
+	<th:block th:replace="part/_header.html :: header_top" />
+	<th:block th:replace="part/_header.html :: header_bottom" />
+
+	<div class="content">
+		<div class="container">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 bhoechie-tab-menu">
+						<div class="list-group">
+							<a href="#" class="list-group-item active"> <strong>B1.</strong>Tìm
+								kiếm sản phẩm
+							</a> <a href="#" class="list-group-item"> <strong>B2.</strong>Chọn
+								sản phẩm
+							</a> <a href="#" class="list-group-item"> <strong>B3.</strong>Kiểm
+								tra thông tin sản phẩm
+							</a> <a href="#" class="list-group-item"> <strong>B4.</strong>Xác
+								nhận giỏ hàng
+							</a> <a href="#" class="list-group-item"> <strong>B5.</strong>Xác
+								thực tài khoản
+							</a> <a href="#" class="list-group-item"> <strong>B6.</strong>Xem
+								hóa đơn
+							</a> <a href="#" class="list-group-item"> <strong>B7.</strong>Hoàn
+								tất!
+							</a>
+						</div>
+					</div>
+					<div class="col-md-9 bhoechie-tab">
+						<div class="bhoechie-tab-content active">
+							<img th:src="@{/image/guide/b1.png}">
+						</div>
+						<div class="bhoechie-tab-content">
+							<img th:src="@{/image/guide/b2.png}">
+						</div>
+						<div class="bhoechie-tab-content">
+							<img th:src="@{/image/guide/b3.png}">
+						</div>
+						<div class="bhoechie-tab-content">
+							<img th:src="@{/image/guide/b4.png}">
+						</div>
+						<div class="bhoechie-tab-content">
+							<img th:src="@{/image/guide/b5.png}">
+						</div>
+						<div class="bhoechie-tab-content">
+							<img th:src="@{/image/guide/b6.png}">
+						</div>
+						<div class="bhoechie-tab-content">
+							<img th:src="@{/image/guide/b7.png}">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<style>
+/*  bhoechie tab */
+.bhoechie-tab-content>img {
+	width: 100% !important;
+}
+
+div.bhoechie-tab-container {
+	z-index: 10;
+	background-color: #ffffff;
+	padding: 0 !important;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	border: 1px solid #ddd;
+	margin-top: 20px;
+	margin-left: 50px;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	background-clip: padding-box;
+	opacity: 0.97;
+	filter: alpha(opacity = 97);
+}
+
+div.bhoechie-tab-menu {
+	padding-right: 0;
+	padding-left: 0;
+	padding-bottom: 0;
+}
+
+div.bhoechie-tab-menu div.list-group {
+	margin-bottom: 0;
+}
+
+div.bhoechie-tab-menu div.list-group>a {
+	margin-bottom: 0;
+	padding: 20px;
+}
+
+div.bhoechie-tab-menu div.list-group>a .glyphicon, div.bhoechie-tab-menu div.list-group>a .fa
+	{
+	color: #5A55A3;
+}
+
+div.bhoechie-tab-menu div.list-group>a:first-child {
+	border-top-right-radius: 0;
+	-moz-border-top-right-radius: 0;
+}
+
+div.bhoechie-tab-menu div.list-group>a:last-child {
+	border-bottom-right-radius: 0;
+	-moz-border-bottom-right-radius: 0;
+}
+
+div.bhoechie-tab-menu div.list-group>a.active, div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
+	div.bhoechie-tab-menu div.list-group>a.active .fa {
+	background-color: #5A55A3;
+	background-image: #5A55A3;
+	color: #ffffff;
+}
+
+div.bhoechie-tab-menu div.list-group>a.active:after {
+	content: '';
+	position: absolute;
+	left: 100%;
+	top: 50%;
+	margin-top: -13px;
+	border-left: 0;
+	border-bottom: 13px solid transparent;
+	border-top: 13px solid transparent;
+	border-left: 10px solid #5A55A3;
+}
+
+div.bhoechie-tab-content {
+	background-color: #ffffff;
+	/* border: 1px solid #eeeeee; */
+	padding-left: 20px;
+	padding-top: 10px;
+}
+
+div.bhoechie-tab div.bhoechie-tab-content:not(.active) {
+	display: none;
+}
+</style>
+
+			<script type="text/javascript">
+				$(document)
+						.ready(
+								function() {
+									$("div.bhoechie-tab-menu>div.list-group>a")
+											.click(
+													function(e) {
+														e.preventDefault();
+														$(this)
+																.siblings(
+																		'a.active')
+																.removeClass(
+																		"active");
+														$(this).addClass(
+																"active");
+														var index = $(this)
+																.index();
+														$(
+																"div.bhoechie-tab>div.bhoechie-tab-content")
+																.removeClass(
+																		"active");
+														$(
+																"div.bhoechie-tab>div.bhoechie-tab-content")
+																.eq(index)
+																.addClass(
+																		"active");
+													});
+								});
+			</script>
+		</div>
+	</div>
+
+	<th:block th:replace="part/_footer.html :: newsletter" />
+
+
+	<th:block th:replace="part/_footer.html :: footer" />
+
+	<script>
+		$('.currency').html(function() {
+			const num = Number($(this).html());
+			return new Intl.NumberFormat('vi-VN', {
+				style : 'currency',
+				currency : 'VND'
+			}).format(num);
+		});
+
+		/*$("#cart-form").on("submit", function (e) {
+			e.preventDefault();
+			$('.delete').each(function() {
+				if ($(this).is(":checked"))
+					$('#not-' + $(this).attr("id")).attr("disabled", true);
+			})
+			
+			console.log($(this).serializeArray());	
+			return true;
+			
+		})*/
+	</script>
+
+</body>
+</html>

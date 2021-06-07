@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<th:block th:replace="part/_head.html :: head(title = 'Đăng ký')" />
+
+<link rel="stylesheet" th:href="@{/css/css_giohang.css}" type="text/css"
+	media="all" />
+<script type="text/javascript">
+	$(function() {
+		$('a[title]').tooltip();
+	});
+</script>
+
+</head>
+
+<body>
+	<th:block th:replace="part/_header.html :: header_top" />
+	<th:block th:replace="part/_header.html :: header_bottom" />
+
+	<div class="content">
+		<div class="container">
+
+			<div class="row">
+				<div
+					class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+					<form role="form" method="post">
+						<h2>
+							Hãy đăng kí tài khoản <strong>QLMobile</strong><br>
+							<small>Vì nó miễn phí và mãi mãi là thế.</small>
+						</h2>
+						<br>
+						
+
+						<hr class="colorgraph">
+						<div class="form-group">
+							<input type="text" name="ho_ten" id="ho_ten"
+								class="form-control input-lg kiemtra" placeholder="Họ và tên"
+								tabindex="1" data_error="Nhập họ và tên" value="">
+						</div>
+						<div class="form-group">
+							<p class="help-block" id="ajax-tk-trung"></p>
+							<input type="text" name="tai_khoan" id="tai_khoan"
+								class="form-control input-lg kiemtra" maxlength="12"
+								placeholder="Tài khoản" tabindex="2" data_error="Nhập tài khoản"
+								value="">
+						</div>
+						<div class="form-group">
+							<input type="password" name="mat_khau" id="mat_khau"
+								class="form-control input-lg kiemtra" placeholder="Mật khẩu"
+								tabindex="3" data_error="Nhập mật khẩu">
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6">
+								<div class="form-group">
+									<input type="email" name="email" id="email"
+										class="form-control input-lg kiemtra" placeholder="Email"
+										tabindex="4" data_error="Nhập email" value="">
+								</div>
+							</div>
+							<div class="col-xs-12 col-sm-6 col-md-6">
+								<div class="form-group">
+									<input type="text" name="dien_thoai" id="dien_thoai"
+										class="form-control input-lg kiemtra" placeholder="Điện thoại"
+										tabindex="5" data_error="Nhập số điện thoại" value="">
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<input type="text" name="dia_chi" id="dia_chi"
+								class="form-control input-lg kiemtra" placeholder="Địa chỉ"
+								tabindex="6" data_error="Nhập địa chỉ" value="">
+						</div>
+
+						<div class="row">
+							<div class="col-xs-4 col-sm-3 col-md-3">
+								<span class="button-checkbox">
+									<button type="button" class="btn btn-default" data-color="info"
+										tabindex="7">
+										<i class="state-icon glyphicon glyphicon-unchecked"></i> Đồng
+										ý
+									</button> <input type="checkbox" name="t_and_c" id="t_and_c"
+									class="hidden" value="1">
+								</span>
+							</div>
+							<div class="col-xs-8 col-sm-9 col-md-9">
+								Khi click vào <strong class="label label-primary">Đăng
+									ký</strong>, bạn đã đồng ý các <a href="#" data-toggle="modal"
+									data-target="#t_and_c_m">Chính sách và Điều khoản</a> của hệ
+								thống.
+							</div>
+						</div>
+						<hr class="colorgraph">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<input type="submit" name="btn_dang_ky" value="Đăng ký"
+									onclick="return Kiemtradulieu()"
+									class="btn btn-primary btn-block btn-lg" tabindex="8">
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<a href="dang-nhap" class="btn btn-success btn-block btn-lg">Đăng
+									nhập</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+	<style>
+input[type="radio"], input[type="checkbox"] {
+	height: 17px;
+	width: 35px;
+}
+
+.gia-tien {
+	font-size: 22px;
+	font-weight: bold;
+	color: #BF360C;
+}
+
+.tong-cong {
+	padding: 20px 0;
+	background-color: #FFE0B2;
+}
+
+thead.gio-hang {
+	font-weight: bold;
+	font-size: 18px;
+	letter-spacing: 1px;
+	border-top: 2px solid #c3c3c3;
+	border-bottom: 2px solid #c3c3c3;
+}
+</style>
+
+	<th:block th:replace="part/_footer.html :: newsletter" />
+
+
+	<th:block th:replace="part/_footer.html :: footer" />
+
+	<script>
+		$('.currency').html(function() {
+			const num = Number($(this).html());
+			return new Intl.NumberFormat('vi-VN', {
+				style : 'currency',
+				currency : 'VND'
+			}).format(num);
+		});
+	</script>
+
+</body>
+</html>

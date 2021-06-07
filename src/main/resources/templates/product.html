@@ -1,0 +1,398 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+
+<head>
+<th:block th:replace="part/_head.html :: head(title = ${product.name})" />
+<script type="text/javascript">
+  $(function(){
+    $('div[title]').tooltip();
+  });
+
+</script>
+</head>
+<body>
+	<th:block th:replace="part/_header.html :: header_top" />
+	<th:block th:replace="part/_header.html :: header_bottom" />
+
+	<div class="content">
+		<div class="container">
+
+			<div class="single-page">
+				<div class="single-page-row" id="detail-21">
+					<div class="col-md-7 single-top-left">
+						<div class="flexslider">
+							<ul class="slides">
+
+								<th:block th:each="color : ${product.colors}">
+									<li th:data-colorid="${color.id}"
+										th:each="colorImg : ${color.colorImgs}"
+										th:data-thumb="${colorImg.url}">
+										<div class="thumb-image detail_images">
+											<img th:src="${colorImg.url}" data-imagezoom="true"
+												th:data-siderid="${idPic}" class="img-responsive1" alt="">
+											<p class="flex-caption"
+												th:text="${ product.name + ' - Màu ' + color.name}" />
+										</div>
+									</li>
+								</th:block>
+
+								<li th:each="image : ${product.productImgs}"
+									th:data-thumb="${image.url}">
+									<div class="thumb-image detail_images">
+										<img th:src="${image.url}" data-imagezoom="true"
+											class="img-responsive1" alt="">
+
+										<p class="flex-caption" th:text="${product.name}" />
+									</div>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-5 single-top-right">
+						<h3 class="item_name">
+							<strong th:text="${product.name}"></strong>
+						</h3>
+						<div class="single-rating">
+							<div class="fb-like"
+								data-href="http://qlmobile.gear.host/dien-thoai.php?dt=1"
+								data-layout="button_count" data-action="like" data-size="small"
+								data-show-faces="true" data-share="true"></div>
+						</div>
+						<div class="color-list">
+							<th:block th:each="color,colorIter : ${product.colors}">
+								<div th:title="${color.name}" th:data-colorid="${color.id}"
+									th:style="${'background-color:'+color.hexCode}"
+									th:class="${colorIter.index==0 ? 'color-item color active' : 'color-item color'}">
+								</div>
+							</th:block>
+
+						</div>
+
+						<div id="tb-testimonial" class="testimonial testimonial-default">
+							<div class="testimonial-section">
+								<div class="single-price">
+									<ul>
+										<li class="dgkm currency" th:text="${product.price.value}"></li>
+										
+										<hr />
+										<li><i class="fa fa-bell text-danger" aria-hidden="true"></i>
+											Bảo hành chính hãng: <strong>12</strong> tháng</li>
+										<br />
+										<li><i class="fa fa-paper-plane text-info"
+											aria-hidden="true"></i> Free-shipping toàn quốc</li>
+										<li><i class="fa fa-gift text-success" aria-hidden="true"></i>
+											Nhiều quà tặng khuyến mãi bất ngờ khi nhận hàng</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						</p>
+						<br />
+
+						<!--gửi thông tin vào ajax_cart.js-->
+						<input type="hidden" id="sosanpham1" value="1" /> <a
+							href="javascript:void(0)" class="btn w3ls-cart"
+							> <i class="fa fa-cart-plus"
+							aria-hidden="true"></i> Đặt hàng
+						</a> <a href="javascript:void(0)" class="btn w3ls-cart w3ls-cart-like buy-now"
+							> Mua ngay </a>
+
+						<hr />
+						<p class="help-block">
+							<strong>Lượt mua: </strong> [[${product.buyCount}]] | <strong>Lượt
+								xem: </strong> [[${product.seenCount}]]
+						</p>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+
+			<div class="row" id="danh-gia-sp">
+				<div class="col-md-8">
+					<!-- collapse-tabs -->
+					<div class="collpse tabs">
+						<h2 class="w3ls-title">Đánh giá sản phẩm</h2>
+						<div class="tabbable-panel">
+							<div class="tabbable-line">
+
+								<div class="tab-content">
+									<div>
+										<div class="shorten" th:utext="${product.spec.description}" />
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- //collapse -->
+				</div>
+
+				<div class="col-md-4">
+					<div class="specs">
+						<h2>Thông số</h2>
+						<div class="tabbable-panel">
+							<ul
+								th:replace="part/_specs.html :: specs(spec = ${product.spec})" />
+
+							<button id="more-specs"
+								class="btn btn-sm btn-default center-block">
+								Xem chi tiết <i class="fa  fa-angle-right " aria-hidden="true"></i>
+							</button>
+						</div>
+
+
+					</div>
+
+					<div id="lien-he-quang-cao">
+						<a href="huong-dan-mua-hang.php" target="_blank"><img
+							th:src="@{/image/hdmh.png}" alt="Hướng dẫn mua hàng"></a>
+						<hr />
+						<a href="lien-he.php" target="_blank"><img
+							th:src="@{/image/qc.png}" alt="Quảng cáo"></a>
+						<hr />
+						<a href="lien-he.php" target="_blank"><img
+							th:src="@{/image/qc.png}" alt="Quảng cáo"></a>
+					</div>
+
+				</div>
+			</div>
+
+
+			<!--Item text-->
+			<div class="container">
+				<div class="row" id="slider-text">
+					<div class="col-md-6">
+						<h2>Có thể bạn thích</h2>
+					</div>
+				</div>
+			</div>
+			<!-- Item-->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12">
+						<div class="carousel carousel-showmanymoveone slide"
+							id="itemslider">
+							<div class="carousel-inner">
+								<div class="item active">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="dien-thoai.php?dt=7"><img
+											src="images/300_iphone-7-vs1.jpg"
+											class="img-responsive center-block"></a>
+										<h4 class="text-center">iPhone 7 32GB</h4>
+										<h5 class="text-center">18,790,000 VNĐ</h5>
+									</div>
+								</div>
+								<div class="item active">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="dien-thoai.php?dt=18"><img
+											src="images/300_samsung-galaxy-j3-3.jpg"
+											class="img-responsive center-block"></a>
+										<h4 class="text-center">Samsung Galaxy J320G</h4>
+										<h5 class="text-center">3,290,000 VNĐ</h5>
+									</div>
+								</div>
+								<div class="item active">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="dien-thoai.php?dt=29"><img
+											src="images/300_sony-xperia-xa-ultra-2.jpg"
+											class="img-responsive center-block"></a>
+										<h4 class="text-center">Sony Xperia XA Ultra</h4>
+										<h5 class="text-center">6,190,000 VNĐ</h5>
+									</div>
+								</div>
+								<div class="item active">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="dien-thoai.php?dt=32"><img
+											src="images/300_sony-xperia-c4-1.jpg"
+											class="img-responsive center-block"></a>
+										<h4 class="text-center">Sony Xperia C4 Dual</h4>
+										<h5 class="text-center">5,900,000 VNĐ</h5>
+									</div>
+								</div>
+								<div class="item active">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="dien-thoai.php?dt=8"><img
+											src="images/300_iphone-5s-gold-1.jpg"
+											class="img-responsive center-block"></a>
+										<h4 class="text-center">iPhone 5s 16GB Gold</h4>
+										<h5 class="text-center">6,990,000 VNĐ</h5>
+									</div>
+								</div>
+								<div class="item active">
+									<div class="col-xs-12 col-sm-6 col-md-2">
+										<a href="dien-thoai.php?dt=25"><img
+											src="images/300_ss-galaxy-s6-edge-2.jpg"
+											class="img-responsive center-block"></a>
+										<h4 class="text-center">Samsung Galaxy S6 edge 32GB</h4>
+										<h5 class="text-center">8,900,000 VNĐ</h5>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Item slider end-->
+
+
+		</div>
+	</div>
+	<th:block th:replace="part/_footer.html :: newsletter" />
+
+
+	<th:block th:replace="part/_footer.html :: footer" />
+
+
+	<script type="text/javascript">
+	
+
+	$('.shorten').shorten({
+		moreText : '<br/><button class="btn btn-sm btn-default center-block"> Xem thêm <i class="fa fa-chevron-circle-down" aria-hidden="true"></i></button>',
+		lessText : '<br/><button class="btn btn-sm btn-default center-block"> Thu gọn <i class="fa fa-chevron-circle-up" aria-hidden="true"></i></button>',
+		showChars : 600,
+		force : true,
+		onLess : function(e) {
+			$('html, body').animate({
+				scrollTop : $('.tabbable-line').offset().top
+				}, 300);
+			},
+	});
+	
+	// Can also be used with $(document).ready()
+	$(window).load(function() {
+		$('.flexslider').flexslider({
+			animation : "slide",
+		});
+		$('.flexslider').flexslider("stop");
+	});
+	
+	$(".color-item").on('click', function ()  {
+		const el = $(this);
+		$('.color-item').removeClass('active');
+		el.addClass('active');
+		const colorId = el.data("colorid");
+		$('.flexslider').flexslider($('li[data-colorid=' + colorId +']').index() -1);
+		
+	})
+	
+	</script>
+	<script>
+	//ajax_cart
+	const unitPrice = [[${product.price.value}]];
+	const updateTotal = () => {$("#total").text(formatCurrency(unitPrice * Number($("#quantity").val())))};
+	$(function(){
+	$('.w3ls-cart').click(function(){
+		const isBuyNow = $(this).hasClass("buy-now");
+		console.log(isBuyNow);
+		(async () => { 
+			const colorList = $(".color-item").toArray();
+			const colors = colorList.map(colorItem => ({
+				id : colorItem.getAttribute("data-colorid"),
+				name : colorItem.getAttribute("title"),
+				code : colorItem.style.backgroundColor,
+				active : colorItem.classList.contains("active")
+			}))
+			const elements = colors.map((color) => ('<label> <input '+ (color.active? 'checked required ' : '') +'value='+ color.id +' type="radio" name="color" class="form-control" /> '+
+					'<div title="'+color.name+'" data-colorid="' + color.id 
+					+ '" style="background-color:'+ color.code +'" class="color-item color"> </div></label>')).join("");
+			const { value: formValues } = await Swal.fire({
+				  html:
+				    '<div id="buyform"><h2>[[${product.name}]]</h2>'+
+				    '<div class="tabbable-panel"><div id="colorChoose"> Chọn màu: '+elements	+'</div>'+
+				    'Số lượng: <input onchange="updateTotal()" class="form-control" id="quantity" type="number" min="1" value="1">'+
+				    '<p>Tổng: <strong id="total">'+ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(unitPrice) +'</strong></p></div>'
+				    +'</div>',
+				  width: "400px",
+				  focusConfirm: false,
+				  showCancelButton: true,
+				  preConfirm: () => {
+				    return {
+				    	productId : [[${product.id}]],
+				    	colorId : Number($('input[name=color]:checked').val()),
+				    	quantity : Number($("#quantity").val())
+				    }
+				  },
+				})
+				if (!formValues)
+					return;
+				$.ajax({
+					url: '/addToCart',
+					type: 'POST',
+					async: false,
+					data: formValues,
+					//dataType: 'json',
+					success: function(dataBack){
+						
+						var html = '<div class="shopping-cart" style="display: none"> <div class="shopping-cart-header"> <p class="badge">' + 
+							dataBack.totalQuantity+' sản phẩm</p> <div class="shopping-cart-total"> <span class="lighter-text">Tổng cộng:</span>'
+							+' <span class="main-color-text currency">'+ formatCurrency(Number(dataBack.totalMoney)) 
+							+'</span> </div> </div> <ul class="shopping-cart-items" id="scroll-bar-style-7">';
+						
+						html += dataBack.products.map(p => {
+							return '<li  class="clearfix"> <img src="'+ p.avaImage +'" alt="'+ p.name 
+								+'" style="width: 70px !important" /> <span class="item-name" >' + p.name + ' - Màu: ' + p.color.name
+								+' </span> <span class="item-price currency" >' + formatCurrency(Number(p.unitPrice)) 
+								+ '</span> <span class="item-quantity">Số lượng: '+ p.quantity +'</span> </li>'
+						}).join("");
+							
+						html += '</ul> <a href="/gio-hang" class="button">Checkout</a> </div>';
+						Swal.fire({
+							text: "Đã thêm vào giỏ!",
+							icon : 'success',
+							showConfirmButton: false,
+							timer: 1500
+						});
+						if (isBuyNow) 
+							document.location = "/gio-hang";
+						
+						$("#sl-gio-hang").length ? $("#sl-gio-hang").text(dataBack.totalQuantity)
+							: $(".cart").append('<span class="badge" id="sl-gio-hang" >' + dataBack.totalQuantity +'</span>');
+
+						$('.shopping-cart').length ? $('.shopping-cart').remove() : null;
+						$('#cart-container').append(html);
+						
+						$('#cart').toggleClass('animated infinite tada');
+						$('#sl-gio-hang').toggleClass('animated bounceInDown');
+						setTimeout(() => {
+							$('#sl-gio-hang').removeClass('animated bounceInDown');
+							$('#cart').removeClass('animated infinite tada')
+							}, 3000);
+						
+						
+					},
+					error: function(error){
+						alert(error.statusText);
+					}
+				}); //end ajax
+				return false;
+				
+				
+		})();
+		
+
+		
+	}); //end click
+}); //end function
+
+  //Định dạng số
+  const formatCurrency = (num) => {
+	  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
+  } 
+ 
+  $('.currency').html(function () {
+		const num = Number($(this).html());
+		return formatCurrency(num);
+	});
+	</script>
+	<script
+		th:replace="part/_specs.html :: specsDetail(spec=${product.spec})" />
+
+	<!--end back to top-->
+
+
+
+</body>
+</html>
