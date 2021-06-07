@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<th:block th:replace="part/_head.html :: head(title = 'Liên hệ')" />
+
+<link rel="stylesheet" th:href="@{/css/css_giohang.css}" type="text/css"
+	media="all" />
+<script type="text/javascript">
+	$(function() {
+		$('a[title]').tooltip();
+	});
+</script>
+
+</head>
+
+<body>
+	<th:block th:replace="part/_header.html :: header_top" />
+	<th:block th:replace="part/_header.html :: header_bottom" />
+
+	<div
+		th:with="isLoggedIn =  ${#authorization.expression('isAuthenticated()')}"
+		class="content">
+		<div class="container">
+
+			<div class="contact">
+				<div class="container">
+					<h3>Liên hệ</h3>
+					<div class="col-md-3 col-sm-3 contact-left">
+						<div class="address">
+							<h4>ĐỊA CHỈ</h4>
+							<h5>357 Lê Hồng Phong P.2 Q.10,</h5>
+							<h5>Thành phố Hồ Chí Minh.</h5>
+						</div>
+						<hr>
+						<div class="email">
+							<h4>EMAIL</h4>
+							<h5>
+								<a href="mailto:qlmobile.t3h@gmail.com">qlmobile.t3h@gmail.com</a>
+							</h5>
+						</div>
+					</div>
+					<div class="col-md-9 col-sm-9 contact-right">
+						<div th:if="${param.done != null}"
+							class="alert alert-dismissible  alert-success">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<strong>Đã gửi!</strong> Chúng tôi sẽ phản hồi bạn sớm nhất!
+						</div>
+
+						<form th:object="${feedback}" th:action="@{/lien-he}"
+							method="post">
+							<input type="text" th:field="*{fullname}" placeholder="Tên bạn"
+								class="kiemtra" data_error="Nhập tên của bạn"
+								required="required" th:unless="${isLoggedIn}"> 
+							<input th:if="${isLoggedIn}"
+								type="text" th:value="${feedback.fullname}"
+								placeholder="Tên bạn" class="kiemtra"
+								data_error="Nhập tên của bạn" disabled="disabled"> <input
+								type="text" th:field="*{email}" placeholder="Email"
+								data_error="Nhập email của bạn" th:unless="${isLoggedIn}" required="required" class="kiemtra">
+
+							<input th:if="${isLoggedIn}" type="text"
+								th:value="${feedback.email}" data_error="Nhập tên của bạn"
+								disabled="disabled"> <input type="text"
+								th:field="*{title}" placeholder="Tiêu đề" style="width: 96%"
+								class="kiemtra" data_error="Nhập tiêu đề" required="required">
+
+							<textarea th:field="*{detail}" placeholder="Nội dung"
+								class="kiemtra" required="required" data_error="Nhập nội dung"></textarea>
+							<div class="row">
+								<!--  <div class="col-md-8">
+									<div class="col-md-4">
+										<label>Nhập mã bảo vệ: </label> <img src="images/captcha.jpg"
+											alt="captcha" style="width: 100px !important"> <input
+											type="image" name="th_recapcha" src="images/recaptcha.png"
+											style="width: 20px;" value="recapcha">
+									</div>
+									<div class="col-md-4">
+										<input type="text" id="security_code" name="security_code"
+											class="kiemtra" data_error="Nhập mã bảo vệ"
+											style="width: 100px !important; background-color: #DDD; border-style: none">
+									</div>
+								</div>-->
+
+								<div class="col-md-3">
+									<input class="pull-right" type="submit" value="Gửi"
+										name="btn_gui_mail" id="gui_mail"
+										onclick="return Kiemtradulieu()">
+								</div>
+							</div>
+							<p class="text-warning"></p>
+						</form>
+					</div>
+				</div>
+			</div>
+			<hr class="colorgraph">
+			<div class="map-w3ls">
+				<iframe
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.629034633842!2d106.67994971422614!3d10.763046692330612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1eaacae6dd%3A0xeaf52859c6ff873c!2zVHJ1bmcgdMOibSBUaW4gaOG7jWMgLSDEkOG6oWkgaOG7jWMgS2hvYSBo4buNYyBU4buxIG5oacOqbg!5e0!3m2!1sen!2s!4v1492337857997"
+					width="600" height="450" frameborder="0" style="border: 0"
+					allowfullscreen=""></iframe>
+			</div>
+
+		</div>
+	</div>
+
+	<th:block th:replace="part/_footer.html :: newsletter" />
+
+
+	<th:block th:replace="part/_footer.html :: footer" />
+
+
+</body>
+</html>
