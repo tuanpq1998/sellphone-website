@@ -48,4 +48,8 @@ public class ProductService {
 	public int increaseSeenNum(int productId, int seenCount) {
 		return productDao.increaseSeenNum(seenCount, productId);
 	}
+
+	public int increaseBuyCount(Product p) {
+		return productDao.increaseBuyNum(p.getBuyCount()+1, p.getId());
+	}
 }

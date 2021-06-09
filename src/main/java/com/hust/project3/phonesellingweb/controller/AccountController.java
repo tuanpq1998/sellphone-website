@@ -10,7 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.hust.project3.phonesellingweb.entity.Bill;
 import com.hust.project3.phonesellingweb.entity.User;
+import com.hust.project3.phonesellingweb.model.Cart;
+import com.hust.project3.phonesellingweb.service.BillService;
 import com.hust.project3.phonesellingweb.service.UserService;
 
 @Controller
@@ -18,6 +21,9 @@ public class AccountController extends BaseController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BillService billService;
 	
 	@GetMapping({"/dang-nhap/", "/dang-nhap"})
 	public String showLogin(Principal principal) {
@@ -44,8 +50,16 @@ public class AccountController extends BaseController {
 		return "account/authen";
 	}
 	
-	@PostMapping({"/xac-thuc/", "/xac-thuc"})
-	public String createBill(Principal principal) {
-		return null;
+	@PostMapping({"/don-hang/", "/don-hang"})
+	public String createBill(Principal principal, HttpSession session, Model model) {
+		if (isCartEmpty(session))
+			return "redirect:/gio-hang";
+		Cart cart = (Cart)session.getAttribute("cart");
+		User user = userService.findByUsername(principal.getName());
+		Bill newBill = billService.createAndSave(user, cart);
+		
+		resetCart(session, model);
+		model.addAttribute("bill", newBill);
+		return "bill";
 	}
 }

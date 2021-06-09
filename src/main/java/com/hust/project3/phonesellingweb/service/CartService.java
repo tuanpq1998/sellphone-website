@@ -57,4 +57,10 @@ public class CartService {
 		}
 		rootCart.updateTotalMoneyAndTotalQuantity();
 	}
+
+	public void updatePhoneAndAddress(Cart cart, String address, String phone) {
+		cart.setAddress(address);
+		cart.setPhone(phone);
+		
+	}
 }

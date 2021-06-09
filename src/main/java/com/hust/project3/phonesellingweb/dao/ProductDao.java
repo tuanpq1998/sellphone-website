@@ -17,4 +17,9 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	@Modifying
 	@Query("UPDATE Product p SET p.seenCount=:count WHERE p.id=:id")
 	public int increaseSeenNum(@Param("count") int count, @Param("id") int id);
+
+	@Transactional
+	@Modifying
+	@Query("UPDATE Product p SET p.buyCount=:buyCount WHERE p.id=:id")
+	public int increaseBuyNum(@Param("buyCount")int buyCount,@Param("id") int id);
 }

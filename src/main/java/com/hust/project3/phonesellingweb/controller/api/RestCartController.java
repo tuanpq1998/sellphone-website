@@ -16,7 +16,7 @@ import com.hust.project3.phonesellingweb.model.Cart;
 import com.hust.project3.phonesellingweb.service.CartService;
 
 @RestController
-public class AddToCartController {
+public class RestCartController {
 	
 	@Autowired
 	private CartService cartService;
@@ -30,6 +30,18 @@ public class AddToCartController {
 		if (cart == null)
 			cart = new Cart();
 		cartService.addProduct(cart, new Product(productId, quantity, new Color(colorId)));
+		session.setAttribute("cart", cart);
+		return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+	}
+	
+	@PostMapping("/updatePhoneAndAddress")
+	public ResponseEntity<?> changePhoneAndAdress(HttpSession session, Model model , 
+			@RequestParam("address") String address, @RequestParam("phone") String phone) {
+		Cart cart = (Cart)session.getAttribute("cart");
+		if (cart == null)
+			cart = new Cart();
+		
+		cartService.updatePhoneAndAddress(cart, address, phone);
 		session.setAttribute("cart", cart);
 		return new ResponseEntity<Cart>(cart, HttpStatus.OK);
 	}

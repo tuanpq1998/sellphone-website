@@ -44,10 +44,14 @@
 													<strong>Họ và tên: </strong>[[${user.fullname}]]
 												</p>
 												<p>
-													<strong>Địa chỉ: </strong>[[${user.address}]] - Thành phố: [[${user.city}]]
+													<strong>Địa chỉ: </strong>
+													<th:block th:if="${cart.address== null || #strings.equals(cart.address,'')}" th:text="${user.address + 'Thành phố: ' + user.city}"/>
+													<th:block th:unless="${cart.address== null || #strings.equals(cart.address,'')}" th:text="${cart.address}"/>
 												</p>
 												<p>
-													<strong>Số điện thoại: </strong>[[${user.phone}]]
+													<strong>Số điện thoại: </strong>
+													<th:block th:if="${cart.phone== null || #strings.equals(cart.phone,'')}" th:text="${user.phone}"/>
+													<th:block th:unless="${cart.phone== null || #strings.equals(cart.phone,'')}" th:text="${cart.phone}"/>
 												</p>
 												<p>
 													<strong>Email: </strong>[[${user.email}]]
@@ -58,13 +62,54 @@
 										<div class="row text-center">
 											<div class="tiep-tuc">
 												<a style="margin-right: 10px;" href="/gio-hang" class="btn btn-lg btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i> Giỏ hàng</a>
-												<a style="margin-right: 10px;" href="/xac-thuc" class="btn btn-lg btn-primary">Sửa thông tin giao hàng</a>
-												<form method="post">
+												<a style="margin-right: 10px;" onclick="editAddressAndPhone()" class="btn btn-lg btn-primary">Sửa thông tin giao hàng</a>
+												<form th:action="@{/don-hang}" method="post">
 													<input type="submit" class="btn btn-lg btn-success"
 														name="submit" value="Đặt hàng">
 												</form>
 											</div>
 										</div>
+										<script>
+											const editAddressAndPhone = () => {
+												(async () => { 
+													const { value: formValues } = await Swal.fire({
+													  html:
+													    '<div id="editform"><h2>Sửa thông tin giao hàng</h2>'+
+													    '<div class="tabbable-panel text-left">'+ 'Tên người nhận: <input disabled class="form-control" type="text" value="[[${user.fullname}]]">' +
+													    'Địa chỉ: <input class="form-control" id="address" type="text" name="address" required>'+
+													    'Điện thoại: <input class="form-control" id="phone" type="text" name="phone" required></div>'
+													    +'</div>',
+													  width: "400px",
+													  focusConfirm: false,
+													  showCancelButton: true,
+													  preConfirm: () => {
+													    return {
+													    	address : ($("#address").val()),
+													    	phone : ($("#phone").val())
+													    }
+													  },
+													})
+													if (!formValues)
+														return;
+													$.ajax({
+														url: '/updatePhoneAndAddress',
+														type: 'POST',
+														async: false,
+														data: formValues,
+														//dataType: 'json',
+														success: function(dataBack){
+															Swal.fire("Success", "Done!", "success");
+															$('blockquote').html('<p class="p5"> <strong>Họ và tên: </strong>[[${user.fullname}]] </p> <p> <strong>Địa chỉ: </strong>'+
+																dataBack.address+'</p> <p> <strong>Số điện thoại: </strong>'+ dataBack.phone +' </p> <p> <strong>Email: </strong>[[${user.email}]] </p>');
+														},
+														error: function(error){
+															alert(error.statusText);
+														}
+													}); //end ajax
+													return false;
+												})();
+											}
+										</script>
 									</th:block>
 									<div class="text-center" th:unless="${isLoggedIn}">
 										<!--chưa đăng nhập-->

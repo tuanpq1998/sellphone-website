@@ -48,17 +48,21 @@
 							<p>357 LHP P.2 Q.10</p>
 						</div>
 						<div class="col-md-6">
-							<h4 class="text-right"><strong>Hóa đơn số: </strong>#47</h4>
-								<p class="text-right">Ngày lập: 2021-06-07</p>
+							<h4 class="text-right"><strong>Hóa đơn số: </strong>#[[${bill.id}]]</h4>
+								<p class="text-right">Ngày lập: [[${bill.createAt}]]</p>
 							</div>
 						</div>
 						<hr>
 						<div class="row">
 							<h3 style="margin-bottom:5px">Thông tin khách hàng</h3>
 							<div class="ttkh">
-								<p><strong>› Họ tên:</strong> tunnnnnn</p>
-								<p><strong>› Địa chỉ:</strong> 123321</p>
-								<p><strong>› Số điện thoại:</strong> 123321</p>
+								<p><strong>› Họ tên:</strong> [[${bill.user.fullname}]]</p>
+								<p><strong>› Địa chỉ:</strong> 
+									<th:block th:text="${bill.customAddress}" />
+								</p>
+								<p><strong>› Số điện thoại:</strong> 
+									<th:block th:text="${bill.customPhone}" />
+								</p>
 							</div>
 						</div>
 						<hr>
@@ -74,18 +78,18 @@
 									</tr>
 								</thead>
 								<tbody>
-																		<tr>
-										<td>1</td>
-										<td>iPhone 7 Plus 128GB Red</td>
-										<td>1</td>
-										<td>25,190,000 VNĐ</td>
+									<tr th:each="billDetail,index : ${bill.billDetails}">
+										<td>[[${index.index+1}]]</td>
+										<td>[[${billDetail.product.name}]] - Màu : [[${billDetail.colorname}]]</td>
+										<td>[[${billDetail.quantity}]]</td>
+										<td class="currency">[[${billDetail.unitPrice}]]</td>
 									</tr>
-																</tbody>
-						</table>
+								</tbody>
+							</table>
 					</div>
 					<div class="row text-right">
 						<div class="col-md-3 col-md-offset-4">Tổng cộng:</div>
-						<div class="col-md-5"><strong>25,190,000 VNĐ</strong></div>
+						<div class="col-md-5"><strong class="currency">[[${bill.totalMoney}]]</strong></div>
 					</div>
 
 					<hr>
@@ -112,7 +116,7 @@
 	$(function()
 	{
 		$('#xac-nhan').click(function(){
-			swal("Hoàn tất!", "Đang chuyển về trang chủ");
+			Swal.fire("Hoàn tất!", "Đang chuyển về trang chủ");
 			setTimeout(function(){ window.location = "."}, 1000);
 		});
 	});
