@@ -1,7 +1,5 @@
 # sellphone-website
 
----
-
 A fully working sample Maven project that analyses a bit of code with  [JavaSymbolSolver](http://www.javaparser.org)
 
 This is targeted at people without [Maven](https://maven.apache.org/) experience.

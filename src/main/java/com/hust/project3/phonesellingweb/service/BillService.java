@@ -58,5 +58,8 @@ public class BillService {
 		return billRepository.save(bill);
 	}
 	
+	public List<Bill> findTop5ByUserId(int userId) {
+		return billRepository.findTop5ByUser_Id(userId);
+	}
 	
 }

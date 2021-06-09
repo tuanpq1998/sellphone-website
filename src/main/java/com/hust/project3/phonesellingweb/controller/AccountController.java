@@ -1,6 +1,7 @@
 package com.hust.project3.phonesellingweb.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -61,5 +62,18 @@ public class AccountController extends BaseController {
 		resetCart(session, model);
 		model.addAttribute("bill", newBill);
 		return "bill";
+	}
+	
+	@GetMapping({"/thong-tin", "/thong-tin/"})
+	public String showInfo(Principal principal, Model model) {
+		if (!isLoggedIn(principal))
+			return "redirect:/";
+		User user = userService.findByUsername(principal.getName());
+		model.addAttribute("user", user);
+		
+		List<Bill> bills = billService.findTop5ByUserId(user.getId());
+		model.addAttribute("bills", bills);
+		
+		return "account/info";
 	}
 }
