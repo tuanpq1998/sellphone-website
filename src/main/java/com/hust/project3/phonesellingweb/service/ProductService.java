@@ -52,4 +52,8 @@ public class ProductService {
 	public int increaseBuyCount(Product p) {
 		return productDao.increaseBuyNum(p.getBuyCount()+1, p.getId());
 	}
+	
+	public List<Product> findAllByManufacturerId(int manufacturerId) {
+		return productDao.findByDeletedIsFalseAndManufacturer_Id(manufacturerId);
+	}
 }

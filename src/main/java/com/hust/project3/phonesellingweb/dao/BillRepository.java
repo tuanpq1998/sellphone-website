@@ -10,5 +10,5 @@ import com.hust.project3.phonesellingweb.entity.Bill;
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Integer> {
 
-	public List<Bill> findTop5ByUser_Id(int id);
+	public List<Bill> findTop5ByUser_IdOrderByIdDesc(int id);
 }

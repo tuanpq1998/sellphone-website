@@ -21,6 +21,17 @@ public class Manufacturer {
 	private String image;
 	
 	private String country;
+	
+	@Column(name="slug")
+	private String slug;
+
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
 
 	public int getId() {
 		return id;
@@ -56,7 +67,8 @@ public class Manufacturer {
 
 	@Override
 	public String toString() {
-		return "Manufacturer [id=" + id + ", name=" + name + ", image=" + image + ", country=" + country + "]";
+		return "Manufacturer [id=" + id + ", name=" + name + ", image=" + image + ", country=" + country + ", slug="
+				+ slug + "]";
 	}
 
 	public Manufacturer(int id, String name, String image, String country) {

@@ -59,7 +59,7 @@ public class BillService {
 	}
 	
 	public List<Bill> findTop5ByUserId(int userId) {
-		return billRepository.findTop5ByUser_Id(userId);
+		return billRepository.findTop5ByUser_IdOrderByIdDesc(userId);
 	}
 	
 }

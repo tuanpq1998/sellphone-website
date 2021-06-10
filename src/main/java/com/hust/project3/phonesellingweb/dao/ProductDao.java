@@ -1,5 +1,7 @@
 package com.hust.project3.phonesellingweb.dao;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,4 +24,6 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	@Modifying
 	@Query("UPDATE Product p SET p.buyCount=:buyCount WHERE p.id=:id")
 	public int increaseBuyNum(@Param("buyCount")int buyCount,@Param("id") int id);
+	
+	public List<Product> findByDeletedIsFalseAndManufacturer_Id(int manufacturerId);
 }
