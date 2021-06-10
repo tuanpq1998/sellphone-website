@@ -56,4 +56,8 @@ public class ProductService {
 	public List<Product> findAllByManufacturerId(int manufacturerId) {
 		return productDao.findByDeletedIsFalseAndManufacturer_Id(manufacturerId);
 	}
+
+	public List<Product> findAll() {
+		return productDao.findByDeletedIsFalse();
+	}
 }

@@ -26,4 +26,6 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	public int increaseBuyNum(@Param("buyCount")int buyCount,@Param("id") int id);
 	
 	public List<Product> findByDeletedIsFalseAndManufacturer_Id(int manufacturerId);
+
+	public List<Product> findByDeletedIsFalse();
 }

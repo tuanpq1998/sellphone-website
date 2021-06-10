@@ -1,13 +1,475 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-   <head>
-      <meta charset="UTF-8" />
-      <title>Welcome</title>
-   </head>
-   <body>
-      <h1>Welcome</h1>
-      
-                 
-   </body>
-    
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<th:block th:replace="part/_head.html :: head(title = 'Trang chủ')" />
+
+<link rel="stylesheet" th:href="@{/css/css_giohang.css}" type="text/css"
+	media="all" />
+<script type="text/javascript">
+	$(function() {
+		$('a[title]').tooltip();
+	});
+</script>
+
+</head>
+
+<body>
+	<th:block th:replace="part/_header.html :: header_top" />
+	<th:block th:replace="part/_header.html :: header_bottom" />
+
+	
+	
+	<div class="container">
+	
+	<div class="single-page">
+				<div class="single-page-row">
+						<div class="flexslider">
+							<ul class="slides">
+								<li 
+										data-thumb="https://cdn.tgdd.vn/2021/06/banner/euro-samsung-830-300-830x300.png">
+										<div class="thumb-image detail_images">
+											<img src="https://cdn.tgdd.vn/2021/06/banner/euro-samsung-830-300-830x300.png" 
+												class="img-responsive1" alt="">
+											<p class="flex-caption" > Samsung Trên Tay Giảm Đến 6,7 Triệu</p>
+										</div>
+									</li>
+									<li data-colorid="1"
+										data-thumb="https://cdn.tgdd.vn/2021/06/banner/830-300-830x300-2.png">
+										<div class="thumb-image detail_images">
+											<img src="https://cdn.tgdd.vn/2021/06/banner/830-300-830x300-2.png" 
+												class="img-responsive1" alt="">
+											<p class="flex-caption" >Vivo V21 5G Trả Góp 0%</p>
+										</div>
+									</li>
+									<li data-colorid="1"
+										data-thumb="https://cdn.tgdd.vn/2021/06/banner/hotsale-830-300-830x300-1.png">
+										<div class="thumb-image detail_images">
+											<img src="https://cdn.tgdd.vn/2021/06/banner/hotsale-830-300-830x300-1.png" 
+												class="img-responsive1" alt="">
+											<p class="flex-caption" >Hỗ Trợ Mùa Dịch Giao Hàng Miễn Phí</p>
+										</div>
+									</li>
+								
+
+							</ul>
+						</div>
+						
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			
+	
+	<div class="top-products">
+		
+		<div class="products">
+		<h3>Bán chạy</h3>
+			<div class="col-md-12 col-sm-12">
+					
+					<div class="col-md-3 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-3 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-s21-5g.5.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/220833/samsung-galaxy-s21-tim-600x600.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-s21-5g.5.html">Điện thoại Samsung Galaxy S21 5G</a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">17.900.000&nbsp;₫</div>	
+						</h5>
+						
+					</div>
+					
+					<div class="col-md-3 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-note-20.6.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/218355/samsung-galaxy-note-20-062220-122200-fix-600x600.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-note-20.6.html">Điện thoại Samsung Galaxy Note 20</a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">15.990.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-3 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-z-fold2-5g.7.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/226099/samsung-galaxy-z-fold-2-vang-dong-600x600.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-z-fold2-5g.7.html">Điện thoại Samsung Galaxy Z Fold2 5G</a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">50.000.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<!-- <div class="clearfix"></div>	 -->
+					
+				<div class="clearfix"></div>
+				</div>
+		</div>
+	</div>
+	
+	<div class="products">
+		
+		
+		<div class="products">
+		<h3>Điện thoại Apple</h3>
+			<div class="col-md-12 col-sm-12">
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							<div class="row">
+				
+			</div>
+						
+						
+					</div>
+					
+					<div class="text-right">
+					<a href="loai-dien-thoai.php?nsx=2" class="btn btn-lg btn-default">Xem các sản phẩm Samsung khác <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="products">
+		
+		
+		<div class="products">
+		<h3>Điện thoại Apple</h3>
+			<div class="col-md-12 col-sm-12">
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							
+						
+					</div>
+					
+					<div class="col-md-2 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+						<a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html"><div class="product-img">
+							<img src="https://cdn.tgdd.vn/Products/Images/42/228999/samsung-galaxy-a02-den-600x600-200x200.jpg" alt="">
+							<div class="p-mask">
+								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
+							</div>
+						</div></a>
+						<h4><a href="/dtdd/dien-thoai-samsung-galaxy-a02.1.html">Điện thoại Samsung Galaxy A02 </a></h4>
+						<h5><!--  <del>7,990,000 VNĐ</del>-->
+							<div class="dgkm currency">2.370.000&nbsp;₫</div>	
+						</h5>
+							<div class="row">
+				
+			</div>
+						
+						
+					</div>
+					
+					<div class="text-right">
+					<a href="loai-dien-thoai.php?nsx=2" class="btn btn-lg btn-default">Xem các sản phẩm Samsung khác <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="top-brands">
+	<h3>Thương hiệu</h3>
+	<div class="container">
+		<div class="sliderfig">
+			<div class="nbs-flexisel-container"><div class="nbs-flexisel-inner">
+				<ul id="flexiselDemo1" class="nbs-flexisel-ul">
+					<li th:each="m : ${manufacturers}" class="nbs-flexisel-item">
+						<a th:href="${'/hang-dt/'+m.slug+'.'+m.id}">
+							<img th:src="${m.image}" th:alt="${m.name}"  th:title="${m.name}" class="img-responsive" />
+						</a>
+					</li>
+				</ul>
+			
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(window).load(function() {
+				$("#flexiselDemo1").flexisel({
+					visibleItems: 4,
+					itemsToScroll: 3,
+					enableResponsiveBreakpoints: true,
+					responsiveBreakpoints: { 
+						portrait: { 
+							changePoint:480,
+							visibleItems: 1
+						}, 
+						landscape: { 
+							changePoint:640,
+							visibleItems:2
+						},
+						tablet: { 
+							changePoint:768,
+							visibleItems: 3
+						}
+					}
+				});
+
+			});
+		</script>
+		<script type="text/javascript" th:src="@{/js/jquery.flexisel.js}"></script>
+	</div>
+</div>
+	
+</div>
+
+	<div class="products">
+		<div class="products">
+		<h3>Tin tức Công nghệ</h3>
+					<div class="row post">
+					<div class="col-md-6">
+							<img src="https://cdn.tgdd.vn/Files/2021/06/09/1358802/thmb_800x450-500x500.jpg" alt="" />
+							<h4>Khuyến mại đặc biệt: Vinaphone tặng thêm 20% giá trị thẻ cào khi nạp thẻ, chỉ diễn ra 1 ngày duy nhất</h4>
+							<abbr>vừa đăng</abbr>
+					</div>
+					<div class="col-md-6">
+						<div class="row post">
+							<div class="col-md-4">
+								<img src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg"/>
+							</div>
+							<div class="col-md-8">
+								<h4> Ưu đãi trợ giá mùa dịch, iPhone vẫn tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ các iFans săn về đây</h4>
+								<abbr>vừa đăng</abbr>
+							</div>
+						</div>
+						
+						<div class="row post">
+							<div class="col-md-4">
+								<img src="https://cdn.tgdd.vn/Files/2021/06/03/1357203/flaship-android-thumb_800x450-300x200.jpg"/>
+							</div>
+							<div class="col-md-8">
+								<h4>Deal hời nổi bật: 5 flagship Android được trợ giá hết cỡ mùa dịch, giảm đến hơn chục triệu, thấy mà ham</h4>
+								<abbr>vừa đăng</abbr>
+							</div>
+						</div>
+						
+						<div class="row post">
+							<div class="col-md-4">
+								<img src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg"/>
+							</div>
+							<div class="col-md-8">
+								<h4> Redmi Note 10 5G series đạt doanh số khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá thơm có khác</h4>
+								<abbr>vừa đăng</abbr>
+							</div>
+						</div>
+						
+						<div class="row post">
+							<div class="text-right">
+								<a href="loai-dien-thoai.php?nsx=2" class="btn btn-lg btn-default">Xem các sản phẩm Samsung khác <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+							</div>
+						</div>
+						
+					</div>
+					
+					
+					<div class="clearfix"></div>
+				</div>
+					
+					
+		</div>
+	</div>
+	
+</div>
+	
+	
+	<th:block th:replace="part/_footer.html :: newsletter" />
+
+
+	<th:block th:replace="part/_footer.html :: footer" />
+
+	<script>
+	$(window).load(function() {
+		$('.flexslider').flexslider({
+			animation : "slide",controlNav: false
+		});
+		
+	});
+	
+		$('.currency').html(function() {
+			const num = Number($(this).html());
+			return new Intl.NumberFormat('vi-VN', {
+				style : 'currency',
+				currency : 'VND'
+			}).format(num);
+		});
+	</script>
+
+</body>
 </html>

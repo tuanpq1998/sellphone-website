@@ -770,10 +770,10 @@ ul.wmuSliderPagination {
 	position: relative;
 	line-height: 0px;
 }
-.nbs-flexisel-item > img {
+.nbs-flexisel-item img {
 	cursor: pointer;
 	position: relative;
-	width:54%;
+	width: 65%;
 	margin:0 auto;
 }
 /*--//top-brands--*/
@@ -1256,22 +1256,24 @@ p.sbmincart-empty-text {
 }
 .nbs-flexisel-item {
 	float: left;
-	margin: 0;
-	padding:0;
 	cursor: pointer;
 	position: relative;
 	line-height: 0px;
-	
+	padding: 10px 0px;
+    margin: 0px 10px;
+    border: 1px solid rgb(187, 187, 187);
+    height: 70px;
+	border-radius: 5px;
 }
 
-.nbs-flexisel-item > img {
+.nbs-flexisel-item img {
 	cursor: pointer;
 	position: relative; 
 }
 .grid-flex{
 	margin:10px 0 20px 0;
 }
-.nbs-flexisel-item > img {
+.nbs-flexisel-item img {
 	cursor: pointer; 
 }
 .biseller-info {
@@ -3258,4 +3260,12 @@ p.w3-agile{
 	display: none;
 	width: unset;
 	height: unset;
+}
+
+.post {
+	margin-bottom: 10px;
+}
+
+.flexslider {
+	margin: 0px!important;
 }

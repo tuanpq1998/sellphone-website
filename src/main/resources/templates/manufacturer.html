@@ -3,7 +3,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<th:block th:replace="part/_head.html :: head(title = 'Sản phẩm chính hãng giá tốt')" />
+<th:block th:replace="part/_head.html :: head(title = ${'Điện thoại chính hãng ' + (manufacturer==null ? '': (manufacturer.name + ' '))
+	+ ' giá tốt' })" />
 
 <link rel="stylesheet" th:href="@{/css/css_giohang.css}" type="text/css"
 	media="all" />
@@ -29,10 +30,10 @@
 			<div class="ecommerce_dres-type">
 				<ul>
 					<li>
-						<a href="loai-dien-thoai.php" class="1">TẤT CẢ</a>
+						<a href="/dtdd" class="1">TẤT CẢ</a>
 					</li>
 					<li th:each="m : ${manufacturers}">
-						<a th:href="${'/hang-dt/'+m.slug+'.'+m.id}" th:class="${m.id==manufacturer.id ? 'active' : null}" 
+						<a th:href="${'/hang-dt/'+m.slug+'.'+m.id}" th:class="${manufacturer!=null && m.id==manufacturer.id ? 'active' : null}" 
 							th:text="${m.name}"></a>
 					</li>
 				</ul>

@@ -21,9 +21,10 @@ public class ProductController extends BaseController {
 	@Autowired
 	private ProductService productService;
 
-	@GetMapping("/")
-	public String getAllProduct() {
-		return "index";
+	@GetMapping({"/",""})
+	public String getAllProduct(Model model) {
+		model.addAttribute("products", productService.findAll());
+		return "manufacturer";
 	} 
 	
 	@GetMapping("/{productSlug}.{productId}.html")

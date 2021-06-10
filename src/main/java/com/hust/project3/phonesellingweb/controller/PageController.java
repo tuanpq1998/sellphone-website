@@ -18,6 +18,11 @@ import com.hust.project3.phonesellingweb.service.UserService;
 @Controller 
 public class PageController extends BaseController {
 
+	@GetMapping({"/","" })
+	public String showIndex() {
+		return "index";
+	}
+	
 	@GetMapping({"/huong-dan-mua-hang/","/huong-dan-mua-hang" })
 	public String showGuide() {
 		return "guide";
