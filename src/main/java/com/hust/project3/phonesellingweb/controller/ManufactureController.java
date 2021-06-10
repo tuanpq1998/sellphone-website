@@ -29,7 +29,7 @@ public class ManufactureController extends BaseController {
 			return "";
 		String rootManufacturerSlug = manufacturer.getSlug();
 		if (rootManufacturerSlug.equals(manufacturerSlug)) {
-			model.addAttribute("manufacturers", manufacturerService.findAll());
+
 			model.addAttribute("products", productService.findAllByManufacturerId(manufacturerId));
 			model.addAttribute("manufacturer", manufacturer);
 		} else 

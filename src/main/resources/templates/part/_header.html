@@ -2,6 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
+<div th:fragment="banner" class="banner-agile">
+	<div class="container">
+		<div style="padding:40px 0">
+			<h2 id="animate1" class="animated bounceInLeft">Chào mừng bạn đến với</h2>
+			<h3 id="animate2" class="animated zoomInRight">QLMobile</h3>
+			<p id="animate3" class="animated flipInX">Hệ thống cửa hàng kinh doanh điện thoại và phụ kiện với giá cả cạnh tranh nhất ở Sài Gòn! Chúng tôi luôn cung cấp những sản phẩm tốt nhất cho quý khách hàng.</p>
+			<a id="animate4" href="/lien-he" class="animated tada">Liên hệ <i class="fa fa-caret-right" aria-hidden="true"></i>
+			</a>
+		</div>
+	</div>
+</div>
+
 <ul style="background-color:unset;" th:fragment="breadcrumb" class="breadcrumb">
             <li>
                 <a href="/dtdd">Trang chủ</a>
@@ -75,39 +87,34 @@
 							</span></a>
 							<ul class="dropdown-menu multi">
 								<div class="row">
+								
 									<div class="col-sm-4">
 										<ul class="multi-column-dropdown">
-											<li><a href="loai-dien-thoai.php?nsx=1"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>Apple</a></li>
-											<li><a href="loai-dien-thoai.php?nsx=2"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>Samsung</a></li>
-											<li><a href="loai-dien-thoai.php?nsx=3"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>Sony</a></li>
-											<li><a href="loai-dien-thoai.php?nsx=4"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>HTC</a></li>
-											<li><a href="loai-dien-thoai.php?nsx=5"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>Nokia</a></li>
-											<li><a href="loai-dien-thoai.php?nsx=6"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>Xiaomi</a></li>
+											<li th:each="manu,iter : ${manufacturers}" th:if="${iter.index < 6}">
+												<a th:href="${'/hang-dt/'+manu.slug+'.'+manu.id}"><i
+													class="fa fa-angle-right" aria-hidden="true"></i>[[${manu.name}]]</a>
+											</li>
 										</ul>
 									</div>
+									
 									<div class="col-sm-3">
 										<ul class="multi-column-dropdown">
-											<li><a href="loai-dien-thoai.php?nsx=7"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>OPPO</a></li>
-											<li><a href="loai-dien-thoai.php?nsx=14"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>Asus</a></li>
-											<li><a href="loai-dien-thoai.php?nsx=15"><i
-													class="fa fa-angle-right" aria-hidden="true"></i>Huawei</a></li>
+											<li th:each="manu,iter : ${manufacturers}" th:if="${iter.index >= 6}">
+												<a th:href="${'/hang-dt/'+manu.slug+'.'+manu.id}"><i
+													class="fa fa-angle-right" aria-hidden="true"></i>[[${manu.name}]]</a>
+											</li>
 										</ul>
 									</div>
+									
 									<div class="col-sm-4 w3l">
 										<a href="loai-dien-thoai.php" class="hyper"><img
 											th:src="@{/image/smartphone.png}" class="img-responsive"
 											alt="Xem tất cả"></a>
 									</div>
+									
 									<div class="clearfix"></div>
 								</div>
+								
 							</ul></li>
 
 						<li class=" "><a href="/lien-he" class="hyper"><span>Liên

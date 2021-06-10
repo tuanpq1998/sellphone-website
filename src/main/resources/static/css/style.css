@@ -228,7 +228,7 @@ button.w3view-cart:focus{
 
 /*--banner--*/
 .banner-agile{
-	background:url(../../../images/banner1.jpg) no-repeat 0px 61%;
+	background:url('/image/banner1.jpg') no-repeat 0px 61%;
 	background-size:cover;
 	min-height:250px;
 }

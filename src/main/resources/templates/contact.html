@@ -19,7 +19,7 @@
 <body>
 	<th:block th:replace="part/_header.html :: header_top" />
 	<th:block th:replace="part/_header.html :: header_bottom" />
-
+	<th:block th:replace="part/_header.html :: banner" />
 	<div
 		th:with="isLoggedIn =  ${#authorization.expression('isAuthenticated()')}"
 		class="content">
