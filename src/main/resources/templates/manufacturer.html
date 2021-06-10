@@ -77,13 +77,13 @@
 				<div class="col-md-9 col-sm-9 women-dresses">
 					
 					<div th:each="product,iter : ${products}" class="col-md-4 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
-						<a th:href="${'/dtdd/'+product.id}"><div class="product-img">
+						<a th:href="${'/dtdd/'+ product.slug +'.'+ product.id +'.html'}"><div class="product-img">
 							<img th:src="${product.avaImage}" alt="">
 							<div class="p-mask">
 								<button type="submit" class="w3ls-cart-a pw3ls-cart"><i class="fa fa-cart-plus" aria-hidden="true"></i> Xem chi tiết</button>
 							</div>
 						</div></a>
-						<h4><a th:href="${'/dtdd/'+product.id}">[[${product.name}]]</a></h4>
+						<h4><a th:href="${'/dtdd/'+ product.slug +'.'+ product.id +'.html'}" >[[${product.name}]]</a></h4>
 						<h5><!--  <del>7,990,000 VNĐ</del>-->
 							<div class="dgkm currency">[[${product.price.value}]]</div>	
 						</h5>

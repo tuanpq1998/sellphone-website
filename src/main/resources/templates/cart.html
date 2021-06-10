@@ -61,8 +61,10 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 															<tr th:each="product,status : ${cart.products}">
 																<td><img th:src="${product.avaImage}"
 																	style="width: 80px !important"></td>
-																<td style="font-size: 16px; font-weight: bold"
-																	th:text="${product.name + ' - ' + product.color.name}"></td>
+																<td style="font-size: 16px; font-weight: bold">
+																	<a th:text="${product.name + ' - ' + product.color.name}" 
+																		th:href="${'/dtdd/' + product.slug + '.' + product.id + '.html'}" />
+																</td>
 																<input type="hidden"
 																	th:field="*{products[__${status.index}__].id}" />
 																<td style="font-size: 16px;"><input type="hidden"

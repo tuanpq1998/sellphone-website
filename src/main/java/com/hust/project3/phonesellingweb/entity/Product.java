@@ -107,6 +107,16 @@ public class Product {
 	@JsonIgnore
 	private boolean deleted;
 	
+	private String slug;
+	
+	public String getSlug() {
+		return slug;
+	}
+
+	public void setSlug(String slug) {
+		this.slug = slug;
+	}
+
 	@PreUpdate
 	protected void onUpdate() {
 		updatedAt = DateTimeHandler.datetimeToString(new Date());

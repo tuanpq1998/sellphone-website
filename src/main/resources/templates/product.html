@@ -14,10 +14,12 @@
 <body>
 	<th:block th:replace="part/_header.html :: header_top" />
 	<th:block th:replace="part/_header.html :: header_bottom" />
-
+	
 	<div class="content">
 		<div class="container">
-
+		
+			<th:block th:replace="part/_header.html :: breadcrumb" />
+			
 			<div class="single-page">
 				<div class="single-page-row" id="detail-21">
 					<div class="col-md-7 single-top-left">

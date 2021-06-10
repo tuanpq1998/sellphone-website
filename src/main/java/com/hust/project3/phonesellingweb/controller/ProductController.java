@@ -26,11 +26,15 @@ public class ProductController extends BaseController {
 		return "index";
 	} 
 	
-	@GetMapping("/{productId}")
-	public String getProduct(@PathVariable int productId, Model model, HttpSession session, Principal principal) {
-
-		Product product = productService.findById(productId);
+	@GetMapping("/{productSlug}.{productId}.html")
+	public String getProduct(@PathVariable String productSlug, @PathVariable int productId, 
+			Model model, HttpSession session, Principal principal) {
 		
+		Product product = productService.findById(productId);
+		String rootProductSlug = product.getSlug();
+		if (!rootProductSlug.equals(productSlug))
+			return "redirect:/dtdd/" + rootProductSlug + "." + productId +".html";
+
 		productService.increaseSeenNum(product.getId(), product.getSeenCount()+1);
 		model.addAttribute("product", product);
 		return "product";

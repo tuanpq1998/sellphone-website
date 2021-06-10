@@ -2,6 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
+<ul style="background-color:unset;" th:fragment="breadcrumb" class="breadcrumb">
+            <li>
+                <a href="/dtdd">Trang chủ</a>
+                <meta property="position" content="1">
+            </li>
+            <li>
+                <a th:href="${'/hang-dt/'+product.manufacturer.slug+'.'+product.manufacturer.id}">
+                	Điện thoại [[${product.manufacturer.name}]]
+                </a>
+                <meta property="position" content="2">
+            </li>
+</ul>
 
 <div th:fragment="header_top" class="header-top-w3layouts hidden-print"
 	th:with="isLoggedIn =  ${#authorization.expression('isAuthenticated()')}">
