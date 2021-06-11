@@ -3285,3 +3285,8 @@ p.w3-agile{
 .news-thumb {
 	padding: 0 0 5px 10px;
 }
+
+.pagination {
+	display: flex;
+	justify-content: center;
+}

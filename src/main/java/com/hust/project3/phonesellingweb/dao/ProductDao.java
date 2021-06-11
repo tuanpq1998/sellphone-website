@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +27,7 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	@Query("UPDATE Product p SET p.buyCount=:buyCount WHERE p.id=:id")
 	public int increaseBuyNum(@Param("buyCount")int buyCount,@Param("id") int id);
 	
-	public List<Product> findByDeletedIsFalseAndManufacturer_Id(int manufacturerId);
+	public Page<Product> findByDeletedIsFalseAndManufacturer_Id(int manufacturerId, Pageable pageable);
 
 	public List<Product> findByDeletedIsFalse();
 
