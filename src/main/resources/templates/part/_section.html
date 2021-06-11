@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="manuProduct(manuProducts, manu)" class="products">
+	<h3>Điện thoại [[${manu.name}]]</h3>
+	<div class="col-md-12 col-sm-12">
+		<div th:each="product : ${manuProducts}"
+			class="col-md-2 women-grids wp1 animated wow slideInUp"
+			data-wow-delay=".2s">
+			<a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">
+				<div class="product-img">
+					<img th:src="${product.avaImage}" th:alt="${product.name}">
+					<div class="p-mask">
+						<button type="submit" class="w3ls-cart-a pw3ls-cart">Xem
+							chi tiết</button>
+					</div>
+				</div>
+			</a>
+			<h4>
+				<a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]
+				</a>
+			</h4>
+			<h5>
+				<!--  <del>7,990,000 VNĐ</del>-->
+				<div class="dgkm currency" th:text="${product.price.value}"></div>
+			</h5>
+
+
+		</div>
+
+
+
+		<div class="text-right">
+			<a th:href="${'/hang-dt/'+manu.slug+'.'+manu.id}"
+				class="btn btn-lg btn-default">Xem thêm <i
+				class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+		</div>
+	</div>
+</div>

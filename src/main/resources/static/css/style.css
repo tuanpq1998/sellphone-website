@@ -36,7 +36,7 @@
  h1, h2, h3, h4, h5, h6 {
    margin: 0;
    padding: 0;
-   font-family: 'Source Sans Pro', sans-serif;
+   font-family: 'Merriweather', sans-serif;
    letter-spacing:1px;
    margin-bottom: 10px;
  }
@@ -294,9 +294,9 @@ button.w3view-cart:focus{
 	padding:20px 0;
 }
 .top-products h3,.features h3,.top-brands h3,.contact h3,.about h3,.team h3,h3.agileits-icons-title,.faq h3,.products h3,.login h3,.check-out h3,.payment h3{
-	font-size:40px;
+	font-size:28px;
 	color:#000;
-	margin-bottom:40px;
+	margin-bottom:20px;
 }
 .bb-grids img{
 	width:100%;
@@ -3268,4 +3268,20 @@ p.w3-agile{
 
 .flexslider {
 	margin: 0px!important;
+}
+
+.news-title {
+	margin-bottom: 0;
+	min-height: 40px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+	display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.news-thumb {
+	padding: 0 0 5px 10px;
 }

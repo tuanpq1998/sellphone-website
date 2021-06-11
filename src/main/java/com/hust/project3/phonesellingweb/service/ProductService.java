@@ -60,4 +60,12 @@ public class ProductService {
 	public List<Product> findAll() {
 		return productDao.findByDeletedIsFalse();
 	}
+
+	public List<Product> findTop4Buy() {
+		return productDao.findTop4ByDeletedIsFalseOrderByBuyCountDesc();
+	}
+
+	public List<Product> findTop6ByManufacturerId(int manufacturerId) {
+		return productDao.findTop6ByDeletedIsFalseAndManufacturer_Id(manufacturerId);
+	}
 }

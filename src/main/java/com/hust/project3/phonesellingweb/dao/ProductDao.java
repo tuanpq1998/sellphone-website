@@ -28,4 +28,8 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	public List<Product> findByDeletedIsFalseAndManufacturer_Id(int manufacturerId);
 
 	public List<Product> findByDeletedIsFalse();
+
+	public List<Product> findTop4ByDeletedIsFalseOrderByBuyCountDesc();
+
+	public List<Product> findTop6ByDeletedIsFalseAndManufacturer_Id(int manufacturerId);
 }

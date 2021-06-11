@@ -1,6 +1,7 @@
 package com.hust.project3.phonesellingweb.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,16 +11,46 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.hust.project3.phonesellingweb.entity.Feedback;
+import com.hust.project3.phonesellingweb.entity.Manufacturer;
+import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.User;
 import com.hust.project3.phonesellingweb.service.FeedbackService;
+import com.hust.project3.phonesellingweb.service.ManufacturerService;
+import com.hust.project3.phonesellingweb.service.ProductService;
 import com.hust.project3.phonesellingweb.service.UserService;
 
 
 @Controller 
 public class PageController extends BaseController {
-
+	
+	@Autowired
+	private ManufacturerService manufacturerService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private FeedbackService feedbackService;
+	
+	@Autowired
+	private ProductService productService;
+	
 	@GetMapping({"/","" })
-	public String showIndex() {
+	public String showIndex(Model model) {
+		List<Product> topBuyProducts = productService.findTop4Buy();
+		List<Product> samsungProducts = productService.findTop6ByManufacturerId(1);
+		List<Product> appleProducts = productService.findTop6ByManufacturerId(2);
+		Manufacturer samsung = manufacturerService.findById(1);
+		Manufacturer apple = manufacturerService.findById(2);
+		
+		model.addAttribute("topBuyProducts", topBuyProducts);
+		
+		model.addAttribute("samsungProducts", samsungProducts);
+		model.addAttribute("samsung", samsung);
+		
+		model.addAttribute("appleProducts", appleProducts);
+		model.addAttribute("apple", apple);
+		
 		return "index";
 	}
 	
@@ -27,12 +58,6 @@ public class PageController extends BaseController {
 	public String showGuide() {
 		return "guide";
 	}
-	
-	@Autowired
-	public UserService userService;
-	
-	@Autowired
-	public FeedbackService feedbackService;
 	
 	@GetMapping({"/lien-he/","/lien-he" })
 	public String showContact(Model model, Principal principal) {
