@@ -142,7 +142,7 @@
 					});
 		</script>
 		<div class="col-md-4 search-agileinfo">
-			<form method="get">
+			<form method="get" th:action="${#bools.isTrue(isHomepage) ? '/dtdd/' : null}">
 				<input th:value="${param.search}" type="search" name="search" placeholder="Tìm kiếm sản phẩm..."
 					required="">
 				<button type="submit" class="btn btn-default search"
