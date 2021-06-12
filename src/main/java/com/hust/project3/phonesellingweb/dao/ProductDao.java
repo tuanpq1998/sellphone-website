@@ -28,10 +28,23 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	public int increaseBuyNum(@Param("buyCount")int buyCount,@Param("id") int id);
 	
 	public Page<Product> findByDeletedIsFalseAndManufacturer_Id(int manufacturerId, Pageable pageable);
+	
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdOrderByPrice_ValueAsc(int manufacturerId, Pageable pageable);
+	
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdOrderByPrice_ValueDesc(int manufacturerId, Pageable pageable);
 
-	public List<Product> findByDeletedIsFalse();
+	public Page<Product> findByDeletedIsFalse(Pageable pageable);
 
 	public List<Product> findTop4ByDeletedIsFalseOrderByBuyCountDesc();
 
 	public List<Product> findTop6ByDeletedIsFalseAndManufacturer_Id(int manufacturerId);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContaining(int manufacturerId, Pageable pageable,
+			String searchKey);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingOrderByPrice_ValueAsc(
+			int manufacturerId, Pageable pageable, String searchKey);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingOrderByPrice_ValueDesc(
+			int manufacturerId, Pageable pageable, String searchKey);
 }

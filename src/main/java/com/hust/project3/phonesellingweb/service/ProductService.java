@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.hust.project3.phonesellingweb.dao.ProductDao;
 import com.hust.project3.phonesellingweb.entity.Color;
 import com.hust.project3.phonesellingweb.entity.Product;
+import com.hust.project3.phonesellingweb.utility.ConstantVariable;
 
 @Service
 public class ProductService {
@@ -60,13 +62,20 @@ public class ProductService {
 		return productDao.increaseBuyNum(p.getBuyCount()+1, p.getId());
 	}
 	
-	public Page<Product> findAllByManufacturerId(int manufacturerId, int page) {
+	public Page<Product> findAllByManufacturerId(int manufacturerId, int page, String sortType) {
 		Pageable pageable = PageRequest.of(page-1, numProductPerPage);
+		if (sortType == null)
+			return productDao.findByDeletedIsFalseAndManufacturer_Id(manufacturerId, pageable);
+		if (sortType.equals(ConstantVariable.SORT_PRICE_ASC))
+			return productDao.findByDeletedIsFalseAndManufacturer_IdOrderByPrice_ValueAsc(manufacturerId, pageable);
+		else if (sortType.equals(ConstantVariable.SORT_PRICE_DESC))
+			return productDao.findByDeletedIsFalseAndManufacturer_IdOrderByPrice_ValueDesc(manufacturerId, pageable);
 		return productDao.findByDeletedIsFalseAndManufacturer_Id(manufacturerId, pageable);
 	}
 
-	public List<Product> findAll() {
-		return productDao.findByDeletedIsFalse();
+	public Page<Product> findAll(int page) {
+		Pageable pageable = PageRequest.of(page-1, numProductPerPage);
+		return productDao.findByDeletedIsFalse(pageable);
 	}
 
 	public List<Product> findTop4Buy() {
@@ -75,5 +84,16 @@ public class ProductService {
 
 	public List<Product> findTop6ByManufacturerId(int manufacturerId) {
 		return productDao.findTop6ByDeletedIsFalseAndManufacturer_Id(manufacturerId);
+	}
+
+	public Page<Product> findByManufacturerIdAndNameLike(int manufacturerId, Integer page, String sortType, String searchKey) {
+		Pageable pageable = PageRequest.of(page-1, numProductPerPage);
+		if (sortType == null)
+			return productDao.findByDeletedIsFalseAndManufacturer_IdAndNameContaining(manufacturerId, pageable, searchKey);
+		if (sortType.equals(ConstantVariable.SORT_PRICE_ASC))
+			return productDao.findByDeletedIsFalseAndManufacturer_IdAndNameContainingOrderByPrice_ValueAsc(manufacturerId, pageable, searchKey);
+		else if (sortType.equals(ConstantVariable.SORT_PRICE_DESC))
+			return productDao.findByDeletedIsFalseAndManufacturer_IdAndNameContainingOrderByPrice_ValueDesc(manufacturerId, pageable, searchKey);
+		return productDao.findByDeletedIsFalseAndManufacturer_IdAndNameContaining(manufacturerId, pageable, searchKey);
 	}
 }

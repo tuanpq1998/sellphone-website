@@ -1289,12 +1289,12 @@ p.sbmincart-empty-text {
 }
 .nbs-flexisel-nav-left {
   left: 0;
-  background: url(../images/img-sprite.png) no-repeat 5px center;
+  background: url('/image/img-sprite.png') no-repeat 5px center;
   background-color:#dddddd;
 }
 .nbs-flexisel-nav-right { 
 	right: 0%;
-  background: url(../images/img-sprite.png) no-repeat -20px center;
+  background: url('/image/img-sprite.png')  no-repeat -20px center;
   background-color: #dddddd;
 }
 /*-- //about --*/

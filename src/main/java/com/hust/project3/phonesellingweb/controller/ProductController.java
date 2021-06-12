@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.service.ProductService;
@@ -22,8 +23,9 @@ public class ProductController extends BaseController {
 	private ProductService productService;
 
 	@GetMapping({"/",""})
-	public String getAllProduct(Model model) {
-		model.addAttribute("products", productService.findAll());
+	public String getAllProduct(Model model,
+			@RequestParam(name = "page", required = false, defaultValue = "1") Integer page ) {
+		model.addAttribute("products", productService.findAll(page));
 		return "manufacturer";
 	} 
 	

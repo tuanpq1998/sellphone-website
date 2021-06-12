@@ -1,6 +1,7 @@
 package com.hust.project3.phonesellingweb.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +26,21 @@ public class ManufactureController extends BaseController {
 	@GetMapping({"/{manufactureSlug}.{manufactureId}","/{manufactureSlug}.{manufactureId}/"})
 	public String showProductList(@PathVariable("manufactureSlug") String manufacturerSlug, 
 			@PathVariable("manufactureId") int manufacturerId, Model model,
-			@RequestParam(name = "page", required = false, defaultValue = "1") Integer page ) {
+			@RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+			@RequestParam(name = "sx", required = false) String sortType,
+			@RequestParam(name = "search", required = false) String searchKey) {
 		Manufacturer manufacturer = manufacturerService.findById(manufacturerId);
 		if (manufacturer == null)
 			return "";
 		String rootManufacturerSlug = manufacturer.getSlug();
 		if (rootManufacturerSlug.equals(manufacturerSlug)) {
-
-			model.addAttribute("products", productService.findAllByManufacturerId(manufacturerId, page));
+			if (searchKey == null || searchKey.equals("")) 
+				model.addAttribute("products", productService.findAllByManufacturerId(manufacturerId, page, sortType));
+			else model.addAttribute("products", productService.findByManufacturerIdAndNameLike(manufacturerId, page, sortType, searchKey));
 			model.addAttribute("manufacturer", manufacturer);
 		} else 
 			return "redirect:/hang-dt/" + rootManufacturerSlug + "." + manufacturerId;
 		return "manufacturer";
 	}
+	
 }
