@@ -30,6 +30,7 @@ public class ProductController extends BaseController {
 
 		productService.increaseSeenNum(product.getId(), product.getSeenCount()+1);
 		model.addAttribute("product", product);
+		model.addAttribute("randomProducts", productService.getRandomProducts());
 		return "product";
 	}	
 	

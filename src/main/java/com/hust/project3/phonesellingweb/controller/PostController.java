@@ -32,7 +32,7 @@ public class PostController {
 		String rootPostSlug = post.getSlug();
 		if (rootPostSlug.equals(postSlug)) {
 			model.addAttribute("post", post);
-
+			
 			return "post/post";	
 		} else return "redirect:/bai-viet/"+rootPostSlug+"."+postId + ".html";
 		

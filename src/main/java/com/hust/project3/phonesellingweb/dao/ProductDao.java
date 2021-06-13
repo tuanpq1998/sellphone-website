@@ -158,4 +158,6 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 
 	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueBetweenOrderByPrice_ValueDesc(
 			int manufacturerId, String searchKey, double d, double e, Pageable pageable);
+
+	public int countByDeletedIsFalse();
 }

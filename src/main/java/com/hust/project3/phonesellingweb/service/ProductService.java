@@ -1,5 +1,7 @@
 package com.hust.project3.phonesellingweb.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +25,26 @@ public class ProductService {
 
 	// @Value("${com.tuanpq.myaskfm.qperpage}")
 	private int numProductPerPage = 9;
+	
+	private int numRandomProduct = 6;
+	
+	public int countAll() {
+		return productDao.countByDeletedIsFalse();
+	}
 
 	public List<Product> getAll() {
 		return productDao.findAll();
+	}
+	
+	public List<Product> getRandomProducts() {
+		int total = countAll();
+		int totalPages = (total % numRandomProduct == 0) ? (total / numRandomProduct) : (total / numRandomProduct)+1;
+		int pageIndex = (int) (Math.random()*totalPages);
+		PageRequest request = PageRequest.of(pageIndex, numRandomProduct);
+		Page<Product> page = productDao.findByDeletedIsFalse(request);
+		List<Product> result = new ArrayList<Product>(page.getContent());
+		Collections.shuffle(result);
+		return result;
 	}
 
 	public Product findById(int productIdNumber) {

@@ -179,13 +179,13 @@
 							id="itemslider">
 							<div class="carousel-inner">
 							
-								<div class="item active">
+								<div th:each="product : ${randomProducts}" class="item active">
 									<div class="col-xs-12 col-sm-6 col-md-2">
-										<a href="dien-thoai.php?dt=7"><img
-											src="images/300_iphone-7-vs1.jpg"
-											class="img-responsive center-block"></a>
-										<h4 class="text-center">iPhone 7 32GB</h4>
-										<h5 class="text-center">18,790,000 VNĐ</h5>
+										<a th:href="${'dtdd/'+product.slug+'.'+product.id+'.html'}">
+											<img th:src="${product.avaImage}" class="img-responsive center-block">
+										</a>
+										<h4 class="text-center">[[${product.name}]]</h4>
+										<h5 class="text-center currency">[[${product.price.value}]]</h5>
 									</div>
 								</div>
 								
