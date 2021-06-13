@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<th:block th:replace="part/_head.html :: head(title = 'Liên hệ')" />
+
+<link rel="stylesheet" th:href="@{/css/css_giohang.css}" type="text/css"
+	media="all" />
+<script type="text/javascript">
+	$(function() {
+		$('a[title]').tooltip();
+	});
+</script>
+
+</head>
+
+<body>
+	<th:block th:replace="part/_header.html :: header_top" />
+	<th:block th:replace="part/_header.html :: header_bottom" />
+	
+	<div class="content">
+		<div class="container">
+		
+		</div>
+	</div>
+	
+
+	<th:block th:replace="part/_footer.html :: newsletter" />
+
+
+	<th:block th:replace="part/_footer.html :: footer" />
+
+
+</body>
+</html>
