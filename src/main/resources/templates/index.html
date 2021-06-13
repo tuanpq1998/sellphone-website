@@ -133,6 +133,71 @@
 </div>
 	
 </div>
+
+<div class="top-brands">
+	<h3>Khoảng giá</h3>
+	<div class="container">
+		<div class="sliderfig">
+			<div class="nbs-flexisel-container"><div class="nbs-flexisel-inner">
+				<ul id="flexiselDemo2" class="nbs-flexisel-ul">
+					<li class="nbs-flexisel-item">
+						<a th:href="${'/dtdd/?price=2tr-5tr&sx=tang'}">
+							2 - 5 triệu
+						</a>
+					</li>
+					
+					<li class="nbs-flexisel-item">
+						<a th:href="${'/dtdd/?price=5tr-10tr&sx=tang'}">
+							5 - 10 triệu
+						</a>
+					</li>
+					
+					<li class="nbs-flexisel-item">
+						<a th:href="${'/dtdd/?price=10tr-20tr&sx=tang'}">
+							10 - 20 triệu
+						</a>
+					</li>
+					
+					<li class="nbs-flexisel-item">
+						<a th:href="${'/dtdd/?price=hon20tr&sx=tang'}">
+							Trên 20 triệu
+						</a>
+					</li>
+					
+				</ul>
+			
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(window).load(function() {
+				$("#flexiselDemo2").flexisel({
+					visibleItems: 4,
+					itemsToScroll: 1,
+					infinite: false,
+					
+					enableResponsiveBreakpoints: true,
+					responsiveBreakpoints: { 
+						portrait: { 
+							changePoint:480,
+							visibleItems: 1
+						}, 
+						landscape: { 
+							changePoint:640,
+							visibleItems:2
+						},
+						tablet: { 
+							changePoint:768,
+							visibleItems: 3
+						}
+					}
+				});
+
+			});
+		</script>
+	</div>
+</div>
+	
+</div>
 	
 	<div class="products">
 		<th:block th:replace="part/_section :: manuProduct(manuProducts = ${samsungProducts}, manu = ${samsung})" />

@@ -3714,7 +3714,7 @@ p.w3-agile {
 
 .clearfix:after {
 	clear: both;
-	content: ".";
+	content: "";
 	display: block;
 	width: 0px;
 	height: 0px;
@@ -3732,4 +3732,24 @@ p.w3-agile {
 
 .flex-control-nav li {
 	margin: 0 2px!important;
+}
+
+#flexiselDemo2 .nbs-flexisel-item {
+    display: inline-block;
+    cursor: pointer;
+    height: 50px;
+    line-height: 50px;
+    background: #f3f5f8;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0;
+    border-radius: 4px;
+    margin: 0 8px 0 0;
+    color: #0e0e0e;
+    transition: background .5s ease;
+}
+
+.nbs-flexisel-item a {
+	color: #0e0e0e;
 }
