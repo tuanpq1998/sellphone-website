@@ -2,8 +2,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" 
 	th:with="searchUrl = ${(#strings.isEmpty(param.search)) ?  '' : '?search='+param.search} , 
-		resetSortUrl = ${  searchUrl + ((#strings.isEmpty(searchUrl) ? '?' : '&') + ('sx='))  },
+		resetSortUrl = ${  searchUrl + ((#strings.isEmpty(searchUrl) ? '?' : '&') 
+			+ (#strings.isEmpty(param.price) ? '' : 'price='+param.price+'&') + ('sx='))  },
+		filterUrl = ${ searchUrl + ( !#strings.isEmpty(searchUrl) ? '&' : '?' )
+			+ ((!#strings.isEmpty(param.sx)) ? 'sx='+param.sx+'&' : '')  },
 		paginationUrl = ${ searchUrl + ( !#strings.isEmpty(searchUrl) ? '&' : '?' )
+			+ (#strings.isEmpty(param.price) ? '' : 'price='+param.price+'&')
 			+ ((!#strings.isEmpty(param.sx)) ? 'sx='+param.sx+'&' : '')  }"
 		>
 
@@ -36,7 +40,7 @@
 			<div class="ecommerce_dres-type">
 				<ul>
 					<li>
-						<a href="/dtdd" class="1">TẤT CẢ</a>
+						<a th:class="${#bools.isTrue(isAllManuPage) ? 'active' : null}" href="/dtdd">TẤT CẢ</a>
 					</li>
 					<li th:each="m : ${manufacturers}">
 						<a th:href="${'/hang-dt/'+m.slug+'.'+m.id}" th:class="${manufacturer!=null && m.id==manufacturer.id ? 'active' : null}" 
@@ -51,10 +55,16 @@
 		<div class="w3ls_dresses_grid_left_grid_sub">
 			<div class="ecommerce_color ecommerce_size">
 				<ul>
-					<li><p class="loc-gia-ne" id="loc-duoi-2">Dưới 2 triệu</p></li>
-					<li><p class="loc-gia-ne" id="loc-2-5">2 - 5 triệu</p></li>
-					<li><p class="loc-gia-ne" id="loc-5-10">5 - 10 triệu</p></li>
-					<li><p class="loc-gia-ne" id="loc-tren-10">Trên 10 triệu</p></li>
+					<li><p class="loc-gia-ne"><a th:class="${#strings.equals(param.price, 'duoi2tr') ? 'active' : null}" 
+						th:href="${filterUrl + 'price=duoi2tr'}">Dưới 2 triệu</a></p></li>
+					<li><p class="loc-gia-ne"><a th:class="${#strings.equals(param.price, '2tr-5tr') ? 'active' : null}" 
+						th:href="${filterUrl + 'price=2tr-5tr'}">2 - 5 triệu</a></p></li>
+					<li><p class="loc-gia-ne"><a th:class="${#strings.equals(param.price, '5tr-10tr') ? 'active' : null}" 
+						th:href="${filterUrl + 'price=5tr-10tr'}">5 - 10 triệu</a></p></li>
+					<li><p class="loc-gia-ne"><a th:class="${#strings.equals(param.price, '10tr-20tr') ? 'active' : null}" 
+						th:href="${filterUrl + 'price=10tr-20tr'}">10 - 20 triệu</a></p></li>
+					<li><p class="loc-gia-ne"><a th:class="${#strings.equals(param.price, 'hon20tr') ? 'active' : null}" 
+						th:href="${filterUrl + 'price=hon20tr'}">Trên 20 triệu</a></p></li>
 				</ul>
 			</div>
 		</div>
@@ -70,7 +80,8 @@
 <div class="row">
 	<div class="col-md-6 pull-right">
 		<form method="get" class="row flex">
-			<input th:if="${searchUrl.length > 0}" type="hidden" name="search" th:value="${param.search}"  />
+			<input th:unless="${#strings.isEmpty(searchUrl)}" type="hidden" name="search" th:value="${param.search}"  />
+			<input th:unless="${#strings.isEmpty(param.price)}" type="hidden" name="price" th:value="${param.price}"  />
 			<select class="form-control" name="sx" id="sort-gia">
 				<option th:selected="${#strings.isEmpty(param.sx)}" value disabled >-- Sắp xếp --</option>
 				<option th:selected="${#strings.equals(param.sx, 'giam')}" value="giam">Sắp xếp theo giá GIẢM DẦN</option>
@@ -85,8 +96,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9 col-sm-9 women-dresses">
-					
-					<div th:if="${products.getContent().size() > 0}" th:each="product,iter : ${products.getContent()}" class="col-md-4 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+					<th:block th:if="${products.getContent().size() > 0}" th:each="product,iter : ${products.getContent()}" >
+					<div  class="col-md-4 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
 						<a th:href="${'/dtdd/'+ product.slug +'.'+ product.id +'.html'}"><div class="product-img">
 							<img th:src="${product.avaImage}" alt="">
 							<div class="p-mask">
@@ -97,10 +108,11 @@
 						<h5><!--  <del>7,990,000 VNĐ</del>-->
 							<div class="dgkm currency">[[${product.price.value}]]</div>	
 						</h5>
-						<div th:if="${(iter.index+1) % 3 == 0}" class="clearfix"></div>	
+						
 						
 					</div>
-					
+					<div th:if="${(iter.index+1) % 3 == 0}" class="clearfix"></div>	
+					</th:block>
 					<div class="products" th:unless="${products.getContent().size() > 0}" >
 						<h3 class="text-center" >Không có sản phẩm nào!</h3>
 					</div>

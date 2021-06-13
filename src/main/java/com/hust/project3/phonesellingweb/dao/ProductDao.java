@@ -47,4 +47,115 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 
 	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingOrderByPrice_ValueDesc(
 			int manufacturerId, Pageable pageable, String searchKey);
+
+	public Page<Product> findByDeletedIsFalseOrderByPrice_ValueAsc(Pageable pageable);
+	
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueBetweenOrderByPrice_ValueAsc(Double min, Double max, Pageable pageable);
+	
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueLessThanOrderByPrice_ValueAsc(Double max, Pageable pageable);
+	
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueGreaterThanOrderByPrice_ValueAsc(Double min, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseOrderByPrice_ValueDesc(Pageable pageable);
+	
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueBetweenOrderByPrice_ValueDesc(Double min, Double max, Pageable pageable);
+	
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueLessThanOrderByPrice_ValueDesc(Double max, Pageable pageable);
+	
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueGreaterThanOrderByPrice_ValueDesc(Double min, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContaining(Pageable pageable, String searchKey);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingOrderByPrice_ValueAsc(Pageable pageable,
+			String searchKey);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingOrderByPrice_ValueDesc(Pageable pageable,
+			String searchKey);
+
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueLessThan(double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueGreaterThan(double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndPrice_ValueBetween(double d, double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueLessThan(String searchKey, double d,
+			Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueGreaterThan(String searchKey, double d,
+			Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueBetween(String searchKey, double d,
+			double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueLessThanOrderByPrice_ValueAsc(
+			String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueGreaterThanOrderByPrice_ValueAsc(
+			String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueBetweenOrderByPrice_ValueAsc(
+			String searchKey, double d, double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueLessThanOrderByPrice_ValueDesc(
+			String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueGreaterThanOrderByPrice_ValueDesc(
+			String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndNameContainingAndPrice_ValueBetweenOrderByPrice_ValueDesc(
+			String searchKey, double d, double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueLessThan(int manufacturerId, double d,
+			Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueGreaterThan(int manufacturerId, double d,
+			Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueBetween(int manufacturerId, double d,
+			double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueLessThanOrderByPrice_ValueAsc(
+			int manufacturerId, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueGreaterThanOrderByPrice_ValueAsc(
+			int manufacturerId, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueBetweenOrderByPrice_ValueAsc(
+			int manufacturerId, double d, double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueLessThanOrderByPrice_ValueDesc(
+			int manufacturerId, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueGreaterThanOrderByPrice_ValueDesc(
+			int manufacturerId, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndPrice_ValueBetweenOrderByPrice_ValueDesc(
+			int manufacturerId, double d, double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueLessThan(
+			int manufacturerId, String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueGreaterThan(
+			int manufacturerId, String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueBetween(
+			int manufacturerId, String searchKey, double d, double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueLessThanOrderByPrice_ValueAsc(
+			int manufacturerId, String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueGreaterThanOrderByPrice_ValueAsc(
+			int manufacturerId, String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueBetweenOrderByPrice_ValueAsc(
+			int manufacturerId, String searchKey, double d, double e, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueLessThanOrderByPrice_ValueDesc(
+			int manufacturerId, String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueGreaterThanOrderByPrice_ValueDesc(
+			int manufacturerId, String searchKey, double d, Pageable pageable);
+
+	public Page<Product> findByDeletedIsFalseAndManufacturer_IdAndNameContainingAndPrice_ValueBetweenOrderByPrice_ValueDesc(
+			int manufacturerId, String searchKey, double d, double e, Pageable pageable);
 }

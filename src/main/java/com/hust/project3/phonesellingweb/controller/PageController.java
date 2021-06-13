@@ -51,6 +51,7 @@ public class PageController extends BaseController {
 		model.addAttribute("appleProducts", appleProducts);
 		model.addAttribute("apple", apple);
 		
+		model.addAttribute("isHomepage", true);
 		return "index";
 	}
 	
