@@ -18,29 +18,126 @@
 
 <body class="post">
 	<th:block th:replace="part/_header.html :: header_top" />
+	<th:block th:replace="part/_header.html :: header_bottom" />
 
-	<div th:unless="${#strings.isEmpty(post.bannerImage)}" class="sub-banner"
+	<div th:unless="${#strings.isEmpty(post.bannerImage)}"
+		class="sub-banner"
 		th:style="${'background: url(' + post.bannerImage +') no-repeat 0px 0px; background-size: cover;'}"></div>
 
 	<div class="faq">
-		
-		<div class="post-container container">
-		<h1>[[${post.title}]]</h1>
-		<div class="text-right">
-			<span> <i class="fa fa-calendar"></i> [[${post.createAt}]]</span> <span><i class="fa fa-eye"></i> [[${post.viewCount}]] luợt xem</span>
-		</div>
-		<hr />
-		<div class="post-container container ">[(${post.body})]</div>
-			
-		</div>
-		
-		<div class="container">
-			<h3>Bài viết khác</h3>
-			
-			
-		</div>
-	</div>
 
+		<div class="post-container container">
+			<h1>[[${post.title}]]</h1>
+			<div class="text-left">
+				<span> <i class="fa fa-calendar"></i> [[${post.createAt}]]
+				</span> <span><i class="fa fa-eye"></i> [[${post.viewCount}]] luợt
+					xem</span>
+			</div>
+			<hr />
+			<div class="post-container container row">
+				<article class="col-md-8 text-justify">[(${post.body})]</article>
+
+
+				<div class="col-md-4">
+					<h3>Bài viết mới</h3>
+					<div class="row post">
+						<div class="news-thumb col-md-4">
+							<img
+								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
+						</div>
+						<div class="col-md-8">
+							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
+								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
+								các iFans săn về đây</h4>
+							<abbr class="news-time">vừa đăng</abbr>
+						</div>
+					</div>
+
+					<div class="row post">
+						<div class="news-thumb col-md-4">
+							<img
+								src="https://cdn.tgdd.vn/Files/2021/06/03/1357203/flaship-android-thumb_800x450-300x200.jpg">
+						</div>
+						<div class="col-md-8">
+							<h4 class="news-title">Deal hời nổi bật: 5 flagship Android
+								được trợ giá hết cỡ mùa dịch, giảm đến hơn chục triệu, thấy mà
+								ham</h4>
+							<abbr class="news-time">vừa đăng</abbr>
+						</div>
+					</div>
+
+					<div class="row post">
+						<div class="news-thumb col-md-4">
+							<img
+								src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
+						</div>
+						<div class="col-md-8">
+							<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
+								khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
+								thơm có khác</h4>
+							<abbr class="news-time">vừa đăng</abbr>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+<hr/>
+		</div>
+
+
+	</div>
+	
+	<div class="container">
+		<div class="products news">
+			<h3>Bài liên quan</h3>
+			<div class="row post">
+				<div class="col-md-3">
+					<img
+						src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
+					<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
+						khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
+						thơm có khác</h4>
+					<abbr class="news-time">vừa đăng</abbr>
+				</div>
+
+				<div class="col-md-3">
+					<img
+						src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
+					<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
+						khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
+						thơm có khác</h4>
+					<abbr class="news-time">vừa đăng</abbr>
+				</div>
+
+				<div class="col-md-3">
+					<img
+						src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
+					<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
+						khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
+						thơm có khác</h4>
+					<abbr class="news-time">vừa đăng</abbr>
+				</div>
+				
+				<div class="col-md-3">
+					<img
+						src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
+					<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
+						khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
+						thơm có khác</h4>
+					<abbr class="news-time">vừa đăng</abbr>
+				</div>
+
+
+				<div class="clearfix"></div>
+			</div>
+
+
+		</div>
+
+
+	</div>
 
 	<th:block th:replace="part/_footer.html :: newsletter" />
 

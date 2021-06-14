@@ -1,5 +1,6 @@
 package com.hust.project3.phonesellingweb.dao;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,5 +12,7 @@ import com.hust.project3.phonesellingweb.entity.Post;
 public interface PostRepository extends JpaRepository<Post, Integer> {
 
 	public Optional<Post> findByIdAndDraftIsFalse(int postId);
+
+	public List<Post> findTop4ByOrderByCreateAtAsc();
 
 }

@@ -1,5 +1,6 @@
 package com.hust.project3.phonesellingweb.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class PostService {
 		if (result.isPresent())
 			post = result.get();
 		return post;
+	}
+
+	public List<Post> findNewest() {
+		return postRepository.findTop4ByOrderByCreateAtAsc();
 	}
 	
 	

@@ -16,6 +16,7 @@ import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.User;
 import com.hust.project3.phonesellingweb.service.FeedbackService;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
+import com.hust.project3.phonesellingweb.service.PostService;
 import com.hust.project3.phonesellingweb.service.ProductService;
 import com.hust.project3.phonesellingweb.service.UserService;
 
@@ -35,6 +36,9 @@ public class PageController extends BaseController {
 	@Autowired
 	private ProductService productService;
 	
+	@Autowired
+	private PostService postService;
+	
 	@GetMapping({"/","" })
 	public String showIndex(Model model) {
 		List<Product> topBuyProducts = productService.findTop4Buy();
@@ -50,6 +54,8 @@ public class PageController extends BaseController {
 		
 		model.addAttribute("appleProducts", appleProducts);
 		model.addAttribute("apple", apple);
+		
+		model.addAttribute("posts", postService.findNewest());
 		
 		model.addAttribute("isHomepage", true);
 		return "index";

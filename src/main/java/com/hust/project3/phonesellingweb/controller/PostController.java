@@ -12,7 +12,7 @@ import com.hust.project3.phonesellingweb.service.PostService;
 
 @Controller
 @RequestMapping("/bai-viet")
-public class PostController {
+public class PostController extends BaseController {
 
 	@Autowired
 	private PostService postService;

@@ -19,276 +19,259 @@
 	<th:block th:replace="part/_header.html :: header_top" />
 	<th:block th:replace="part/_header.html :: header_bottom" />
 
-	
-	
-	<div class="container">
-	
-	<div class="single-page">
-				<div class="single-page-row">
-						<div class="flexslider">
-							<ul class="slides">
-								<li 
-										data-thumb="https://cdn.tgdd.vn/2021/06/banner/euro-samsung-830-300-830x300.png">
-										<div class="thumb-image detail_images">
-											<img src="https://cdn.tgdd.vn/2021/06/banner/euro-samsung-830-300-830x300.png" 
-												class="img-responsive1" alt="">
-											<p class="flex-caption" > Samsung Trên Tay Giảm Đến 6,7 Triệu</p>
-										</div>
-									</li>
-									<li data-colorid="1"
-										data-thumb="https://cdn.tgdd.vn/2021/06/banner/830-300-830x300-2.png">
-										<div class="thumb-image detail_images">
-											<img src="https://cdn.tgdd.vn/2021/06/banner/830-300-830x300-2.png" 
-												class="img-responsive1" alt="">
-											<p class="flex-caption" >Vivo V21 5G Trả Góp 0%</p>
-										</div>
-									</li>
-									<li data-colorid="1"
-										data-thumb="https://cdn.tgdd.vn/2021/06/banner/hotsale-830-300-830x300-1.png">
-										<div class="thumb-image detail_images">
-											<img src="https://cdn.tgdd.vn/2021/06/banner/hotsale-830-300-830x300-1.png" 
-												class="img-responsive1" alt="">
-											<p class="flex-caption" >Hỗ Trợ Mùa Dịch Giao Hàng Miễn Phí</p>
-										</div>
-									</li>
-								
 
-							</ul>
-						</div>
-						
-					<div class="clearfix"></div>
+
+	<div class="container">
+
+		<div class="single-page">
+			<div class="single-page-row">
+				<div class="flexslider">
+					<ul class="slides">
+						<li
+							data-thumb="https://cdn.tgdd.vn/2021/06/banner/euro-samsung-830-300-830x300.png">
+							<div class="thumb-image detail_images">
+								<img
+									src="https://cdn.tgdd.vn/2021/06/banner/euro-samsung-830-300-830x300.png"
+									class="img-responsive1" alt="">
+								<p class="flex-caption">Samsung Trên Tay Giảm Đến 6,7 Triệu</p>
+							</div>
+						</li>
+						<li data-colorid="1"
+							data-thumb="https://cdn.tgdd.vn/2021/06/banner/830-300-830x300-2.png">
+							<div class="thumb-image detail_images">
+								<img
+									src="https://cdn.tgdd.vn/2021/06/banner/830-300-830x300-2.png"
+									class="img-responsive1" alt="">
+								<p class="flex-caption">Vivo V21 5G Trả Góp 0%</p>
+							</div>
+						</li>
+						<li data-colorid="1"
+							data-thumb="https://cdn.tgdd.vn/2021/06/banner/hotsale-830-300-830x300-1.png">
+							<div class="thumb-image detail_images">
+								<img
+									src="https://cdn.tgdd.vn/2021/06/banner/hotsale-830-300-830x300-1.png"
+									class="img-responsive1" alt="">
+								<p class="flex-caption">Hỗ Trợ Mùa Dịch Giao Hàng Miễn Phí</p>
+							</div>
+						</li>
+
+
+					</ul>
 				</div>
+
+				<div class="clearfix"></div>
 			</div>
-			
-	
-	<div class="top-products">
-		
-		<div class="products">
-		<h3>Bán chạy</h3>
-			<div class="col-md-12 col-sm-12">
-					
-					<div th:each="product : ${topBuyProducts}" class="col-md-3 women-grids wp1 animated wow slideInUp" data-wow-delay=".2s">
+		</div>
+
+
+		<div class="top-products">
+
+			<div class="products">
+				<h3>Bán chạy</h3>
+				<div class="col-md-12 col-sm-12">
+
+					<div th:each="product : ${topBuyProducts}"
+						class="col-md-3 women-grids wp1 animated wow slideInUp"
+						data-wow-delay=".2s">
 						<a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">
 							<div class="product-img">
 								<img th:src="${product.avaImage}" th:alt="${product.name}">
 								<div class="p-mask">
-									<button type="submit" class="w3ls-cart-a pw3ls-cart"> Xem chi tiết</button>
+									<button type="submit" class="w3ls-cart-a pw3ls-cart">
+										Xem chi tiết</button>
 								</div>
 							</div>
 						</a>
-						<h4><a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]</a></h4>
+						<h4>
+							<a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]</a>
+						</h4>
 						<h5>
-							<div class="dgkm currency">[[${product.price.value}]]</div>	
+							<div class="dgkm currency">[[${product.price.value}]]</div>
 						</h5>
-							
-						
+
+
 					</div>
-					
-				<div class="clearfix"></div>
-				</div>
-		</div>
-	</div>
-	
-	<div class="top-brands">
-	<h3>Thương hiệu</h3>
-	<div class="container">
-		<div class="sliderfig">
-			<div class="nbs-flexisel-container"><div class="nbs-flexisel-inner">
-				<ul id="flexiselDemo1" class="nbs-flexisel-ul">
-					<li th:each="m : ${manufacturers}" class="nbs-flexisel-item">
-						<a th:href="${'/hang-dt/'+m.slug+'.'+m.id}">
-							<img th:src="${m.image}" th:alt="${m.name}"  th:title="${m.name}" class="img-responsive" />
-						</a>
-					</li>
-				</ul>
-			
-			</div>
-		</div>
-		<script type="text/javascript">
-			$(window).load(function() {
-				$("#flexiselDemo1").flexisel({
-					visibleItems: 4,
-					itemsToScroll: 3,
-					enableResponsiveBreakpoints: true,
-					responsiveBreakpoints: { 
-						portrait: { 
-							changePoint:480,
-							visibleItems: 1
-						}, 
-						landscape: { 
-							changePoint:640,
-							visibleItems:2
-						},
-						tablet: { 
-							changePoint:768,
-							visibleItems: 3
-						}
-					}
-				});
 
-			});
-		</script>
-		<script type="text/javascript" th:src="@{/js/jquery.flexisel.js}"></script>
-	</div>
-</div>
-	
-</div>
-
-<div class="top-brands">
-	<h3>Khoảng giá</h3>
-	<div class="container">
-		<div class="sliderfig">
-			<div class="nbs-flexisel-container"><div class="nbs-flexisel-inner">
-				<ul id="flexiselDemo2" class="nbs-flexisel-ul">
-					<li class="nbs-flexisel-item">
-						<a th:href="${'/dtdd/?price=2tr-5tr&sx=tang'}">
-							2 - 5 triệu
-						</a>
-					</li>
-					
-					<li class="nbs-flexisel-item">
-						<a th:href="${'/dtdd/?price=5tr-10tr&sx=tang'}">
-							5 - 10 triệu
-						</a>
-					</li>
-					
-					<li class="nbs-flexisel-item">
-						<a th:href="${'/dtdd/?price=10tr-20tr&sx=tang'}">
-							10 - 20 triệu
-						</a>
-					</li>
-					
-					<li class="nbs-flexisel-item">
-						<a th:href="${'/dtdd/?price=hon20tr&sx=tang'}">
-							Trên 20 triệu
-						</a>
-					</li>
-					
-				</ul>
-			
-			</div>
-		</div>
-		<script type="text/javascript">
-			$(window).load(function() {
-				$("#flexiselDemo2").flexisel({
-					visibleItems: 4,
-					itemsToScroll: 1,
-					infinite: false,
-					
-					enableResponsiveBreakpoints: true,
-					responsiveBreakpoints: { 
-						portrait: { 
-							changePoint:480,
-							visibleItems: 1
-						}, 
-						landscape: { 
-							changePoint:640,
-							visibleItems:2
-						},
-						tablet: { 
-							changePoint:768,
-							visibleItems: 3
-						}
-					}
-				});
-
-			});
-		</script>
-	</div>
-</div>
-	
-</div>
-	
-	<div class="products">
-		<th:block th:replace="part/_section :: manuProduct(manuProducts = ${samsungProducts}, manu = ${samsung})" />
-		<div class="clearfix"></div>
-	</div>
-	
-	<div class="products">
-		<th:block th:replace="part/_section :: manuProduct(manuProducts = ${appleProducts}, manu = ${apple})" />
-		<div class="clearfix"></div>
-	</div>
-
-	<div class="products">
-		<div class="products news">
-		<h3>Tin tức Công nghệ</h3>
-					<div class="row post">
-					<div class="col-md-6">
-							<img src="https://cdn.tgdd.vn/Files/2021/06/09/1358802/thmb_800x450-500x500.jpg" alt="" />
-							<h4 class="news-title">Khuyến mại đặc biệt: Vinaphone tặng thêm 20% giá trị thẻ cào khi nạp thẻ, chỉ diễn ra 1 ngày duy nhất</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-					</div>
-					<div class="col-md-6">
-						<div class="row post">
-							<div class="news-thumb col-md-4">
-								<img src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg"/>
-							</div>
-							<div class="col-md-8">
-								<h4 class="news-title"> Ưu đãi trợ giá mùa dịch, iPhone vẫn tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ các iFans săn về đây</h4>
-								<abbr class="news-time">vừa đăng</abbr>
-							</div>
-						</div>
-						
-						<div class="row post">
-							<div class="news-thumb col-md-4">
-								<img src="https://cdn.tgdd.vn/Files/2021/06/03/1357203/flaship-android-thumb_800x450-300x200.jpg"/>
-							</div>
-							<div class="col-md-8">
-								<h4 class="news-title">Deal hời nổi bật: 5 flagship Android được trợ giá hết cỡ mùa dịch, giảm đến hơn chục triệu, thấy mà ham</h4>
-								<abbr class="news-time">vừa đăng</abbr>
-							</div>
-						</div>
-						
-						<div class="row post">
-							<div class="news-thumb col-md-4">
-								<img src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg"/>
-							</div>
-							<div class="col-md-8">
-								<h4 class="news-title">Redmi Note 10 5G series đạt doanh số khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá thơm có khác</h4>
-								<abbr class="news-time">vừa đăng</abbr>
-							</div>
-						</div>
-						
-						<div class="row post">
-							<div class="text-right">
-								<a href="#" class="btn btn-lg btn-default">Xem thêm tin tức <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-							</div>
-						</div>
-						
-					</div>
-					
-					
 					<div class="clearfix"></div>
 				</div>
-					
-					
+			</div>
 		</div>
-	</div>
-	
-</div>
-	
-	
-	<th:block th:replace="part/_footer.html :: newsletter" />
+
+		<div class="top-brands">
+			<h3>Thương hiệu</h3>
+			<div class="container">
+				<div class="sliderfig">
+					<div class="nbs-flexisel-container">
+						<div class="nbs-flexisel-inner">
+							<ul id="flexiselDemo1" class="nbs-flexisel-ul">
+								<li th:each="m : ${manufacturers}" class="nbs-flexisel-item">
+									<a th:href="${'/hang-dt/'+m.slug+'.'+m.id}"> <img
+										th:src="${m.image}" th:alt="${m.name}" th:title="${m.name}"
+										class="img-responsive" />
+								</a>
+								</li>
+							</ul>
+
+						</div>
+					</div>
+					<script type="text/javascript">
+						$(window).load(function() {
+							$("#flexiselDemo1").flexisel({
+								visibleItems : 4,
+								itemsToScroll : 3,
+								enableResponsiveBreakpoints : true,
+								responsiveBreakpoints : {
+									portrait : {
+										changePoint : 480,
+										visibleItems : 1
+									},
+									landscape : {
+										changePoint : 640,
+										visibleItems : 2
+									},
+									tablet : {
+										changePoint : 768,
+										visibleItems : 3
+									}
+								}
+							});
+
+						});
+					</script>
+					<script type="text/javascript" th:src="@{/js/jquery.flexisel.js}"></script>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="top-brands">
+			<h3>Khoảng giá</h3>
+			<div class="container">
+				<div class="sliderfig">
+					<div class="nbs-flexisel-container">
+						<div class="nbs-flexisel-inner">
+							<ul id="flexiselDemo2" class="nbs-flexisel-ul">
+								<li class="nbs-flexisel-item"><a
+									th:href="${'/dtdd/?price=2tr-5tr&sx=tang'}"> 2 - 5 triệu </a></li>
+
+								<li class="nbs-flexisel-item"><a
+									th:href="${'/dtdd/?price=5tr-10tr&sx=tang'}"> 5 - 10 triệu
+								</a></li>
+
+								<li class="nbs-flexisel-item"><a
+									th:href="${'/dtdd/?price=10tr-20tr&sx=tang'}"> 10 - 20
+										triệu </a></li>
+
+								<li class="nbs-flexisel-item"><a
+									th:href="${'/dtdd/?price=hon20tr&sx=tang'}"> Trên 20 triệu
+								</a></li>
+
+							</ul>
+
+						</div>
+					</div>
+					<script type="text/javascript">
+						$(window).load(function() {
+							$("#flexiselDemo2").flexisel({
+								visibleItems : 4,
+								itemsToScroll : 1,
+								infinite : false,
+
+								enableResponsiveBreakpoints : true,
+								responsiveBreakpoints : {
+									portrait : {
+										changePoint : 480,
+										visibleItems : 1
+									},
+									landscape : {
+										changePoint : 640,
+										visibleItems : 2
+									},
+									tablet : {
+										changePoint : 768,
+										visibleItems : 3
+									}
+								}
+							});
+
+						});
+					</script>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="products">
+			<th:block
+				th:replace="part/_section :: manuProduct(manuProducts = ${samsungProducts}, manu = ${samsung})" />
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="products">
+			<th:block
+				th:replace="part/_section :: manuProduct(manuProducts = ${appleProducts}, manu = ${apple})" />
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="products">
+			<div class="products news">
+				<h3>Tin tức Công nghệ</h3>
+				<div class="row post">
+					<div th:with="post = ${posts.get(0)}" class="col-md-6">
+						<a th:href="${'/bai-viet/'+ post.slug+ '.'+ post.id + '.html'}">
+							<img th:src="${post.avaImage}" th:alt="${post.title}" />
+							<h4 class="news-title">[[${post.title}]]</h4>
+						</a> 
+						<abbr class="news-time">[[${post.createAt}]]</abbr>
+					</div>
+
+					<div class="col-md-6">
+						<div th:each="post,iter : ${posts}" th:if="${iter.index > 0}"
+							class="row post">
+							<div class="news-thumb col-md-4">
+								<a th:href="${'/bai-viet/'+ post.slug+ '.'+ post.id + '.html'}">
+									<img th:src="${post.avaImage}" />
+								</a>
+							</div>
+							<div class="col-md-8">
+								<a th:href="${'/bai-viet/'+ post.slug+ '.'+ post.id + '.html'}">
+									<h4 class="news-title">[[${post.title}]]</h4>
+								</a> <abbr class="news-time">[[${post.createAt}]]</abbr>
+
+							</div>
+						</div>
+
+						<div class="clearfix"></div>
+					</div>
 
 
-	<th:block th:replace="part/_footer.html :: footer" />
+				</div>
+			</div>
 
-	<script>
-	$(window).load(function() {
-		$('.flexslider').flexslider({
-			animation : "slide",controlNav: false
-		});
-		
-	});
-	
-		$('.currency').html(function() {
-			const num = Number($(this).html());
-			return new Intl.NumberFormat('vi-VN', {
-				style : 'currency',
-				currency : 'VND'
-			}).format(num);
-		});
-	</script>
+		</div>
 
+
+		<th:block th:replace="part/_footer.html :: newsletter" />
+
+
+		<th:block th:replace="part/_footer.html :: footer" />
+
+		<script>
+			$(window).load(function() {
+				$('.flexslider').flexslider({
+					animation : "slide",
+					controlNav : false
+				});
+
+			});
+
+			$('.currency').html(function() {
+				const num = Number($(this).html());
+				return new Intl.NumberFormat('vi-VN', {
+					style : 'currency',
+					currency : 'VND'
+				}).format(num);
+			});
+		</script>
 </body>
 </html>
