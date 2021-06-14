@@ -55,7 +55,7 @@ public class PageController extends BaseController {
 		model.addAttribute("appleProducts", appleProducts);
 		model.addAttribute("apple", apple);
 		
-		model.addAttribute("posts", postService.findNewest());
+		model.addAttribute("posts", postService.findNewest(4));
 		
 		model.addAttribute("isHomepage", true);
 		return "index";

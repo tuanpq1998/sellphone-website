@@ -222,7 +222,7 @@
 							<img th:src="${post.avaImage}" th:alt="${post.title}" />
 							<h4 class="news-title">[[${post.title}]]</h4>
 						</a> 
-						<abbr class="news-time">[[${post.createAt}]]</abbr>
+						<abbr><i class="fa fa-calendar"></i> <span class="news-time ago">[[${post.createAt}]]</span></abbr>
 					</div>
 
 					<div class="col-md-6">
@@ -233,10 +233,10 @@
 									<img th:src="${post.avaImage}" />
 								</a>
 							</div>
-							<div class="col-md-8">
+							<div class="col-md-8" style="padding-left: 10px">
 								<a th:href="${'/bai-viet/'+ post.slug+ '.'+ post.id + '.html'}">
 									<h4 class="news-title">[[${post.title}]]</h4>
-								</a> <abbr class="news-time">[[${post.createAt}]]</abbr>
+								</a> <i class="fa fa-calendar"></i> <abbr class="news-time ago"> [[${post.createAt}]]</abbr>
 
 							</div>
 						</div>
@@ -246,10 +246,15 @@
 
 
 				</div>
+				<div class="text-right">
+			<a th:href="${'/bai-viet'}"
+				class="btn btn-lg btn-default">Xem thêm <i
+				class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+		</div>
 			</div>
 
 		</div>
-
+</div>
 
 		<th:block th:replace="part/_footer.html :: newsletter" />
 
@@ -264,6 +269,37 @@
 				});
 
 			});
+			
+			function timeSince(date) {
+			    let minute = 60;
+			    let hour   = minute * 60;
+			    let day    = hour   * 24;
+			    let month  = day    * 30;
+			    let year   = day    * 365;
+
+			    let suffix = ' trước';
+
+			    let elapsed = Math.floor((Date.now() - date) / 1000);
+
+			    if (elapsed < minute) {
+			        return 'Vừa xong';
+			    }
+
+			    // get an array in the form of [number, string]
+			    let a = elapsed < hour  && [Math.floor(elapsed / minute), 'phút'] ||
+			            elapsed < day   && [Math.floor(elapsed / hour), 'giờ']     ||
+			            elapsed < month && [Math.floor(elapsed / day), 'ngày']       ||
+			            elapsed < year  && [Math.floor(elapsed / month), 'tháng']   ||
+			            [Math.floor(elapsed / year), 'năm'];
+
+			    // pluralise and append suffix
+			    return a[0] + ' ' + a[1] + (a[0] === 1 ? '' : '') + suffix;
+			}
+			
+			$('.ago').html(function() {
+				const dateTime = Date.parse(($(this).html()));
+				return timeSince(dateTime);
+			})
 
 			$('.currency').html(function() {
 				const num = Number($(this).html());

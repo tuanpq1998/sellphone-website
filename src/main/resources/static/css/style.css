@@ -3814,3 +3814,24 @@ p.w3-agile {
 hr {
 	margin: 10px 0;
 }
+
+.info-item {
+	margin-right: 15px;
+}
+
+.faq .news-title {
+	min-height: unset;
+	display: block;
+	padding-bottom: 5px;
+}
+
+.post2-desciption, .post-desciption {
+	margin: 5px 0!important;
+}
+
+.post2-desciption {
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}

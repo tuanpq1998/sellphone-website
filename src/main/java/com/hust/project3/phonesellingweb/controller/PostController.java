@@ -18,7 +18,10 @@ public class PostController extends BaseController {
 	private PostService postService;
 	
 	@GetMapping({"","/"})
-	public String showAllPost() {
+	public String showAllPost(Model model) {
+		
+		model.addAttribute("hotPosts", postService.getHotPosts());
+		model.addAttribute("posts", postService.findNewest(6, 0));
 		
 		return "post/category";
 	}
@@ -31,7 +34,11 @@ public class PostController extends BaseController {
 			return "";
 		String rootPostSlug = post.getSlug();
 		if (rootPostSlug.equals(postSlug)) {
+			postService.increaseViewCount(post.getId(), post.getViewCount()+1);
+			
 			model.addAttribute("post", post);
+			model.addAttribute("newestPosts", postService.findNewest(4));
+			model.addAttribute("randomPosts", postService.getRandomPosts());
 			
 			return "post/post";	
 		} else return "redirect:/bai-viet/"+rootPostSlug+"."+postId + ".html";

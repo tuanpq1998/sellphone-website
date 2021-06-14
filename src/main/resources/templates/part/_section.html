@@ -8,7 +8,7 @@
 		<div th:each="product : ${manuProducts}"
 			class="col-md-2 women-grids wp1 animated wow slideInUp"
 			data-wow-delay=".2s">
-			<a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">
+			<a th:title="${product.name}" th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">
 				<div class="product-img">
 					<img th:src="${product.avaImage}" th:alt="${product.name}">
 					<div class="p-mask">
@@ -18,7 +18,7 @@
 				</div>
 			</a>
 			<h4>
-				<a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]
+				<a th:title="${product.name}" th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]
 				</a>
 			</h4>
 			<h5>

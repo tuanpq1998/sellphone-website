@@ -22,231 +22,70 @@
 	<div class="faq">
 		<div class="post-container container">
 			<div class="post-container container row">
-				<div class="col-md-8 text-justify">
-					<div class="row post">
+				<div id="posts-container" class="col-md-7 text-justify">
+					<div th:each="post,iter : ${posts.getContent()}"
+						th:if="${iter.index == 0}" class="row post">
 						<div class="news-thumb col-md-12">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
+							<a th:href="${'/bai-viet/'+post.slug+'.'+post.id+'.html'}"> <img
+								th:src="${post.avaImage}">
+							</a>
 						</div>
 						<div class="col-md-12">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
-
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
+							<a th:href="${'/bai-viet/'+post.slug+'.'+post.id+'.html'}">
+								<h4 class="news-title">[[${post.title}]]</h4>
+							</a><i class="fa fa-calendar"></i> <abbr class="news-time ago">[[${post.createAt}]]</abbr>
+							<p class="post-desciption">[[${post.description}]]</p>
 						</div>
 					</div>
 
 					<hr />
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
 
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
+					<th:block th:each="post,iter : ${posts.getContent()}"
+						th:unless="${iter.index == 0}">
+						<div class="row post">
+							<div class="news-thumb col-md-4">
+								<a th:href="${'/bai-viet/'+post.slug+'.'+post.id+'.html'}">
+									<img th:src="${post.avaImage}">
+								</a>
+							</div>
+							<div class="col-md-8">
+								<a th:href="${'/bai-viet/'+post.slug+'.'+post.id+'.html'}">
+									<h4 class="news-title">[[${post.title}]]</h4>
+								</a><i class="fa fa-calendar"></i> <abbr class="news-time ago">[[${post.createAt}]]</abbr>
 
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
+								<p class="post2-desciption">[[${post.description}]]</p>
+							</div>
 						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
+						<hr />
+					</th:block>
 
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-					<hr />
-
-					<div class="text-center">
-						<a href="#" class="btn btn-lg btn-primary">Xem thêm <i
-							class="fa fa-arrow-circle-down" aria-hidden="true"></i></a>
+					<div id="loadmore-container" class="text-center">
+						<button onclick="loadmore(1);" id="loadmore"
+							class="btn btn-lg btn-primary">
+							Xem thêm <i class="fa fa-arrow-circle-down" aria-hidden="true"></i>
+						</button>
 					</div>
 
 				</div>
 
 
-				<div class="col-md-4">
+				<div class="col-md-5">
 					<h3>Bài viết hot</h3>
 
-					<div class="row post">
+					<div th:each="post : ${hotPosts}" class="row post">
 						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
+							<a th:href="${'/bai-viet/'+post.slug+'.'+post.id+'.html'}"> <img
+								th:src="${post.avaImage}">
+							</a>
 						</div>
 						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
+							<a th:href="${'/bai-viet/'+post.slug+'.'+post.id+'.html'}">
+								<h4 class="news-title">[[${post.title}]]</h4>
+							</a> <abbr class="news-time ago">[[${post.createAt}]]</abbr>
 						</div>
 					</div>
 
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/03/1357203/flaship-android-thumb_800x450-300x200.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Deal hời nổi bật: 5 flagship Android
-								được trợ giá hết cỡ mùa dịch, giảm đến hơn chục triệu, thấy mà
-								ham</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
 
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-								khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-								thơm có khác</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-								khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-								thơm có khác</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-								khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-								thơm có khác</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-								khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-								thơm có khác</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
 
 				</div>
 			</div>
@@ -255,7 +94,77 @@
 
 		</div>
 	</div>
+	<script>
+		const loadmore = (pageNum) => {
+			
+			$.ajax({
+				  type: "POST",
+				  url: '/bai-viet/loadmore',
+				  data: {'page' : Number(pageNum)},
+				  success: function(dataBack){
+					const content = dataBack.content;
+					var html = content.map(item => ('<div class="row post"> <div class="news-thumb col-md-4"> <a href="/bai-viet/'+
+							item.slug+'.'+item.id+'.html"> <img src="'+item.avaImage+'"> </a> </div> <div class="col-md-8"> <a href="/bai-viet/'+
+							item.slug+'.'+item.id+'.html"> <h4 class="news-title">'+item.title+'</h4> </a> <abbr class="news-time ago"><i class="fa fa-calendar"></i> '+
+							timeSince(Date.parse((item.createAt)))+'</abbr> <p class="post2-desciption">'+ item.description +'</p> </div> </div>')).join("");
+					if (!dataBack.last)
+						html += '<div id="loadmore-container" class="text-center"> <button onclick="loadmore('+ (Number(pageNum)+1) +');" id="loadmore" class="btn btn-lg btn-primary"> Xem thêm <i class="fa fa-arrow-circle-down" aria-hidden="true"></i> </button> </div>';
+					else html += '<hr /><div id="loadmore-container" class="text-center"> Đã hết bài viết!</div>'
+					$('#loadmore-container').remove();
+					$('#posts-container').append(html);
+					
+					}
+				});
+		}
+	
+		$(window).load(function() {
+			$('.flexslider').flexslider({
+				animation : "slide",
+				controlNav : false
+			});
 
+		});
+
+		function timeSince(date) {
+			let minute = 60;
+			let hour = minute * 60;
+			let day = hour * 24;
+			let month = day * 30;
+			let year = day * 365;
+
+			let suffix = ' trước';
+
+			let elapsed = Math.floor((Date.now() - date) / 1000);
+
+			if (elapsed < minute) {
+				return 'Vừa xong';
+			}
+
+			// get an array in the form of [number, string]
+			let a = elapsed < hour && [ Math.floor(elapsed / minute), 'phút' ]
+					|| elapsed < day && [ Math.floor(elapsed / hour), 'giờ' ]
+					|| elapsed < month && [ Math.floor(elapsed / day), 'ngày' ]
+					|| elapsed < year
+					&& [ Math.floor(elapsed / month), 'tháng' ]
+					|| [ Math.floor(elapsed / year), 'năm' ];
+
+			// pluralise and append suffix
+			return a[0] + ' ' + a[1] + (a[0] === 1 ? '' : '') + suffix;
+		}
+
+		$('.ago').html(function() {
+			const dateTime = Date.parse(($(this).html()));
+			return timeSince(dateTime);
+		})
+
+		$('.currency').html(function() {
+			const num = Number($(this).html());
+			return new Intl.NumberFormat('vi-VN', {
+				style : 'currency',
+				currency : 'VND'
+			}).format(num);
+		});
+	</script>
 	<th:block th:replace="part/_footer.html :: newsletter" />
 
 

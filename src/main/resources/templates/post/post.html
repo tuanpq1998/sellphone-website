@@ -28,9 +28,10 @@
 
 		<div class="post-container container">
 			<h1>[[${post.title}]]</h1>
-			<div class="text-left">
-				<span> <i class="fa fa-calendar"></i> [[${post.createAt}]]
-				</span> <span><i class="fa fa-eye"></i> [[${post.viewCount}]] luợt
+			<div class="container text-right">
+				<span class="info-item"><i class="fa fa-folder"></i> <a href="/bai-viet">Tin tức</a></span>
+				<span class="info-item"><i class="fa fa-calendar"></i> <span class="ago">[[${post.createAt}]]</span></span>
+				<span class="info-item"><i class="fa fa-eye"></i> [[${post.viewCount}]] luợt
 					xem</span>
 			</div>
 			<hr />
@@ -40,95 +41,50 @@
 
 				<div class="col-md-4">
 					<h3>Bài viết mới</h3>
+					<th:block th:each="post : ${newestPosts}" >
 					<div class="row post">
 						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/07/1358176/thumb_800x450-600x400.jpg">
+							<a
+								th:href="${'/bai-viet/' + post.slug + '.' + post.id + '.html'}">
+								<img th:src="${post.avaImage}">
+							</a>
 						</div>
 						<div class="col-md-8">
-							<h4 class="news-title">Ưu đãi trợ giá mùa dịch, iPhone vẫn
-								tiếp tục được giảm nóng đến bạc triệu, hàng xịn giá hời đang chờ
-								các iFans săn về đây</h4>
-							<abbr class="news-time">vừa đăng</abbr>
+							<a
+								th:href="${'/bai-viet/' + post.slug + '.' + post.id + '.html'}">
+								<h4 class="news-title">[[${post.title}]]</h4>
+							</a> <abbr class="news-time ago">[[${post.createAt}]]</abbr>
 						</div>
+						
 					</div>
-
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/03/1357203/flaship-android-thumb_800x450-300x200.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Deal hời nổi bật: 5 flagship Android
-								được trợ giá hết cỡ mùa dịch, giảm đến hơn chục triệu, thấy mà
-								ham</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
+					<hr />
+					</th:block>
+					<div class="text-right">
+						<a th:href="${'/bai-viet'}" class="btn btn-lg btn-default">Xem
+							thêm <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+						</a>
 					</div>
-
-					<div class="row post">
-						<div class="news-thumb col-md-4">
-							<img
-								src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-						</div>
-						<div class="col-md-8">
-							<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-								khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-								thơm có khác</h4>
-							<abbr class="news-time">vừa đăng</abbr>
-						</div>
-					</div>
-
 				</div>
 			</div>
 
 
-<hr/>
+			<hr />
 		</div>
 
 
 	</div>
-	
+
 	<div class="container">
 		<div class="products news">
 			<h3>Bài liên quan</h3>
 			<div class="row post">
-				<div class="col-md-3">
-					<img
-						src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-					<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-						khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-						thơm có khác</h4>
-					<abbr class="news-time">vừa đăng</abbr>
+				<div th:each="post : ${randomPosts}" class="col-md-3">
+				<a th:href="${'/bai-viet/'+post.slug+'.'+post.id+'.html'}">
+					<img th:src="${post.avaImage}">
+					<h4 class="news-title">[[${post.title}]]</h4>
+				</a>
+				<abbr class="news-time ago">[[${post.createAt}]]</abbr>
 				</div>
-
-				<div class="col-md-3">
-					<img
-						src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-					<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-						khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-						thơm có khác</h4>
-					<abbr class="news-time">vừa đăng</abbr>
-				</div>
-
-				<div class="col-md-3">
-					<img
-						src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-					<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-						khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-						thơm có khác</h4>
-					<abbr class="news-time">vừa đăng</abbr>
-				</div>
-				
-				<div class="col-md-3">
-					<img
-						src="https://cdn.tgdd.vn/Files/2021/06/10/1359193/thumb2_800x450-300x200.jpg">
-					<h4 class="news-title">Redmi Note 10 5G series đạt doanh số
-						khủng 1 triệu thiết bị chỉ trong 9 ngày đầu mở bán, hàng xịn giá
-						thơm có khác</h4>
-					<abbr class="news-time">vừa đăng</abbr>
-				</div>
-
 
 				<div class="clearfix"></div>
 			</div>
@@ -138,7 +94,55 @@
 
 
 	</div>
+	<script>
+		$(window).load(function() {
+			$('.flexslider').flexslider({
+				animation : "slide",
+				controlNav : false
+			});
 
+		});
+
+		function timeSince(date) {
+			let minute = 60;
+			let hour = minute * 60;
+			let day = hour * 24;
+			let month = day * 30;
+			let year = day * 365;
+
+			let suffix = ' trước';
+
+			let elapsed = Math.floor((Date.now() - date) / 1000);
+
+			if (elapsed < minute) {
+				return 'Vừa xong';
+			}
+
+			// get an array in the form of [number, string]
+			let a = elapsed < hour && [ Math.floor(elapsed / minute), 'phút' ]
+					|| elapsed < day && [ Math.floor(elapsed / hour), 'giờ' ]
+					|| elapsed < month && [ Math.floor(elapsed / day), 'ngày' ]
+					|| elapsed < year
+					&& [ Math.floor(elapsed / month), 'tháng' ]
+					|| [ Math.floor(elapsed / year), 'năm' ];
+
+			// pluralise and append suffix
+			return a[0] + ' ' + a[1] + (a[0] === 1 ? '' : '') + suffix;
+		}
+
+		$('.ago').html(function() {
+			const dateTime = Date.parse(($(this).html()));
+			return timeSince(dateTime);
+		})
+
+		$('.currency').html(function() {
+			const num = Number($(this).html());
+			return new Intl.NumberFormat('vi-VN', {
+				style : 'currency',
+				currency : 'VND'
+			}).format(num);
+		});
+	</script>
 	<th:block th:replace="part/_footer.html :: newsletter" />
 
 
