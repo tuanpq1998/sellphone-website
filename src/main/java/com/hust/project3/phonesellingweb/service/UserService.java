@@ -1,7 +1,5 @@
 package com.hust.project3.phonesellingweb.service;
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.hust.project3.phonesellingweb.config.CustomUserDetail;
 import com.hust.project3.phonesellingweb.dao.UserRepository;
 import com.hust.project3.phonesellingweb.entity.User;
 
@@ -31,8 +30,7 @@ public class UserService implements UserDetailsService {
 		if (user == null) 
 			throw new UsernameNotFoundException("Username " + username
 				+ "not found!");
-		return new org.springframework.security.core.userdetails.User(username, 
-				user.getPassword(), new ArrayList<>());
+		return new CustomUserDetail(user);
 	}
 
 }
