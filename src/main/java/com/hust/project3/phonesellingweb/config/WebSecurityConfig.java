@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.hust.project3.phonesellingweb.service.UserService;
 
@@ -33,90 +34,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	
-	@Configuration
-	@Order(1)
-	public static class AdminConfigurationAdapter extends WebSecurityConfigurerAdapter {
-	    public AdminConfigurationAdapter() {
-	        super();
-	    }
-
-
-	    @Override
-	    protected void configure(HttpSecurity http) throws Exception {
-	        http.antMatcher("/admin*")
-	          .authorizeRequests()
-	          .anyRequest()
-	          .hasRole("ADMIN")
-	          
-	          .and()
-	          .formLogin()
-	          .loginPage("/login_admin").usernameParameter("username").passwordParameter("password")
-//	          .loginProcessingUrl("/admin/login_admin_processing_url")
-	          .failureUrl("/login_admin?error=loginError")
-	          .defaultSuccessUrl("/admin")
-	          
-	          .and()
-	          .logout()
-	          .logoutUrl("/admin_logout")
-	          .logoutSuccessUrl("/protectedLinks")
-	          .deleteCookies("JSESSIONID")
-	          
-	          .and()
-	          .exceptionHandling()
-	          .accessDeniedPage("/403")
-	          
-	          .and()
-	          .csrf().disable();
-	    }
-	}
-	
-	@Configuration
-	@Order(2)
-	public static class UserConfigurationAdapter extends WebSecurityConfigurerAdapter {
-
-	    public UserConfigurationAdapter() {
-	        super();
-	    }
-
-	    protected void configure(HttpSecurity http) throws Exception {
-	        http.antMatcher("/user*")
-	          .authorizeRequests()
-	          .anyRequest()
-	          .hasRole("USER")
-	          
-	          .and()
-	          .formLogin()
-	          .loginPage("/dang-nhap").usernameParameter("username").passwordParameter("password")
-	          .loginProcessingUrl("/dang-nhap")
-	          .failureUrl("/dang-nhap?error")
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+			.authorizeRequests()
+				.antMatchers("/thong-tin**", "/updatePhoneAndAddress**", "/don-hang**").authenticated()
+				.antMatchers("/admin/**").hasRole("ADMIN")
+				.anyRequest().permitAll()
+				.and().formLogin().loginPage("/dang-nhap")
+				.loginProcessingUrl("/dang-nhap")
 //				.successHandler(customLoginSuccessHandler)
-	          
-	          .and()
-	          .logout()
-	          .logoutUrl("/dang-xuat")
-	          .logoutSuccessUrl("/dang-nhap?dang-xuat")
-	          .deleteCookies("JSESSIONID")
-	          
-	          .and()
-	          .exceptionHandling()
-	          .accessDeniedPage("/403")
-	          
-	          .and()
-	          .csrf().disable();
-	    }
+				.permitAll()
+				.and().logout()
+					.logoutRequestMatcher(new AntPathRequestMatcher("/dang-xuat"))
+					.logoutSuccessUrl("/dang-nhap?dang-xuat").permitAll()
+				.and().exceptionHandling().accessDeniedPage("/error")
+				.and()
+        .csrf().disable().cors();
 	}
-	
-	@Configuration
-    @Order(3)
-    public static class GuestSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                    .anyRequest().permitAll();
-
-        }
-
-	}
-
 }

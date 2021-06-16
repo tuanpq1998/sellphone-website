@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -41,6 +42,22 @@ public class Product {
 	@Transient
 	private Color color;
 	
+	@Column(updatable = false)
+	private String createAt;
+	
+	@PrePersist
+	protected void onCreate() {
+		createAt = DateTimeHandler.datetimeToString(new Date());
+	}
+	
+	public String getCreateAt() {
+		return createAt;
+	}
+
+	public void setCreateAt(String createAt) {
+		this.createAt = createAt;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

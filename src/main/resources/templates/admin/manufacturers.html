@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:with="searchUrl = ${(#strings.isEmpty(param.search)) ?  '' : '?search='+param.search} , 
+		resetSortUrl = ${  searchUrl + ((#strings.isEmpty(searchUrl) ? '?' : '&') 
+			+ (#strings.isEmpty(param.price) ? '' : 'price='+param.price+'&') + ('sx='))  },
+		filterUrl = ${ searchUrl + ( !#strings.isEmpty(searchUrl) ? '&' : '?' )
+			+ ((!#strings.isEmpty(param.sx)) ? 'sx='+param.sx+'&' : '')  },
+		paginationUrl = ${ searchUrl + ( !#strings.isEmpty(searchUrl) ? '&' : '?' )
+			+ (#strings.isEmpty(param.price) ? '' : 'price='+param.price+'&')
+			+ ((!#strings.isEmpty(param.sx)) ? 'sx='+param.sx+'&' : '')  }">
+<head>
+<th:block
+	th:replace="/admin/part/_head.html :: head(title ='Danh sách hãng sản xuất')" />
+<link href="/vendor/datatables-plugins/dataTables.bootstrap.css"
+	rel="stylesheet">
+<link href="/vendor/datatables-responsive/dataTables.responsive.css"
+	rel="stylesheet">
+</head>
+<body>
+
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		<nav class="navbar navbar-default navbar-static-top" role="navigation"
+			style="margin-bottom: 0">
+
+			<th:block th:replace="/admin/part/_nav.html :: header" />
+
+			<th:block th:replace="/admin/part/_nav.html :: slideMenu" />
+
+			<!-- /.navbar-static-side -->
+		</nav>
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Tất cả hãng</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4">
+					<div class="panel panel-default">
+                        <div class="panel-heading">
+                            Tạo mới
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <form role="form" method="post" th:object="${manufacturer}" enctype="multipart/form-data">
+                                        <div class="form-group">
+                                            <label>Tên hãng</label>
+                                            <input th:field="*{name}" class="form-control">
+                                        </div>
+                                        
+                                        
+                                        <div class="form-group">
+                                            <label>Slug</label>
+                                            <input th:field="*{slug}" class="form-control">
+                                            <p class="help-block">URL các sản phẩm của hãng có dạng '/hang-dt/{slug}.{id}/'.</p>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Quốc gia</label>
+                                            <input th:field="*{country}" class="form-control">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Ảnh</label>
+                                            <input th:field="*{image}"  class="form-control">
+                                            <input name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" />
+                                            <p class="help-block">Upload ảnh hoặc nhập URL.</p>
+                                        </div>
+                                        
+                                        
+                                        <button type="submit" class="btn btn-primary">Submit Button</button>
+                                        <button type="reset" class="btn btn-default">Reset Button</button>
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+				</div>
+				<div class="col-lg-8">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							[[${manufacturers.size()}]] hãng sản xuất
+						</div>
+						<div class="panel-body">
+							<div id="dataTables-example_wrapper"
+								class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+								<div class="row">
+									<div class="col-sm-4">
+										<!--  <div class="dataTables_length" id="dataTables-example_length">
+											<label>Show <select name="dataTables-example_length"
+												aria-controls="dataTables-example"
+												class="form-control input-sm">
+													<option value="25">25</option>
+													<option value="50">50</option>
+													<option value="100">100</option></select> entries
+											</label>
+										</div>-->
+									</div>
+									<div class="col-sm-8">
+										<!--<div id="dataTables-example_filter" class="dataTables_filter">
+											<form method="get">
+												<label>Search:<input type="search"
+													class="form-control input-sm" name="search" placeholder=""
+													aria-controls="dataTables-example" th:value="${param.search}"></label>
+												<a th:unless="${#strings.isEmpty(param.search)}" href="/admin/products" class="btn btn-link">Reset</a>
+												<input type="submit" class="btn btn-info" />
+											</form>
+											
+										</div>-->
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<table width="100%"
+											class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
+											id="dataTables-example" role="grid"
+											aria-describedby="dataTables-example_info"
+											style="width: 100%;">
+											<thead>
+												<tr role="row">
+													<th class="sorting_asc" tabindex="0"
+														aria-controls="dataTables-example" rowspan="1" colspan="1"
+														style="width: 150px;" aria-sort="ascending">Tên</th>
+													<th class="sorting" tabindex="0"
+														aria-controls="dataTables-example" rowspan="1" colspan="1"
+														style="width: 70px;">Quốc gia</th>
+													<th class="sorting" tabindex="0"
+														aria-controls="dataTables-example" rowspan="1" colspan="1"
+														style="width: 70px;">Image</th>
+													<th class="sorting" tabindex="0"
+														aria-controls="dataTables-example" rowspan="1" colspan="1"
+														style="width: 70px;">Slug</th>
+													<th class="sorting" tabindex="0"
+														aria-controls="dataTables-example" rowspan="1" colspan="1"
+														style="width: 50px;">Hành động</th>
+												</tr>
+											</thead>
+											<tbody>
+
+												<tr role="row" th:unless="${manufacturers.size() == 0}" 
+													th:each="manufacturer,iter : ${manufacturers}"
+													th:class="${iter.index%2==0 ? 'gradeA odd' : 'gradeA even'}">
+
+													<td>[[${manufacturer.name}]]</td>
+													<td>[[${manufacturer.country}]]</td>
+													<td class="text-center">
+														<img th:src="${#strings.startsWith( manufacturer.image,'http://') || #strings.startsWith(manufacturer.image,'https://' ) || #strings.startsWith(manufacturer.image, 'www.')
+															? manufacturer.image : '/upload/images/'+manufacturer.image}"/></td>
+													<td>[[${manufacturer.slug}]]</td>
+													<td class="center"><span><a
+															th:href="${'/hang-dt/'+manufacturer.slug+'.'+manufacturer.id}">Xem</a></span>
+														<span>Sửa nhanh</span> <span>Sửa</span> <span>Xoá</span></td>
+
+												</tr>
+												
+											</tbody>
+										</table>
+										<p class="text-center"role="row" th:if="${manufacturers.size() == 0}" >
+											Không có kết quả nào!
+										</p>
+									</div>
+								</div>
+								
+
+							</div>
+							<!-- /.table-responsive -->
+
+
+						</div>
+						<!-- /.panel-body -->
+					</div>
+					<!-- /.panel -->
+				</div>
+				
+				<!-- /.col-lg-12 -->
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<th:block th:replace="/admin/part/_js.html" />
+	<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+	<script src="/vendor/datatables-responsive/dataTables.responsive.js"></script>
+	<script>
+const formatCurrency = (num) => {
+	  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
+} 
+
+$('.currency').html(function () {
+		const num = Number($(this).html());
+		return formatCurrency(num);
+	});
+$('.ss').html(function() {
+	const time = new Date(($(this).html()));
+	return time.toLocaleString();
+})
+</script>
+</body>
+
+</html>

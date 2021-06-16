@@ -351,4 +351,14 @@ public class ProductService {
 		return productDao.findByDeletedIsFalseAndManufacturer_IdAndNameContaining(manufacturerId, pageable, searchKey);
 	}
 
+	public Page<Product> findAllForAdmin(int numPerPage, int page) {
+		Pageable pageable = PageRequest.of(page - 1, numPerPage);
+			return productDao.findByDeletedIsFalse(pageable);
+	}
+
+	public Page<Product> findAllForAdminLike(String searchKey, int numPerPage, int page) {
+		Pageable pageable = PageRequest.of(page - 1, numPerPage);
+		return productDao.findByDeletedIsFalseAndNameContaining(pageable, searchKey);
+	}
+
 }

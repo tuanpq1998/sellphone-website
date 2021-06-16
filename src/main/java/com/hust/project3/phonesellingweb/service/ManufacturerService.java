@@ -26,4 +26,8 @@ public class ManufacturerService {
 	public List<Manufacturer> findAll() {
 		return manufacturerDao.findAll();
 	}
+
+	public Manufacturer save(Manufacturer manufacturer) {
+		return manufacturerDao.save(manufacturer);
+	}
 }
