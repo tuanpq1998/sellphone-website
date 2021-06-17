@@ -27,6 +27,11 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	@Query("UPDATE Product p SET p.buyCount=:buyCount WHERE p.id=:id")
 	public int increaseBuyNum(@Param("buyCount")int buyCount,@Param("id") int id);
 	
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "UPDATE Product p SET p.manufacturer_id=0 WHERE p.manufacturer_id=:manufacturerId")
+	public int updateManufacturerIdToNoBrand(@Param("manufacturerId") int manufacturerId);
+	
 	public Page<Product> findByDeletedIsFalseAndManufacturer_Id(int manufacturerId, Pageable pageable);
 	
 	public Page<Product> findByDeletedIsFalseAndManufacturer_IdOrderByPrice_ValueAsc(int manufacturerId, Pageable pageable);
@@ -160,4 +165,6 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 			int manufacturerId, String searchKey, double d, double e, Pageable pageable);
 
 	public int countByDeletedIsFalse();
+
+	
 }

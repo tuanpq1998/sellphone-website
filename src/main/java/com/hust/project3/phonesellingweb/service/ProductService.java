@@ -360,5 +360,9 @@ public class ProductService {
 		Pageable pageable = PageRequest.of(page - 1, numPerPage);
 		return productDao.findByDeletedIsFalseAndNameContaining(pageable, searchKey);
 	}
+	
+	public int moveToNoBrand(int manufacturerId) {
+		return productDao.updateManufacturerIdToNoBrand(manufacturerId);
+	}
 
 }

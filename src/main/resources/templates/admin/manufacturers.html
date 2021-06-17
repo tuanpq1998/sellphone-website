@@ -78,8 +78,8 @@
                                         </div>
                                         
                                         
-                                        <button type="submit" class="btn btn-primary">Submit Button</button>
-                                        <button type="reset" class="btn btn-default">Reset Button</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-default">Reset</button>
                                     </form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
@@ -135,7 +135,7 @@
 												<tr role="row">
 													<th class="sorting_asc" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 150px;" aria-sort="ascending">Tên</th>
+														style="width: 70px;" aria-sort="ascending">Tên</th>
 													<th class="sorting" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
 														style="width: 70px;">Quốc gia</th>
@@ -147,25 +147,25 @@
 														style="width: 70px;">Slug</th>
 													<th class="sorting" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 50px;">Hành động</th>
+														style="width: 140px;">Hành động</th>
 												</tr>
 											</thead>
 											<tbody>
 
 												<tr role="row" th:unless="${manufacturers.size() == 0}" 
-													th:each="manufacturer,iter : ${manufacturers}"
+													th:each="manufacturer,iter : ${manufacturers}" th:data-id="${manufacturer.id}"
 													th:class="${iter.index%2==0 ? 'gradeA odd' : 'gradeA even'}">
 
-													<td>[[${manufacturer.name}]]</td>
+													<td><ath:href="${'/hang-dt/'+manufacturer.slug+'.'+manufacturer.id}">[[${manufacturer.name}]]</a></td>
 													<td>[[${manufacturer.country}]]</td>
 													<td class="text-center">
-														<img th:src="${manufacturer.image}" th:alt="${manufacturer.name}"/></td>
+														<p th:if="${#strings.isEmpty(manufacturer.image)}" class="text-center">không có ảnh</p>
+														<img th:unless="${#strings.isEmpty(manufacturer.image)}" th:src="${manufacturer.image}" th:alt="${manufacturer.name}"/>
+													</td>
 													<td>[[${manufacturer.slug}]]</td>
-													<td class="center"><span><a
-															th:href="${'/hang-dt/'+manufacturer.slug+'.'+manufacturer.id}">Xem</a></span>
-														 <span><a th:href="${'/admin/manufacturers/edit?id='+manufacturer.id}">Sửa</a></span>
-														 <span>Xoá</span></td>
-
+													<td class="center"> 
+														 <a class="btn btn-warning" th:href="${'/admin/manufacturers/edit?id='+manufacturer.id}">Sửa</a>
+														 <a class="btn btn-danger" th:onclick="'handleDelete('+ ${manufacturer.id} +')'" href="#">Xoá</a></td>
 												</tr>
 												
 											</tbody>
@@ -253,6 +253,47 @@ function link() {
 	$("#upload").val("");
 	$("#image").attr("disabled", false);
     $("#upload").attr("disabled", true);
+}
+
+const handleDelete = (manufacturerId) => {
+	Swal.fire({
+		  title: 'Xoá hãng sản xuất?',
+		  text: "Thao tác này không thể quay lại!",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Xoá!'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			  if (Number(manufacturerId) == 0) {
+				  Swal.fire(
+					      'Thất bại!',
+					      'Không thể xoá brand mặc định.',
+					      'error'
+					)
+					return;
+			  }
+				  
+			  $.ajax({
+				    url: '/admin/manufacturers/'+manufacturerId,
+				    type: 'DELETE',
+				    success: function(result) {
+				    	$("tr[data-id=" + manufacturerId + "]").remove();
+				    	Swal.fire(
+				  		      'Đã xoá!',
+				  		      'Các sản phẩm của hãng cũ đã chuyển sang "no-brand".',
+				  		      'success'
+				  		    )
+				    },
+				    error : function(error) {
+				    	alert("Không thể xoá")
+				    }
+				});
+			  
+		    
+		  }
+		})
 }
 </script>
 </body>

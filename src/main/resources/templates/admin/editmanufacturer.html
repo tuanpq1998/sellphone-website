@@ -26,7 +26,8 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Tất cả hãng</h1>
+					<h1 class="page-header">Sửa thông tin</h1>
+					<a href="/admin/manufacturers" class="btn btn-link">Quay lại</a>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -60,14 +61,18 @@
                                         
                                         <div class="form-group">
                                             <label>Ảnh</label>
-                                            <input th:field="*{image}"  class="form-control">
-                                            <input name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" />
+                                            	<select name="imageType" id="imageType" onchange="onSelectChange()">
+        											<option value="fromURL">Nhập URL
+        											<option value="upload">Upload  
+											    </select>
+                                            <input th:field="*{image}"  class="form-control" placeholder="URL">
+                                            <input id="upload" class="form-control" name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" />
                                             <p class="help-block">Upload ảnh hoặc nhập URL.</p>
                                         </div>
                                         
                                         
-                                        <button type="submit" class="btn btn-primary">Submit Button</button>
-                                        <button type="reset" class="btn btn-default">Reset Button</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="reset" class="btn btn-default">Reset</button>
                                     </form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
@@ -130,6 +135,24 @@ $('#name').on("change", function () {
 	const name = $(this).val();
 	$("#slug").val(string_to_slug(name));
 })
+
+onSelectChange();
+function onSelectChange() {
+    var selectedValue = $('#imageType').val();    
+    selectedValue == "upload" ? upload() : link();
+}
+
+function upload() {
+	$("#image").val("");
+    $("#image").attr("disabled", true);
+    $("#upload").attr("disabled", false);
+}
+
+function link() {    
+	$("#upload").val("");
+	$("#image").attr("disabled", false);
+    $("#upload").attr("disabled", true);
+}
 </script>
 </body>
 

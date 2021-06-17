@@ -15,6 +15,9 @@ public class ManufacturerService {
 	@Autowired
 	private ManufacturerDao manufacturerDao;
 	
+	@Autowired
+	private ProductService productService;
+	
 	public Manufacturer findById(int id) {
 		Optional<Manufacturer> result = manufacturerDao.findById(id);
 		Manufacturer manufacturer = null;
@@ -29,5 +32,10 @@ public class ManufacturerService {
 
 	public Manufacturer save(Manufacturer manufacturer) {
 		return manufacturerDao.save(manufacturer);
+	}
+
+	public void deleteById(int manufacturerId) {
+		productService.moveToNoBrand(manufacturerId);
+		manufacturerDao.deleteById(manufacturerId);
 	}
 }
