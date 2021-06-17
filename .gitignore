@@ -33,5 +33,5 @@ build/
 ### VS Code ###
 .vscode/
 
-## for testing
-/src/main/resources/static/upload/**
+## file upload
+/upload/**
