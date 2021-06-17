@@ -11,5 +11,8 @@ public class ConstantVariable {
 	public static final String PRICE_RANGE_10M_TO_20M = "10tr-20tr";
 	public static final String PRICE_RANGE_HIGHER_20M = "hon20tr";
 	
+	public static final String UPLOAD_DIR = "upload/images/";
 	
+	public static final String IMAGE_METHOD_UPLOAD = "upload";
+	public static final String IMAGE_METHOD_FROMURL = "fromURL";
 }

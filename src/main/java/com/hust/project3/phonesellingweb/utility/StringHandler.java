@@ -1,5 +1,7 @@
 package com.hust.project3.phonesellingweb.utility;
 
+import com.github.slugify.Slugify;
+
 public class StringHandler {
 	
 	public static boolean isEmpty(String s) {
@@ -22,5 +24,10 @@ public class StringHandler {
 		} else if (priceRange.equals(ConstantVariable.PRICE_RANGE_HIGHER_20M)) 
 			res[0] = 20_000_000;
 		return res;
+	}
+	
+	public static String toSlug(String str) {
+		Slugify slg = new Slugify();
+		return slg.slugify(str);
 	}
 }

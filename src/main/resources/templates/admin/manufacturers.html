@@ -57,7 +57,7 @@
                                         
                                         <div class="form-group">
                                             <label>Slug</label>
-                                            <input th:field="*{slug}" class="form-control">
+                                            <input disabled="disabled" th:field="*{slug}" class="form-control">
                                             <p class="help-block">URL các sản phẩm của hãng có dạng '/hang-dt/{slug}.{id}/'.</p>
                                         </div>
                                         
@@ -68,8 +68,12 @@
                                         
                                         <div class="form-group">
                                             <label>Ảnh</label>
-                                            <input th:field="*{image}"  class="form-control">
-                                            <input name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" />
+                                            	<select name="imageType" id="imageType" onchange="onSelectChange()">
+        											<option value="fromURL">Nhập URL
+        											<option value="upload">Upload  
+											    </select>
+                                            <input th:field="*{image}"  class="form-control" placeholder="URL">
+                                            <input id="upload" class="form-control" name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" />
                                             <p class="help-block">Upload ảnh hoặc nhập URL.</p>
                                         </div>
                                         
@@ -155,12 +159,12 @@
 													<td>[[${manufacturer.name}]]</td>
 													<td>[[${manufacturer.country}]]</td>
 													<td class="text-center">
-														<img th:src="${#strings.startsWith( manufacturer.image,'http://') || #strings.startsWith(manufacturer.image,'https://' ) || #strings.startsWith(manufacturer.image, 'www.')
-															? manufacturer.image : '/upload/images/'+manufacturer.image}"/></td>
+														<img th:src="${manufacturer.image}" th:alt="${manufacturer.name}"/></td>
 													<td>[[${manufacturer.slug}]]</td>
 													<td class="center"><span><a
 															th:href="${'/hang-dt/'+manufacturer.slug+'.'+manufacturer.id}">Xem</a></span>
-														<span>Sửa nhanh</span> <span>Sửa</span> <span>Xoá</span></td>
+														 <span><a th:href="${'/admin/manufacturers/edit?id='+manufacturer.id}">Sửa</a></span>
+														 <span>Xoá</span></td>
 
 												</tr>
 												
@@ -204,10 +208,52 @@ $('.currency').html(function () {
 		const num = Number($(this).html());
 		return formatCurrency(num);
 	});
-$('.ss').html(function() {
+$('.datetime').html(function() {
 	const time = new Date(($(this).html()));
 	return time.toLocaleString();
 })
+
+function string_to_slug (str) {
+    str = str.replace(/^\s+|\s+$/g, ''); // trim
+    str = str.toLowerCase();
+  
+    // remove accents, swap ñ for n, etc
+    var from = "àáãäâèéëêìíïîòóöôùúüûñç·/_,:;";
+    var to   = "aaaaaeeeeiiiioooouuuunc------";
+
+    for (var i=0, l=from.length ; i<l ; i++) {
+        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+
+    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+        .replace(/-+/g, '-'); // collapse dashes
+
+    return str;
+}
+
+$('#name').on("change", function () {
+	const name = $(this).val();
+	$("#slug").val(string_to_slug(name));
+})
+
+onSelectChange();
+function onSelectChange() {
+    var selectedValue = $('#imageType').val();    
+    selectedValue == "upload" ? upload() : link();
+}
+
+function upload() {
+	$("#image").val("");
+    $("#image").attr("disabled", true);
+    $("#upload").attr("disabled", false);
+}
+
+function link() {    
+	$("#upload").val("");
+	$("#image").attr("disabled", false);
+    $("#upload").attr("disabled", true);
+}
 </script>
 </body>
 
