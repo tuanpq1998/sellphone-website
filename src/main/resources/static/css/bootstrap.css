@@ -6758,3 +6758,10 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+.danger.badge {
+	background-color: #d9534f;
+	font-style: italic;
+}
+.success.badge {
+	background-color: #5cb85c;
+}

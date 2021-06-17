@@ -101,7 +101,7 @@
 														style="width: 84px;">Loại màu</th>
 													<th class="sorting" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 50px;">Còn hàng?</th>
+														style="width: 50px;">Tình trạng</th>
 													<th class="sorting" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
 														style="width: 130px;">Hành động</th>
@@ -110,21 +110,24 @@
 											<tbody>
 
 												<tr role="row" th:unless="${products.getContent().size() == 0}" 
-													th:each="product,iter : ${products.getContent()}"
+													th:each="product,iter : ${products.getContent()}" th:data-id="${product.id}"
 													th:class="${iter.index%2==0 ? 'gradeA odd' : 'gradeA even'}">
 
-													<td><a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]</a></td>
+													<td><a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]</a> <th:block  th:if="${product.deleted}"><span class="badge danger">đã xoá</span></th:block></td>
 													<td><a th:href="${'/hang-dt/'+product.manufacturer.slug+'.'+product.manufacturer.id}">[[${product.manufacturer.name}]]</a> <a th:href="${'/admin/manufacturers/edit?id='+product.manufacturer.id}" class="btn btn-xs btn-link">Sửa </a></td>
 													<td class="datetime">[[${product.createAt}]]</td>
 													<td class="center currency">[[${product.price.value}]]</td>
 													<td class="center"><span
 														th:each="color : ${product.colors}">[[${color.name}]],
 													</span></td>
-													<td class="center">[[${product.available}]]</td>
+													<td class="center">
+														<span th:unless="${product.available}" class="badge danger">hết hàng</span> 
+														<span th:if="${product.available}" class="success badge ">còn hàng</span> 
+													</td>
 													<td class="center">
 														<a class="btn btn-link">Sửa nhanh</a>
 														<a class="btn btn-warning">Sửa</a>
-														<a class="btn btn-danger">Xoá</a>
+														<a th:unless="${product.deleted}" th:onclick="'handleDelete('+${product.id}+')'" class="btn btn-danger">Xoá</a>
 													</td>
 												</tr>
 												
@@ -204,6 +207,40 @@ $('.datetime').html(function() {
 	const time = new Date(($(this).html()));
 	return time.toLocaleString();
 })
+
+const handleDelete = (productId) => {
+	Swal.fire({
+		  title: 'Xoá sản phẩm?',
+		  text: "Thao tác này không thể quay lại!",
+		  icon: 'warning',
+		  showCancelButton: true,
+		  confirmButtonColor: '#3085d6',
+		  cancelButtonColor: '#d33',
+		  confirmButtonText: 'Xoá'
+		}).then((result) => {
+		  if (result.isConfirmed) {
+			  
+				  
+			  $.ajax({
+				    url: '/admin/products/'+productId,
+				    type: 'DELETE',
+				    success: function(result) {
+				    	Swal.fire(
+				  		      'Đã xoá!',
+				  		      '',
+				  		      'success'
+				  		    )
+				  		  location.reload();
+				    },
+				    error : function(error) {
+				    	alert("Không thể xoá")
+				    }
+				});
+			  
+		    
+		  }
+		})
+}
 </script>
 </body>
 

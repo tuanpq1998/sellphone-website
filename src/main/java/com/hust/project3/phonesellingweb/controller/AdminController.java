@@ -51,6 +51,18 @@ public class AdminController {
 		return "admin/products.html";
 	}
 	
+	@DeleteMapping("/products/{productId}")
+	public ResponseEntity<String> handleDeleteProduct(@PathVariable int productId) {
+		productService.deleteById(productId);
+		return ResponseEntity.ok("Deleted!");
+	}
+	
+	@GetMapping("/products/new")
+	public String showCreateProduct() {
+		
+		return "/admin/newproduct";
+	}
+	
 	@GetMapping("/manufacturers")
 	public String showAllManufacturers(Model model) {
 		model.addAttribute("manufacturers", manufacturerService.findAll());

@@ -2,9 +2,12 @@ package com.hust.project3.phonesellingweb.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,6 +27,28 @@ public class Price {
 	
 	@Column(name="end_date")
 	private String endDate;
+	
+	private boolean current;
+	
+	@OneToOne(fetch =  FetchType.LAZY)
+	@JoinColumn(name="product_id")
+	private Product product;
+
+	public boolean isCurrent() {
+		return current;
+	}
+
+	public void setCurrent(boolean current) {
+		this.current = current;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
 	public Price(int priceId, double value, String startDate, String endDate) {
 		super();

@@ -48,7 +48,7 @@ public class ProductService {
 	}
 
 	public Product findById(int productIdNumber) {
-		Optional<Product> res = productDao.findById(productIdNumber);
+		Optional<Product> res = productDao.findByIdAndDeletedIsFalse(productIdNumber);
 		Product product = null;
 		if (res.isPresent())
 			product = res.get();
@@ -353,16 +353,20 @@ public class ProductService {
 
 	public Page<Product> findAllForAdmin(int numPerPage, int page) {
 		Pageable pageable = PageRequest.of(page - 1, numPerPage);
-			return productDao.findByDeletedIsFalse(pageable);
+			return productDao.findAll(pageable);
 	}
 
 	public Page<Product> findAllForAdminLike(String searchKey, int numPerPage, int page) {
 		Pageable pageable = PageRequest.of(page - 1, numPerPage);
-		return productDao.findByDeletedIsFalseAndNameContaining(pageable, searchKey);
+		return productDao.findByNameContaining(pageable, searchKey);
 	}
 	
 	public int moveToNoBrand(int manufacturerId) {
 		return productDao.updateManufacturerIdToNoBrand(manufacturerId);
+	}
+
+	public void deleteById(int productId) {
+		productDao.updateDeleteById(productId);
 	}
 
 }

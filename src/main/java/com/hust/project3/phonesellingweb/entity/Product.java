@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -232,11 +233,23 @@ public class Product {
 		this.buyCount = buyCount;
 	}
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="manufacturer_id")
 	@JsonIgnore
 	private Manufacturer manufacturer;
 	
+	@OneToOne
+	@JoinColumn(name="old_price_id")
+	private Price oldPrice;
+	
+	public Price getOldPrice() {
+		return oldPrice;
+	}
+
+	public void setOldPrice(Price oldPrice) {
+		this.oldPrice = oldPrice;
+	}
+
 	@OneToOne
 	@JoinColumn(name="price_id")
 	@JsonIgnore

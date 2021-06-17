@@ -8,6 +8,7 @@ encoding//src/main/resources/templates/account/signup.html=UTF-8
 encoding//src/main/resources/templates/admin/editmanufacturer.html=UTF-8
 encoding//src/main/resources/templates/admin/index.html=UTF-8
 encoding//src/main/resources/templates/admin/manufacturers.html=UTF-8
+encoding//src/main/resources/templates/admin/newproduct.html=UTF-8
 encoding//src/main/resources/templates/admin/part/_nav.html=UTF-8
 encoding//src/main/resources/templates/admin/products.html=UTF-8
 encoding//src/main/resources/templates/bill.html=UTF-8

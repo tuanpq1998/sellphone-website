@@ -1,6 +1,7 @@
 package com.hust.project3.phonesellingweb.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -31,6 +32,13 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 	@Modifying
 	@Query(nativeQuery = true, value = "UPDATE Product p SET p.manufacturer_id=0 WHERE p.manufacturer_id=:manufacturerId")
 	public int updateManufacturerIdToNoBrand(@Param("manufacturerId") int manufacturerId);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Product p SET p.deleted=1 WHERE p.id=:productId")
+	public int updateDeleteById(@Param("productId") int productId);
+	
+	public Page<Product> findByNameContaining(Pageable pageable, String search);
 	
 	public Page<Product> findByDeletedIsFalseAndManufacturer_Id(int manufacturerId, Pageable pageable);
 	
@@ -165,6 +173,8 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 			int manufacturerId, String searchKey, double d, double e, Pageable pageable);
 
 	public int countByDeletedIsFalse();
+
+	public Optional<Product> findByIdAndDeletedIsFalse(int productIdNumber);
 
 	
 }
