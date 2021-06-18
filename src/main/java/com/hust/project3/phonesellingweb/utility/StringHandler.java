@@ -1,5 +1,8 @@
 package com.hust.project3.phonesellingweb.utility;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 import com.github.slugify.Slugify;
 
 public class StringHandler {
@@ -30,4 +33,15 @@ public class StringHandler {
 		Slugify slg = new Slugify();
 		return slg.slugify(str);
 	}
+	
+	private static Random RANDOM = new SecureRandom();
+    private static String ALPHABET = "0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
+
+    public static String generateRandomString(int length) {
+        StringBuffer buffer = new StringBuffer(length);
+        for (int i = 0; i < length; i++) {
+            buffer.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
+        }
+        return new String(buffer);
+    } 
 }

@@ -1,6 +1,8 @@
 package com.hust.project3.phonesellingweb.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +23,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
 import com.hust.project3.phonesellingweb.entity.Product;
+import com.hust.project3.phonesellingweb.model.TempImageUploadItem;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
 import com.hust.project3.phonesellingweb.service.ProductService;
 import com.hust.project3.phonesellingweb.utility.ConstantVariable;
-import com.hust.project3.phonesellingweb.utility.FileUploadHandler;
+import com.hust.project3.phonesellingweb.utility.FileHandler;
 import com.hust.project3.phonesellingweb.utility.StringHandler;
 
 @Controller
@@ -61,7 +64,31 @@ public class AdminController {
 	@GetMapping("/products/new")
 	public String showCreateProduct(Model model) {
 		model.addAttribute("product", new Product());
+		model.addAttribute("manufacturers", manufacturerService.findAll());
+		
 		return "/admin/newproduct";
+	}
+	
+	@PostMapping("/tmpUpload")
+	public ResponseEntity<List<TempImageUploadItem>> uploadTempImage(
+			@RequestPart(name = "fileImage", required = false) MultipartFile[] files) throws IOException {
+		List<TempImageUploadItem> result = null;
+		if (files != null && !(files.length == 0)) {
+			result = new ArrayList<>();
+			for (MultipartFile file : files) {
+				if (file != null && !file.isEmpty()) {
+					TempImageUploadItem item = new TempImageUploadItem();
+					item.setOriginName(file.getOriginalFilename());
+					String ext = StringUtils.getFilenameExtension(file.getOriginalFilename());
+					String newFileName = StringHandler.generateRandomString(10) + "." + ext;
+			        FileHandler.save(ConstantVariable.UPLOAD_TEMP_DIR, newFileName, file);
+			        item.setTempPath(ConstantVariable.UPLOAD_TEMP_DIR + newFileName);
+			        
+			        result.add(item);
+				}
+			}
+		}
+		return new ResponseEntity<List<TempImageUploadItem>>(result, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/manufacturers")
@@ -78,11 +105,18 @@ public class AdminController {
 		if (multipartFile != null && !multipartFile.isEmpty()) {
 			String ext = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 	        String newFileName =  manufacturer.getSlug() + "." + ext;
-	        FileUploadHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, multipartFile);
+	        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, multipartFile);
 	        manufacturer.setImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
 		}
         manufacturerService.save(manufacturer);
 		return "redirect:/admin/manufacturers?created";
+	}
+	
+	@PostMapping(value = "/manufacturers/ajax")
+	public ResponseEntity<List<Manufacturer>> createManufacturerAjax(Manufacturer manufacturer,
+			@RequestPart(name = "fileImage", required = false) MultipartFile multipartFile) throws IOException {
+		createManufacturer(manufacturer, multipartFile);
+		return new ResponseEntity<List<Manufacturer>>(manufacturerService.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/manufacturers/edit")
@@ -102,7 +136,7 @@ public class AdminController {
 		if (multipartFile != null && !multipartFile.isEmpty()) {
 			String ext = StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
 	        String newFileName =  manufacturer.getSlug() + "." + ext;
-	        FileUploadHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, multipartFile);
+	        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, multipartFile);
 	        manufacturer.setImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
 		}
         manufacturerService.save(manufacturer);

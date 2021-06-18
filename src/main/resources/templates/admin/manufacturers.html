@@ -156,11 +156,11 @@
 													th:each="manufacturer,iter : ${manufacturers}" th:data-id="${manufacturer.id}"
 													th:class="${iter.index%2==0 ? 'gradeA odd' : 'gradeA even'}">
 
-													<td><ath:href="${'/hang-dt/'+manufacturer.slug+'.'+manufacturer.id}">[[${manufacturer.name}]]</a></td>
+													<td><a th:href="${'/hang-dt/'+manufacturer.slug+'.'+manufacturer.id}">[[${manufacturer.name}]]</a></td>
 													<td>[[${manufacturer.country}]]</td>
 													<td class="text-center">
 														<p th:if="${#strings.isEmpty(manufacturer.image)}" class="text-center">không có ảnh</p>
-														<img th:unless="${#strings.isEmpty(manufacturer.image)}" th:src="${manufacturer.image}" th:alt="${manufacturer.name}"/>
+														<img style="with:160px;height:40px" th:unless="${#strings.isEmpty(manufacturer.image)}" th:src="${manufacturer.image}" th:alt="${manufacturer.name}"/>
 													</td>
 													<td>[[${manufacturer.slug}]]</td>
 													<td class="center"> 

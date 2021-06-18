@@ -87,7 +87,7 @@
 									
 									<div class="form-group" id="slider1" data-idSlider=1>
 										<div class="input-group col-md-12">
-	    									<span class="input-group-addon">Ảnh 1</span>
+	    									<span class="input-group-addon">Ảnh</span>
 	    									
 											<select onchange="onSelectChangeSlider(1)" id="selectSlider1" class="form-control">
 												<option value="fromURL">Nhập URL
@@ -413,10 +413,22 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-12">
-									<div class="form-group">
-
-										<button type="submit" class="btn btn-primary">Thêm
-											chuyên mục mới</button>
+									<div id="colors-container" class="form-group">
+										<div class="input-group col-md-12">
+	    									<span style="color:blue;font-size:20px" class="input-group-addon"><i class="fa fa-square" aria-hidden="true"></i></span>
+											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+											<input class="form-control" value="Trắng"> 
+											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>											
+											<input class="form-control" value="2 ảnh"> 
+											<span class="input-group-btn">
+												<a class="btn btn-warning">Sửa</a>
+												<a class="btn btn-danger">Xoá</a>
+											</span>							
+										</div>
+										
+									</div>
+									<div class="form-group pull-right">
+										<a onclick="createNewColor()" class="btn btn-primary">Thêm</a>				
 									</div>
 								</div>
 							</div>
@@ -455,14 +467,13 @@
 							<div class="row">
 								<div class="col-lg-12">
 								<div class="form-group ">
-										<label>Chọn hãng:</label> 
 										<div class="input-group">
-										<select name="imageType"  class="form-control">
-											<option value="fromURL">Còn hàng
-											</option><option value="upload">Hết hàng
-										</option></select>
+										<select id="manufacturerSelect" class="form-control">
+											<option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}">[[${manufacturer.name}]]
+											</option>
+										</select>
 										<span class="input-group-btn">
-											<button type="submit" class="btn btn-success">Thêm mới</button>
+											<a id="addNewManuBtn" class="btn btn-success">Thêm mới</a>
 										</span>
 										</div>
 									</div>
@@ -548,6 +559,11 @@ $('#name').on("change", function () {
 	$("#slug").val(string_to_slug(name));
 })
 
+const onManuNameChange = () => {
+	const name = $('#nameNewManu').val();
+	$("#slugNewManu").val(string_to_slug(name));
+}
+
 onSelectChangeAva();
 function onSelectChangeAva() {
     var selectedValue = $('#imageAvaType').val();    
@@ -564,13 +580,27 @@ function linkAva() {
 	$("#urlAva").attr("disabled", false).show();
 }
 
+const onSelectChange4ImageManu = () => {
+	var selectedValue = $("#imageManuType").val();
+	selectedValue == "upload" ? uploadImageManu() : linkImageManu();
+}
+
+function uploadImageManu() {
+	$("#urlManu").val("").attr("disabled", true).hide();
+    $("#uploadManu").attr("disabled", false).show();
+}
+
+function linkImageManu() {    
+	$("#uploadManu").val("").attr("disabled", true).hide();
+	$("#urlManu").attr("disabled", false).show();
+}
 
 const onSelectChangeSlider = (sliderIndex) => {
 	const selectedVal = $('#selectSlider'+sliderIndex).val();
 	selectedVal == "upload" ? uploadSlider(sliderIndex) : linkSlider(sliderIndex);
 }
 
-const templateSlider = (sliderId) => '<div class="form-group" id="slider'+ sliderId +'" data-idSlider='+ sliderId +'> <div class="input-group"> <span class="input-group-addon">Ảnh '+ sliderId +'</span> <select onchange="onSelectChangeSlider('+ sliderId +')" id="selectSlider'+ sliderId +'" class="form-control"> <option value="fromURL">Nhập URL <option value="upload">Upload </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input id="urlSlider'+ sliderId +'" class="form-control" placeholder="URL"> <input id="uploadSlider'+ sliderId +'" class="form-control" name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" /> '+
+const templateSlider = (sliderId) => '<div class="form-group" id="slider'+ sliderId +'" data-idSlider='+ sliderId +'> <div class="input-group"> <span class="input-group-addon">Ảnh</span> <select onchange="onSelectChangeSlider('+ sliderId +')" id="selectSlider'+ sliderId +'" class="form-control"> <option value="fromURL">Nhập URL <option value="upload">Upload </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input id="urlSlider'+ sliderId +'" class="form-control" placeholder="URL"> <input id="uploadSlider'+ sliderId +'" class="form-control" name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" /> '+
 	'<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <a onclick="return removeSlider('+ sliderId +')" class="form-control btn btn-danger">Xoá</a>'
 	+'</div> </div>';
 
@@ -597,12 +627,117 @@ const removeSlider = (sliderIndex) => {
 }
 
 onSelectChangeSlider(1);
+$("#addNewManuBtn").click(function() {
+	const html = '<div class="panel panel-info" style="text-align: left;"> <div class="panel-heading">Tạo hãng sx mới</div> <div class="panel-body"> <form id="manuForm" class="row"> <div class="col-lg-12"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tên hãng</label> <div class="col-lg-9"> <input name="name" onchange="onManuNameChange()" required class="form-control col-lg-6" id="nameNewManu" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Slug</label> <div class="col-lg-9"> <input name="slug" disabled="disabled" class="form-control" id="slugNewManu" value="" /> </div> <p class="help-block col-lg-12">URL các sản phẩm của hãng có dạng \'/hang-dt/{slug}.{id}/\'.</p> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Quốc gia</label> <div class="col-lg-9"> <input name="country" class="form-control" id="countryNewManu" value="" /></div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Ảnh</label> <div class="col-lg-9"> <div class="input-group"> <select class="form-control" id="imageManuType" onchange="onSelectChange4ImageManu()"> <option value="fromURL" selected>Nhập URL </option> <option value="upload">Upload </option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="image" class="form-control" placeholder="URL" id="urlManu" value="" /> <input name="fileImage" disabled="disabled" style="display: none;" id="uploadManu" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" /> </div> <p class="help-block col-lg-12">Upload ảnh hoặc nhập URL.</p> </div> </div> </div> </form> </div> </div>';
+	(async () => { 
+		const { isConfirmed, value: formValues } = await Swal.fire({
+			  html,
+			  width: "600px",
+			  focusConfirm: false,
+			  showCancelButton: true,
+			  preConfirm: () => {return new FormData($('form#manuForm')[0])},
+			})
 
+		if (!isConfirmed)
+			return;
+		$.ajax({
+			url: '/admin/manufacturers/ajax',
+			type: 'POST',
+			processData: false,
+		    contentType: false,
+		    data: formValues,
+			async: false,
+			data: formValues,
+			success: function(dataBack){
+				const newList = dataBack.map(e => '<option value="'+ e.id +'">'+ e.name +'</option>').join("");
+				$("#manufacturerSelect").html(newList);
+			}, 
+			error : function(error){
+				alert(error.statusText);
+			}
+		})
+	})();
+});
 
+const createNewColor = () => {
+	const html = '<div class="panel panel-info" style="text-align: left;"> <div class="panel-heading">Tạo màu mới</div> <div class="panel-body"> <form id="addColorForm" class="row"> <div class="col-lg-12"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tên:</label> <div class="col-lg-9"> <input name="name" required class="form-control col-lg-6" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Mã màu:</label> <div class="col-lg-9"> <input style="width: 80px" name="slug" class="form-control" type="color" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-12">Ảnh:</label> <div id="colorImage-container" class="col-lg-12" data-colorimageid=1> <div class="form-group"> <div class="input-group col-md-12"> <select id="colorImageSelect1" onchange="handleSelectImageColor(1)" class="form-control" data-from-url="colorImageFromURL1" data-upload="colorImageUpload1"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL1" class="form-control" placeholder="URL"> <input name="fileImage" id="colorImageUpload1" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> </div> </div> </div> <div class="col-lg-12"> <a onclick="handleClickAddMoreImageColor()" class=" pull-right btn btn-success">+ Thêm</a> <p class="help-block">Upload ảnh hoặc nhập URL.</p> </div> </div> </div> </form> </div> </div>';
+	(async () => { 
+		const { isConfirmed, value: formValues } = await Swal.fire({
+			  html,
+			  width: "600px",
+			  focusConfirm: false,
+			  showCancelButton: true,
+			  preConfirm: () => {return new FormData($('form#addColorForm')[0])},
+			})
 
+		if (!isConfirmed)
+			return;
+		var object = {};
+		formValues.forEach((value, key) => {
+		    if(!Reflect.has(object, key)){
+		        object[key] = value;
+		        return;
+		    }
+		    if(!Array.isArray(object[key])){
+		        object[key] = [object[key]];    
+		    }
+		    object[key].push(value);
+		});
+		if (formValues.get("fileImage")!=null) {
+			const result = await $.ajax({
+				url: '/admin/tmpUpload',
+				type: 'POST',
+				processData: false,
+			    contentType: false,
+			    data: formValues,
+				data: formValues,
+			});
+			if (!Array.isArray(object.fileImage))
+				object.fileImage = [object.fileImage];
+			if (!Array.isArray(object.imageURL))
+				object.imageURL = [object.imageURL];
+			console.log("ocj", object);
+			object.fileImage = [...object.fileImage.map(file => (result.find(r => r.originName == file.name)))];
+			console.log("ccc", object);
+			const newIndex = $("#colors-container").data("length")==null?1:Number($("#colors-container").data("length"))+1;
+			$("#colors-container").data("length", newIndex)
+				.append('<div id="colorcontainer'+ newIndex +'" class="input-group col-md-12"> <span style="color: '+ object.hexCode +'; font-size: 20px;" class="input-group-addon"><i class="fa fa-square" aria-hidden="true"></i></span> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="'+ object.name +'" /> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="' + (object.fileImage.length + object.imageURL.length) +' ảnh" /> <span class="input-group-btn"> <a class="btn btn-warning">Sửa</a> <a class="btn btn-danger">Xoá</a> </span> </div>');
+			$("#colorcontainer"+newIndex).data("color", object);
+		}
+		
+		
+	})();
+}
+
+const handleSelectImageColor = (colorId) => {
+	const select = $("#colorImageSelect"+colorId);
+	const value = select.val();
+	const urlInput = select.data("fromUrl");
+	const uploadInput = select.data("upload");
+	if (value == "upload") {
+		$("#"+urlInput).val("").attr("disabled", true).hide();
+	    $("#"+uploadInput).attr("disabled", false).show();
+	} else {
+		$("#"+uploadInput).val("").attr("disabled", true).hide();
+	    $("#"+urlInput).attr("disabled", false).show();
+	}
+		
+}
+
+const handleClickAddMoreImageColor = () => {
+	const parent = $("#colorImage-container");
+	const imageId = Number(parent.data("colorimageid"))+1;
+	parent.data("colorimageid", imageId);
+	const html = '<div class="form-group" id="imageColorContainer'+ imageId +'"> <div class="input-group col-md-12"> <select id="colorImageSelect'+ imageId +'" onchange="handleSelectImageColor('+ imageId +')" class="form-control" data-from-url="colorImageFromURL'+ imageId +'" data-upload="colorImageUpload'+ imageId +'"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL'+ imageId +'" class="form-control" placeholder="URL"> <input name="fileImage" id="colorImageUpload'+ imageId +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> <span class="input-group-btn"> <a onclick="handleClickRemoveImageColor('+ imageId +')" class="btn btn-danger">Xoá</a> </span> </div> </div>';
+	parent.append(html);
+}
+
+const handleClickRemoveImageColor = (imageColorId) => {
+	$("#imageColorContainer"+imageColorId).remove();
+}
 </script>
-</script>
-	<style>
+
+<style>
 .specs ul li {
 	padding: 0;
 }
