@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
+import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
 import com.hust.project3.phonesellingweb.service.ProductService;
 import com.hust.project3.phonesellingweb.utility.ConstantVariable;
@@ -58,8 +59,8 @@ public class AdminController {
 	}
 	
 	@GetMapping("/products/new")
-	public String showCreateProduct() {
-		
+	public String showCreateProduct(Model model) {
+		model.addAttribute("product", new Product());
 		return "/admin/newproduct";
 	}
 	

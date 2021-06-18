@@ -41,7 +41,7 @@
 
 			<div class="row">
 				<div class="col-lg-4">
-					<div class="panel panel-default">
+					<div class="panel panel-info">
                         <div class="panel-heading">
                             Tạo mới
                         </div>
@@ -92,7 +92,7 @@
                     </div>
 				</div>
 				<div class="col-lg-8">
-					<div class="panel panel-default">
+					<div class="panel panel-primary">
 						<div class="panel-heading">
 							[[${manufacturers.size()}]] hãng sản xuất
 						</div>
@@ -244,15 +244,13 @@ function onSelectChange() {
 }
 
 function upload() {
-	$("#image").val("");
-    $("#image").attr("disabled", true);
-    $("#upload").attr("disabled", false);
+	$("#image").val("").hide().attr("disabled", true);
+    $("#upload").attr("disabled", false).show();
 }
 
 function link() {    
-	$("#upload").val("");
-	$("#image").attr("disabled", false);
-    $("#upload").attr("disabled", true);
+	$("#upload").val("").hide().attr("disabled", true);
+	$("#image").attr("disabled", false).show();
 }
 
 const handleDelete = (manufacturerId) => {

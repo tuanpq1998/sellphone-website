@@ -7,8 +7,10 @@
 	rel="stylesheet">
 <link href="/vendor/datatables-responsive/dataTables.responsive.css"
 	rel="stylesheet">
-	<script src="https://cdn.tiny.cloud/1/oho7g9paamw0neh86dlw9oze73tomb42811s1vaocsvw457x/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-	<script>
+<script
+	src="https://cdn.tiny.cloud/1/oho7g9paamw0neh86dlw9oze73tomb42811s1vaocsvw457x/tinymce/5/tinymce.min.js"
+	referrerpolicy="origin"></script>
+<script>
       tinymce.init({
         selector: '#post-content',
         toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
@@ -41,434 +43,464 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">Tao mới</h1>
-					<a href="/admin/products" class="btn btn-link">Quay lại</a>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
 
 			<form class="row">
 				<div class="col-lg-8">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><a href="/admin/products" class="btn btn-sm btn-default">Quay lại</a></div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group">
+										<label>Tên sản phẩm: </label> <input class="form-control">
+									</div>
+
+
+									<div class="form-group">
+										<label>Slug</label> <input disabled="disabled"
+											class="form-control">
+										<p class="help-block">URL các sản phẩm dạng
+											'/dtdd/{slug}.{id}.html'.</p>
+									</div>
+
+									<div class="form-group">
+										<textarea cols="100" rows="30" id="post-content"
+											class="form-control"></textarea>
+									</div>
+
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="panel panel-info">
+						<div class="panel-heading">Slide</div>
+						<div class="panel-body">
+							<div class="row">
+								<div id="slider-container" data-sliderlen=1 class="col-lg-12">
+									
+									<div class="form-group" id="slider1" data-idSlider=1>
+										<div class="input-group col-md-12">
+	    									<span class="input-group-addon">Ảnh 1</span>
+	    									
+											<select onchange="onSelectChangeSlider(1)" id="selectSlider1" class="form-control">
+												<option value="fromURL">Nhập URL
+												<option value="upload">Upload
+											</select>  
+											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+											<input id="urlSlider1" class="form-control" placeholder="URL"> 
+											<input id="uploadSlider1" class="form-control" name="fileImage" type="file"
+												accept="image/png, image/jpeg, image/jpg" />
+											
+										</div>
+									</div>
+									
+								</div>
+								<div class="col-lg-12">
+									<a onclick="return newSlider()" class=" pull-right btn btn-success">+ Thêm</a>
+									<p class="help-block">Upload ảnh hoặc nhập URL.</p>
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+
 					<div class="panel panel-default">
-                        <div class="panel-heading">
-                            Tạo mới
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label>Tên sản phẩm: </label>
-                                            <input class="form-control">
-                                        </div>
-                                        
-                                        
-                                        <div class="form-group">
-                                            <label>Slug</label>
-                                            <input disabled="disabled" class="form-control">
-                                            <p class="help-block">URL các sản phẩm dạng '/dtdd/{slug}.{id}.html'.</p>
-                                        </div>
-                                        
-                     					<div class="form-group">
-                                            <textarea cols="100" rows="30" id="post-content" class="form-control"></textarea>
-                                        </div>
-                                        
-                                        
-                                        
-                                        
-                                </div>
-                                <!-- /.col-lg-6 (nested) -->
-                                
-                                <!-- /.col-lg-6 (nested) -->
-                            </div>
-                            <!-- /.row (nested) -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Cấu hình
-                        </div>
-                        <div class="panel-body specs">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                
-                                <div class="label-group col-lg-12">Màn hình</div>
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Công nghệ màn hình:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Độ phân giải:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Kích thước màn hình:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Tần số quét (Hz):</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Độ sáng tối đa:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                <div class="label-group col-lg-12">Camera sau</div>
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Độ phân giải chụp hình:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Độ phân giải quay video:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                  <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Tính năng nổi bật:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="label-group col-lg-12">Camera trước</div>
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Độ phân giải chụp hình:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Độ phân giải quay video:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                  <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Tính năng nổi bật:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="label-group col-lg-12">OS và Chip</div>
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Hệ điều hành:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">CPU:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Xung nhịp:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                  <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">GPU:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="label-group col-lg-12">Bộ nhớ và SIM</div>
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">RAM:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">ROM:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Loại sim:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>
-                                 
-                                 <div class="label-group col-lg-12">Kết nối không dây</div>
-                                  <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Dữ liệu di động:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>   
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Wifi:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>      
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">GPS:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>     
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Bluetooth:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>  
-                                 
-                                <div class="label-group col-lg-12">Kết nối có dây</div>
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Cổng sạc:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>  
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Jack tai nghe:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>  
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Kết nối khác:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div>  
-                                 
-                                 <div class="label-group col-lg-12">Pin</div>
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Dung lượng:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div> 
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Loại pin:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div> 
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Công nghệ pin:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div> 
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Công suất sạc:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div> 
-                                 
-                                 <div class="label-group col-lg-12">Khác</div>
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Chống nước bụi:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div> 
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Thiết kế:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div> 
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Chất liệu:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div> 
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Khối lượng:</label>
-                                     <div class="col-lg-9">
-                                    	 <input class="form-control">
-                                     </div>
-                                 </div> 
-                                 
-                                 <div class="form-group col-lg-12">
-                                     <label class="col-lg-3">Ngày ra mắt:</label>
-                                     <div class="col-lg-9">
-                                    	 <input type="date" class="form-control">
-                                     </div>
-                                 </div> 
-                                     
-                                        
-                                </div>
-                           
-                            </div>
-                        </div>
-                    </div>
-                    
-                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Ảnh
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label>Tên hãng</label>
-                                            <input class="form-control">
-                                        </div>
-                                        
-                                        
-                                        <div class="form-group">
-                                            <label>Slug</label>
-                                            <input disabled="disabled" class="form-control">
-                                            <p class="help-block">URL các sản phẩm của hãng có dạng '/hang-dt/{slug}.{id}/'.</p>
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label>Quốc gia</label>
-                                            <input class="form-control">
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label>Ảnh</label>
-                                            	<select name="imageType" id="imageType" onchange="onSelectChange()">
-        											<option value="fromURL">Nhập URL
-        											<option value="upload">Upload  
-											    </select>
-                                            <input class="form-control" placeholder="URL">
-                                            <input id="upload" class="form-control" name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" />
-                                            <p class="help-block">Upload ảnh hoặc nhập URL.</p>
-                                        </div>
-                                        
-                                        
-                                </div>
-                           
-                            </div>
-                        </div>
-                    </div>
-                    
+						<div class="panel-heading">Cấu hình</div>
+						<div class="specs">
+							<div class="row">
+								<div class="col-lg-12">
+									<ul class="col-lg-3 nav nav-pills nav-tabs">
+										<li class="col-lg-12 active"><a data-toggle="tab" href="#display">Màn hình</a></li>
+										<li class="col-lg-12"><a data-toggle="tab" href="#back-cammera">Cammera sau</a></li>
+										<li class="col-lg-12"><a data-toggle="tab" href="#front-cammera">Cammera trước</a></li>
+										<li class="col-lg-12"><a data-toggle="tab" href="#os-chip">OS & Chip</a></li>
+										<li class="col-lg-12"><a data-toggle="tab" href="#memo-sim">Bộ nhớ & SIM</a></li>
+										<li class="col-lg-12"><a data-toggle="tab" href="#connect-wireless">Kết nối có dây</a></li>
+										<li class="col-lg-12"><a data-toggle="tab" href="#connect-wired">Kết nối không dây</a></li>
+										<li class="col-lg-12"><a data-toggle="tab" href="#pinTab">Pin</a></li>
+										<li class="col-lg-12"><a data-toggle="tab" href="#extra">Khác</a></li>
+									</ul>
+
+									<div class="col-lg-9 tab-content panel-body">
+										<div id="display" class="tab-pane fade in active">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Công nghệ màn hình:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Độ phân giải:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Kích thước màn hình:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Tần số quét (Hz):</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Độ sáng tối đa:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+										</div>
+										<div id="back-cammera" class="tab-pane fade">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Độ phân giải chụp hình:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Độ phân giải quay video:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Tính năng nổi bật:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+										</div>
+										<div id="front-cammera" class="tab-pane fade">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Độ phân giải chụp hình:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Độ phân giải quay video:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Tính năng nổi bật:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+										</div>
+										<div id="os-chip" class="tab-pane fade">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Hệ điều hành:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">CPU:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Xung nhịp:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">GPU:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+										</div>
+										<div id="memo-sim" class="tab-pane fade">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">RAM:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">ROM:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Loại sim:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+										</div>
+										<div id="connect-wireless" class="tab-pane fade">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Dữ liệu di động:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Wifi:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">GPS:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Bluetooth:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+										</div>
+										
+									<div id="connect-wired" class="tab-pane fade">
+										<div class="form-group col-lg-12">
+										<label class="col-lg-3">Cổng sạc:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Jack tai nghe:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Kết nối khác:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+									</div>
+										<div id="pinTab" class="tab-pane fade">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Dung lượng:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Loại pin:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Công nghệ pin:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Công suất sạc:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+											
+										</div>
+										<div id="extra" class="tab-pane fade">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Chống nước bụi:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Thiết kế:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Chất liệu:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Khối lượng:</label>
+										<div class="col-lg-9">
+											<input class="form-control">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Ngày ra mắt:</label>
+										<div class="col-lg-9">
+											<input type="date" class="form-control">
+										</div>
+									</div>
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					
+
 				</div>
-			
+
 				<div class="col-lg-4">
-				<div class="panel panel-default">
-                        <div class="panel-heading">
-                            Đăng
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                        <div class="form-group">
-                                        
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                        <button type="reset" class="btn btn-default">Reset</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-				</div>
-				
-				<div class="panel panel-default">
-                        <div class="panel-heading">
-                            Màu sắc
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                        <div class="form-group">
-                                        
-                                        <button type="submit" class="btn btn-primary">Thêm chuyên mục mới</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-				</div>
-				
-				<div class="panel panel-default">
-                        <div class="panel-heading">
-                            Chuyên mục
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                        <div class="form-group">
-                                        
-                                        <button type="submit" class="btn btn-primary">Thêm chuyên mục mới</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-				</div>
-				
-				<div class="panel panel-default">
-                        <div class="panel-heading">
-                            Ảnh đại diện
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                        <div class="form-group">
-                                            <label>Ảnh</label>
-                                            	<select name="imageType" id="imageType" onchange="onSelectChange()">
-        											<option value="fromURL">Nhập URL
-        											<option value="upload">Upload  
-											    </select>
-                                            <input class="form-control" placeholder="URL">
-                                            <input id="upload" class="form-control" name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" />
-                                            <p class="help-block">Upload ảnh hoặc nhập URL.</p>
-                                        </div>
-                            </div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-				</div>
-				
+					<div class="panel panel-warning">
+						<div class="panel-heading">Đăng</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="pull-right form-group">
+
+										<button type="submit" class="btn btn-primary">Submit</button>
+										<button type="reset" class="btn btn-default">Reset</button>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+
+					<div class="panel panel-info">
+						<div class="panel-heading">Màu sắc</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group">
+
+										<button type="submit" class="btn btn-primary">Thêm
+											chuyên mục mới</button>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+					
+					<div class="panel panel-info">
+						<div class="panel-heading">Giá</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group ">
+										<label>Mức giá:</label> 
+										<div class="input-group">
+											<input class="form-control">
+											<span class="input-group-addon">VNĐ</span>
+										</div>
+									</div>
+									<div class="form-group ">
+										<label>Tình trạng:</label> 
+										<select name="imageType" class="form-control">
+											<option value="fromURL">Còn hàng
+											</option><option value="upload">Hết hàng
+										</option></select>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+
+					<div class="panel panel-info">
+						<div class="panel-heading">Hãng sản xuất</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+								<div class="form-group ">
+										<label>Chọn hãng:</label> 
+										<div class="input-group">
+										<select name="imageType"  class="form-control">
+											<option value="fromURL">Còn hàng
+											</option><option value="upload">Hết hàng
+										</option></select>
+										<span class="input-group-btn">
+											<button type="submit" class="btn btn-success">Thêm mới</button>
+										</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Ảnh đại diện</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group ">
+										<label>Ảnh</label>
+										<div class="input-group">
+										<select class="form-control" id="imageAvaType" onchange="onSelectChangeAva()">
+											<option value="fromURL">Nhập URL
+											<option value="upload">Upload
+										</select> 
+										<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+										<input id="urlAva" class="form-control" placeholder="URL"> 
+										<input
+											id="uploadAva" class="form-control" name="fileImage" type="file"
+											accept="image/png, image/jpeg, image/jpg" />
+										</div>
+										<p class="help-block">Upload ảnh hoặc nhập URL.</p>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+
 				</div>
 			</form>
-				
+
 		</div>
 
 	</div>
@@ -516,28 +548,75 @@ $('#name').on("change", function () {
 	$("#slug").val(string_to_slug(name));
 })
 
-onSelectChange();
-function onSelectChange() {
-    var selectedValue = $('#imageType').val();    
-    selectedValue == "upload" ? upload() : link();
+onSelectChangeAva();
+function onSelectChangeAva() {
+    var selectedValue = $('#imageAvaType').val();    
+    selectedValue == "upload" ? uploadAva() : linkAva();
 }
 
-function upload() {
-	$("#image").val("");
-    $("#image").attr("disabled", true);
-    $("#upload").attr("disabled", false);
+function uploadAva() {
+	$("#urlAva").val("").attr("disabled", true).hide();
+    $("#uploadAva").attr("disabled", false).show();
 }
 
-function link() {    
-	$("#upload").val("");
-	$("#image").attr("disabled", false);
-    $("#upload").attr("disabled", true);
+function linkAva() {    
+	$("#uploadAva").val("").attr("disabled", true).hide();
+	$("#urlAva").attr("disabled", false).show();
 }
+
+
+const onSelectChangeSlider = (sliderIndex) => {
+	const selectedVal = $('#selectSlider'+sliderIndex).val();
+	selectedVal == "upload" ? uploadSlider(sliderIndex) : linkSlider(sliderIndex);
+}
+
+const templateSlider = (sliderId) => '<div class="form-group" id="slider'+ sliderId +'" data-idSlider='+ sliderId +'> <div class="input-group"> <span class="input-group-addon">Ảnh '+ sliderId +'</span> <select onchange="onSelectChangeSlider('+ sliderId +')" id="selectSlider'+ sliderId +'" class="form-control"> <option value="fromURL">Nhập URL <option value="upload">Upload </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input id="urlSlider'+ sliderId +'" class="form-control" placeholder="URL"> <input id="uploadSlider'+ sliderId +'" class="form-control" name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" /> '+
+	'<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <a onclick="return removeSlider('+ sliderId +')" class="form-control btn btn-danger">Xoá</a>'
+	+'</div> </div>';
+
+const uploadSlider = (sliderIndex) => {
+	$("#urlSlider"+ sliderIndex).val("").attr("disabled", true).hide();
+    $("#uploadSlider"+ sliderIndex).attr("disabled", false).show();
+}
+
+const linkSlider = (sliderIndex) => {
+	$("#uploadSlider"+ sliderIndex).val("").attr("disabled", true).hide();
+    $("#urlSlider"+ sliderIndex).attr("disabled", false).show();
+}
+
+const newSlider = () => {
+	const sliderContainer = $('#slider-container');
+	const newLength = Number(sliderContainer.attr("data-sliderlen"))+1;
+	sliderContainer.append(templateSlider(newLength)).attr("data-sliderlen", newLength);
+	onSelectChangeSlider(newLength);
+	return false;
+}
+
+const removeSlider = (sliderIndex) => {
+	$("#slider"+sliderIndex).remove();
+}
+
+onSelectChangeSlider(1);
+
+
+
 </script>
-<style>
+</script>
+	<style>
+.specs ul li {
+	padding: 0;
+}
+
+.specs ul {
+	border-right: 1px solid #ddd;
+    padding: 0;
+    border-bottom: 0;
+}
+
 .specs label {
 	font-weight: 500;
 }
+
 .specs .label-group {
 	font-weight: 600;
 }
