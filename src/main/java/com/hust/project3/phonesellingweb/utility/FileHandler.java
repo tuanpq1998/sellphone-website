@@ -25,4 +25,10 @@ public class FileHandler {
             throw new IOException("Could not save image file: " + fileName, ioe);
         }      
     }
+	
+	public static void move(String fileToMove, String targetDir, String newName) throws IOException {
+		Path fileToMovePath = Paths.get(fileToMove);
+	    Path targetPath = Paths.get(targetDir + newName);
+	    Files.move(fileToMovePath, targetPath);
+	}
 }

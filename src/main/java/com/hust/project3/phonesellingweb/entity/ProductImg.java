@@ -32,6 +32,11 @@ public class ProductImg {
 		this.imgId = imgId;
 	}
 
+	@Override
+	public String toString() {
+		return "ProductImg [imgId=" + imgId + ", url=" + url + "]";
+	}
+
 	public String getUrl() {
 		return url;
 	}

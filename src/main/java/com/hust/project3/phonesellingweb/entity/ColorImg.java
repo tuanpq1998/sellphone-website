@@ -39,5 +39,10 @@ public class ColorImg {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="color_id")
 	private Color color;
+
+	@Override
+	public String toString() {
+		return "ColorImg [colorImgId=" + colorImgId + ", url=" + url + "]";
+	}
 	
 }

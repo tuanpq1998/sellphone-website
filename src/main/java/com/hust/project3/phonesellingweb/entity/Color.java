@@ -72,7 +72,8 @@ public class Color {
 	
 	@Override
 	public String toString() {
-		return "Color [id=" + id + ", name=" + name + ", hexCode=" + hexCode + "]";
+		return "Color [id=" + id + ", name=" + name + ", hexCode=" + hexCode + ", product=" + product + ", colorImgs="
+				+ colorImgs + "]";
 	}
 
 	@Override

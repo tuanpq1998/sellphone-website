@@ -21,8 +21,11 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hust.project3.phonesellingweb.entity.Color;
+import com.hust.project3.phonesellingweb.entity.ColorImg;
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
 import com.hust.project3.phonesellingweb.entity.Product;
+import com.hust.project3.phonesellingweb.entity.ProductImg;
 import com.hust.project3.phonesellingweb.model.TempImageUploadItem;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
 import com.hust.project3.phonesellingweb.service.ProductService;
@@ -67,6 +70,71 @@ public class AdminController {
 		model.addAttribute("manufacturers", manufacturerService.findAll());
 		
 		return "/admin/newproduct";
+	}
+	
+	@PostMapping("/products/new")
+	public String createNewProduct(Product product, 
+			@RequestPart(name = "file4ProductImg", required = false) MultipartFile[] files,
+			@RequestPart(name="fileImage4Ava", required = false) MultipartFile avaImageFile ) throws IOException {
+		String slug = StringHandler.toSlug(product.getName());
+		product.setSlug(slug);
+		
+		if (avaImageFile != null && !avaImageFile.isEmpty()) {
+			String ext = StringUtils.getFilenameExtension(avaImageFile.getOriginalFilename());
+	        String newFileName =  slug + "." + ext;
+	        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, avaImageFile);
+
+	        product.setAvaImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
+		}
+		
+		List<ProductImg> imgs = product.getProductImgs();
+		
+		for (int i = imgs.size() - 1; i >= 0; i--) {
+			if (StringHandler.isEmpty(imgs.get(i).getUrl()))
+				imgs.remove(i);
+		}
+		
+		if (files != null && !(files.length == 0)) {
+			for (int i = 0; i < files.length; i++) {
+				MultipartFile file = files[i];
+				if (file != null && !file.isEmpty()) {
+					String ext = StringUtils.getFilenameExtension(file.getOriginalFilename());
+					String newFileName = slug + "-" + (i+1) + "." + ext;
+			        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, file);
+			        String newImg = "/"+ConstantVariable.UPLOAD_DIR + newFileName;
+			        ProductImg productImg = new ProductImg();
+			        productImg.setUrl(newImg);
+			        imgs.add(productImg);
+				}
+			}
+			product.setProductImgs(imgs);
+		}
+
+		System.out.println(product);
+		List<Color> colors = product.getColors();
+		for (int i = colors.size() - 1; i >= 0; i--) {
+			if (StringHandler.isEmpty(colors.get(i).getName())) {
+				colors.remove(i);
+				continue;
+			}
+			Color color = colors.get(i);
+			List<ColorImg> colorImgs = color.getColorImgs();
+			for (int j = colorImgs.size() -1; j>= 0; j--) {
+				ColorImg colorImg = colorImgs.get(j);
+				if (StringHandler.isEmpty(colorImg.getUrl()))
+					colorImgs.remove(j);
+				else if (colorImg.getUrl().startsWith("upload/tmp/")) {
+					String ext = StringUtils.getFilenameExtension(colorImg.getUrl());
+					String newname = slug + "_" + StringHandler.toSlug(colors.get(i).getName())+j+"."+ext;
+					FileHandler.move(colorImg.getUrl(), ConstantVariable.UPLOAD_DIR, newname);
+					colorImg.setUrl("/"+ConstantVariable.UPLOAD_DIR + newname);
+				}
+			}
+			color.setColorImgs(colorImgs);
+			colors.set(i, color);
+		}
+		System.out.println(product);
+		return "";
 	}
 	
 	@PostMapping("/tmpUpload")

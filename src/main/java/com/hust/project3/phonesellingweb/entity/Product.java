@@ -190,7 +190,11 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", quantity=" + quantity + ", color=" + color + ", price=" + price + "]";
+		return "Product [id=" + id + ", seenCount=" + seenCount + ", buyCount=" + buyCount + ", quantity=" + quantity
+				+ ", unitPrice=" + unitPrice + ", color=" + color + ", createAt=" + createAt + ", name=" + name
+				+ ", avaImage=" + avaImage + ", updatedAt=" + updatedAt + ", available=" + available + ", deleted="
+				+ deleted + ", slug=" + slug + ", manufacturer=" + manufacturer + ", oldPrice=" + oldPrice + ", price="
+				+ price + ", colors=" + colors + ", productImgs=" + productImgs + ", spec=" + spec + "]";
 	}
 
 	public Product(int id, int seenCount, int buyCount, String name, String avaImage, String updatedAt,

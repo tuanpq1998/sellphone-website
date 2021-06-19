@@ -47,7 +47,7 @@
 				<!-- /.col-lg-12 -->
 			</div>
 
-			<form class="row">
+			<form enctype="multipart/form-data" class="row" th:object="${product}" method="post">
 				<div class="col-lg-8">
 					<div class="panel panel-primary">
 						<div class="panel-heading"><a href="/admin/products" class="btn btn-sm btn-default">Quay lại</a></div>
@@ -55,61 +55,79 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-group">
-										<label>Tên sản phẩm: </label> <input class="form-control">
+										<label>Tên sản phẩm: </label> <input th:field="*{name}" class="form-control">
 									</div>
-
-
 									<div class="form-group">
-										<label>Slug</label> <input disabled="disabled"
+										<label>Slug</label> <input disabled="disabled" th:field="*{slug}"
 											class="form-control">
-										<p class="help-block">URL các sản phẩm dạng
-											'/dtdd/{slug}.{id}.html'.</p>
+										<p class="help-block">URL sản phẩm dạng <code>'/dtdd/{slug}.{id}.html'</code>.</p>
 									</div>
 
 									<div class="form-group">
-										<textarea cols="100" rows="30" id="post-content"
+										<textarea cols="100" rows="30" id="post-content" th:field="*{spec.description}"
 											class="form-control"></textarea>
 									</div>
-
-
-
 
 								</div>
 							</div>
 						</div>
 					</div>
 					
-					<div class="panel panel-info">
-						<div class="panel-heading">Slide</div>
+					
+					
+					<div class="panel panel-info colors">
+						<div class="panel-heading">Màu sắc</div>
 						<div class="panel-body">
 							<div class="row">
-								<div id="slider-container" data-sliderlen=1 class="col-lg-12">
-									
-									<div class="form-group" id="slider1" data-idSlider=1>
-										<div class="input-group col-md-12">
-	    									<span class="input-group-addon">Ảnh</span>
-	    									
-											<select onchange="onSelectChangeSlider(1)" id="selectSlider1" class="form-control">
-												<option value="fromURL">Nhập URL
-												<option value="upload">Upload
-											</select>  
-											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
-											<input id="urlSlider1" class="form-control" placeholder="URL"> 
-											<input id="uploadSlider1" class="form-control" name="fileImage" type="file"
-												accept="image/png, image/jpeg, image/jpg" />
-											
+									<div id="colors-container" data-colorId=1 class="col-lg-12">
+										<ul class="col-lg-2 nav nav-pills nav-tabs">
+										<li class="col-lg-12 active"><a data-toggle="tab" href="#color1">Màu</a></li>
+										<li class="col-lg-12"><a onclick="createNewTabColor(this)" class="btn btn-lg">+</a></li>
+									</ul>
+									<div class="col-lg-10 tab-content panel-body">
+										<div id="color1" class="tab-pane fade in active">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Tên:</label>
+										<div class="col-lg-9">
+											<input name="colors[1].name" class="form-control" value="">
 										</div>
 									</div>
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Hex:</label>
+										<div class="col-lg-9">
+											<input name="colors[1].hexCode" style="width: 80px;" class="form-control" type="color">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12" id="color-1-imgs-container" data-colorid=1 data-imglen=1 style="padding:0 15px;"  >
+										<div class="input-group col-md-12">Ảnh:
+										</div>
+										<div id="color-1-img-1-container" class="input-group col-md-12">
+											<select onchange="handleChangeSelectColorImg(this)" data-uploadlink="upload-1-color-1" data-upload="imgupload-1-color-1" data-url="imgurl-1-color-1" class="form-control">
+												<option value="fromURL">URL
+												</option><option value="upload">Upload
+											</option></select>  
+											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+											<input name="colors[1].colorImgs[0].url" id="imgurl-1-color-1" class="form-control" placeholder="URL" > 
+											<input id="imgupload-1-color-1" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;">
+											<span data-select="#color-1-img-1-container select" id="upload-1-color-1" data-linkto="#imgupload-1-color-1" class="input-group-addon btn" onclick="handleClickUpload(this)" style="display: none;color:#fff;background-color: #337ab7; border-color: #2e6da4;"> <i class="fa fa-upload" aria-hidden="true"></i></span>										
+											<span data-parent="#color-1-img-1-container" class="input-group-addon btn" onclick="handleClickRemoveImgColor(this)"><i class="fa fa-remove " aria-hidden="true"></i></span>										
+										</div>
+										
+									</div>
 									
-								</div>
-								<div class="col-lg-12">
-									<a onclick="return newSlider()" class=" pull-right btn btn-success">+ Thêm</a>
-									<p class="help-block">Upload ảnh hoặc nhập URL.</p>
-								</div>
+									<div style="padding-right: 15px;" class="form-group col-lg-12 text-right">
+										<a data-parent="#color-1-imgs-container" onclick="createNewColorImg(this)" class="btn btn-success">+ Ảnh</a>
+									</div>
+									
+										</div>
+										
+									</div>
+									</div>
+									
 							</div>
+							<!-- /.panel-body -->
 						</div>
-						
-						
 					</div>
 
 					<div class="panel panel-default">
@@ -134,34 +152,34 @@
 											<div class="form-group col-lg-12">
 										<label class="col-lg-3">Công nghệ màn hình:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.displayTech}" class="form-control">
 										</div>
 									</div>
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Độ phân giải:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.displayRes}"  class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Kích thước màn hình:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.size}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Tần số quét (Hz):</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.freq}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Độ sáng tối đa:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.nit}" class="form-control">
 										</div>
 									</div>
 										</div>
@@ -169,21 +187,21 @@
 											<div class="form-group col-lg-12">
 										<label class="col-lg-3">Độ phân giải chụp hình:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.backCameraRes}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Độ phân giải quay video:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.backCameraVideo}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Tính năng nổi bật:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.backCameraFunc}" class="form-control">
 										</div>
 									</div>
 										</div>
@@ -191,21 +209,21 @@
 											<div class="form-group col-lg-12">
 										<label class="col-lg-3">Độ phân giải chụp hình:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.frontCameraRes}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Độ phân giải quay video:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.frontCameraVideo}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Tính năng nổi bật:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.frontCameraFunc}" class="form-control">
 										</div>
 									</div>
 										</div>
@@ -213,28 +231,28 @@
 											<div class="form-group col-lg-12">
 										<label class="col-lg-3">Hệ điều hành:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.os}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">CPU:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.cpu}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Xung nhịp:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.cpuSpeed}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">GPU:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.gpu}" class="form-control">
 										</div>
 									</div>
 										</div>
@@ -242,21 +260,21 @@
 											<div class="form-group col-lg-12">
 										<label class="col-lg-3">RAM:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.ram}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">ROM:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.rom}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Loại sim:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.sim}" class="form-control">
 										</div>
 									</div>
 										</div>
@@ -264,28 +282,28 @@
 											<div class="form-group col-lg-12">
 										<label class="col-lg-3">Dữ liệu di động:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.mobileInternet}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Wifi:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.wifi}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">GPS:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.gps}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Bluetooth:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.bluetooth}" class="form-control">
 										</div>
 									</div>
 										</div>
@@ -294,21 +312,21 @@
 										<div class="form-group col-lg-12">
 										<label class="col-lg-3">Cổng sạc:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.chargePort}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Jack tai nghe:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.jackPort}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Kết nối khác:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.otherPort}" class="form-control">
 										</div>
 									</div>
 									</div>
@@ -316,28 +334,28 @@
 											<div class="form-group col-lg-12">
 										<label class="col-lg-3">Dung lượng:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.pinCap}"  class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Loại pin:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.pinType}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Công nghệ pin:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.pinTech}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Công suất sạc:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.pinWatt}" class="form-control">
 										</div>
 									</div>
 											
@@ -346,35 +364,42 @@
 											<div class="form-group col-lg-12">
 										<label class="col-lg-3">Chống nước bụi:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.ipXx}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Thiết kế:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.designLang}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Chất liệu:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.designMaterial}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Khối lượng:</label>
 										<div class="col-lg-9">
-											<input class="form-control">
+											<input th:field="*{spec.weight}" class="form-control">
 										</div>
 									</div>
 
 									<div class="form-group col-lg-12">
 										<label class="col-lg-3">Ngày ra mắt:</label>
 										<div class="col-lg-9">
-											<input type="date" class="form-control">
+											<input th:field="*{spec.releasedDate}" type="date" class="form-control">
+										</div>
+									</div>
+									
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Tính năng khác:</label>
+										<div class="col-lg-9">
+											<input th:field="*{spec.otherTech}" class="form-control">
 										</div>
 									</div>
 										</div>
@@ -392,39 +417,7 @@
 				</div>
 
 				<div class="col-lg-4">
-					<div class="panel panel-warning">
-						<div class="panel-heading">Đăng</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="pull-right form-group">
 
-										<button type="submit" class="btn btn-primary">Submit</button>
-										<button type="reset" class="btn btn-default">Reset</button>
-									</div>
-								</div>
-							</div>
-							<!-- /.panel-body -->
-						</div>
-					</div>
-
-					<div class="panel panel-info">
-						<div class="panel-heading">Màu sắc</div>
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-lg-12">
-									<div id="colors-container" class="form-group">
-										
-									</div>
-									<div class="form-group pull-right">
-										<a onclick="createNewColor()" class="btn btn-primary">Thêm</a>				
-									</div>
-								</div>
-							</div>
-							<!-- /.panel-body -->
-						</div>
-					</div>
-					
 					<div class="panel panel-info">
 						<div class="panel-heading">Giá</div>
 						<div class="panel-body">
@@ -433,16 +426,16 @@
 									<div class="form-group ">
 										<label>Mức giá:</label> 
 										<div class="input-group">
-											<input class="form-control">
+											<input type="number" th:field="*{price.value}" class="form-control">
 											<span class="input-group-addon">VNĐ</span>
 										</div>
 									</div>
 									<div class="form-group ">
 										<label>Tình trạng:</label> 
-										<select name="imageType" class="form-control">
-											<option value="fromURL">Còn hàng
-											</option><option value="upload">Hết hàng
-										</option></select>
+										<select th:field="*{available}" class="form-control">
+											<option value=1>Còn hàng</option>
+											<option value=0>Hết hàng</option>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -457,7 +450,7 @@
 								<div class="col-lg-12">
 								<div class="form-group ">
 										<div class="input-group">
-										<select id="manufacturerSelect" class="form-control">
+										<select th:field="*{manufacturer.id}" id="manufacturerSelect" class="form-control">
 											<option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}">[[${manufacturer.name}]]
 											</option>
 										</select>
@@ -470,6 +463,39 @@
 							</div>
 							<!-- /.panel-body -->
 						</div>
+					</div>
+					
+					<div class="panel panel-info">
+						<div class="panel-heading">Slide</div>
+						<div class="panel-body">
+							<div class="row">
+								<div id="slider-container" data-sliderlen=1 class="col-lg-12">
+									
+									<div class="form-group" id="slider1" data-idSlider=1>
+										<div class="input-group col-md-12">
+	    									<span class="input-group-addon">Ảnh</span>
+	    									
+											<select onchange="onSelectChangeSlider(1)" id="selectSlider1" class="form-control">
+												<option value="fromURL">Nhập URL
+												<option value="upload">Upload
+											</select>  
+											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+											<input th:field="*{productImgs[0].url}" id="urlSlider1" class="form-control" placeholder="URL"> 
+											<input id="uploadSlider1" class="form-control" name="file4ProductImg" type="file"
+												accept="image/png, image/jpeg, image/jpg" />
+											
+										</div>
+									</div>
+									
+								</div>
+								<div class="col-lg-12">
+									<a onclick="return newSlider()" class=" pull-right btn btn-success">+ Thêm</a>
+									<p class="help-block">Upload ảnh hoặc nhập URL.</p>
+								</div>
+							</div>
+						</div>
+						
+						
 					</div>
 
 					<div class="panel panel-default">
@@ -485,12 +511,28 @@
 											<option value="upload">Upload
 										</select> 
 										<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
-										<input id="urlAva" class="form-control" placeholder="URL"> 
+										<input th:field="*{avaImage}" id="urlAva" class="form-control" placeholder="URL"> 
 										<input
-											id="uploadAva" class="form-control" name="fileImage" type="file"
+											id="uploadAva" class="form-control" name="fileImage4Ava" type="file"
 											accept="image/png, image/jpeg, image/jpg" />
 										</div>
 										<p class="help-block">Upload ảnh hoặc nhập URL.</p>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+					
+					<div class="panel panel-warning">
+						<div class="panel-heading">Đăng</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="pull-right form-group">
+
+										<button type="submit" class="btn btn-primary">Submit</button>
+										<button type="reset" class="btn btn-default">Reset</button>
 									</div>
 								</div>
 							</div>
@@ -524,23 +566,25 @@ $('.datetime').html(function() {
 	return time.toLocaleString();
 })
 
-function string_to_slug (str) {
-    str = str.replace(/^\s+|\s+$/g, ''); // trim
-    str = str.toLowerCase();
-  
-    // remove accents, swap ñ for n, etc
-    var from = "àáãäâèéëêìíïîòóöôùúüûñç·/_,:;";
-    var to   = "aaaaaeeeeiiiioooouuuunc------";
-
-    for (var i=0, l=from.length ; i<l ; i++) {
-        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-    }
-
-    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
-        .replace(/\s+/g, '-') // collapse whitespace and replace by -
-        .replace(/-+/g, '-'); // collapse dashes
-
-    return str;
+function string_to_slug (string) {
+	const a = 'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;'
+	const b = 'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------'
+	const p = new RegExp(a.split('').join('|'), 'g')
+	return string.toString().toLowerCase()
+		.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a')
+		.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e')
+		.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i')
+		.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o')
+		.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u')
+		.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y')
+		.replace(/đ/gi, 'd')
+		.replace(/\s+/g, '-') 
+		.replace(p, c => b.charAt(a.indexOf(c)))
+		.replace(/&/g, '-and-')
+		.replace(/[^\w\-]+/g, '')
+		.replace(/\-\-+/g, '-')
+		.replace(/^-+/, '')
+		.replace(/-+$/, '')
 }
 
 $('#name').on("change", function () {
@@ -589,7 +633,7 @@ const onSelectChangeSlider = (sliderIndex) => {
 	selectedVal == "upload" ? uploadSlider(sliderIndex) : linkSlider(sliderIndex);
 }
 
-const templateSlider = (sliderId) => '<div class="form-group" id="slider'+ sliderId +'" data-idSlider='+ sliderId +'> <div class="input-group"> <span class="input-group-addon">Ảnh</span> <select onchange="onSelectChangeSlider('+ sliderId +')" id="selectSlider'+ sliderId +'" class="form-control"> <option value="fromURL">Nhập URL <option value="upload">Upload </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input id="urlSlider'+ sliderId +'" class="form-control" placeholder="URL"> <input id="uploadSlider'+ sliderId +'" class="form-control" name="fileImage" type="file" accept="image/png, image/jpeg, image/jpg" /> '+
+const templateSlider = (sliderId) => '<div class="form-group" id="slider'+ sliderId +'" data-idSlider='+ sliderId +'> <div class="input-group"> <span class="input-group-addon">Ảnh</span> <select onchange="onSelectChangeSlider('+ sliderId +')" id="selectSlider'+ sliderId +'" class="form-control"> <option value="fromURL">Nhập URL <option value="upload">Upload </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="productImgs['+ sliderId +'].url" id="urlSlider'+ sliderId +'" class="form-control" placeholder="URL"> <input id="uploadSlider'+ sliderId +'" class="form-control" name="file4ProductImg" type="file" accept="image/png, image/jpeg, image/jpg" /> '+
 	'<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <a onclick="return removeSlider('+ sliderId +')" class="form-control btn btn-danger">Xoá</a>'
 	+'</div> </div>';
 
@@ -648,139 +692,82 @@ $("#addNewManuBtn").click(function() {
 	})();
 });
 
-const createNewColor = () => {
-	const html = '<div class="panel panel-info" style="text-align: left;"> <div class="panel-heading">Tạo màu mới</div> <div class="panel-body"> <form id="addColorForm" class="row"> <div class="col-lg-12"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tên:</label> <div class="col-lg-9"> <input name="name" required class="form-control col-lg-6" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Mã màu:</label> <div class="col-lg-9"> <input style="width: 80px" name="hexCode" class="form-control" type="color" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-12">Ảnh:</label> <div id="colorImage-container" class="col-lg-12" data-colorimageid=1> <div class="form-group"> <div class="input-group col-md-12"> <select id="colorImageSelect1" onchange="handleSelectImageColor(1)" class="form-control" data-from-url="colorImageFromURL1" data-upload="colorImageUpload1"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL1" class="form-control" placeholder="URL"> <input name="fileImage" id="colorImageUpload1" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> </div> </div> </div> <div class="col-lg-12"> <a onclick="handleClickAddMoreImageColor()" class=" pull-right btn btn-success">+ Thêm</a> <p class="help-block">Upload ảnh hoặc nhập URL.</p> </div> </div> </div> </form> </div> </div>';
-	(async () => { 
-		const { isConfirmed, value: formValues } = await Swal.fire({
-			  html,
-			  width: "600px",
-			  focusConfirm: false,
-			  showCancelButton: true,
-			  preConfirm: () => {return new FormData($('form#addColorForm')[0])},
-			})
-
-		if (!isConfirmed)
-			return;
-		var object = {};
-		formValues.forEach((value, key) => {
-		    if(!Reflect.has(object, key)){
-		        object[key] = value;
-		        return;
-		    }
-		    if(!Array.isArray(object[key])){
-		        object[key] = [object[key]];    
-		    }
-		    object[key].push(value);
-		});
-		if (formValues.get("fileImage")!=null) {
-			const result = await $.ajax({
-				url: '/admin/tmpUpload',
-				type: 'POST',
-				processData: false,
-			    contentType: false,
-			    data: formValues,
-				data: formValues,
-			});
-			if (!Array.isArray(object.fileImage))
-				object.fileImage = [object.fileImage];
-			object.fileImage = [...object.fileImage.map(file => (result.find(r => r.originName == file.name)))];
-		}
-		if (object.imageURL && !Array.isArray(object.imageURL))
-			object.imageURL = [object.imageURL];
-		const imagenum = (object.fileImage ? object.fileImage.length : 0) + (object.imageURL ? object.imageURL.length : 0);
-		object["imagenum"] = imagenum;
-		const newIndex = $("#colors-container").data("length")==null?1:Number($("#colors-container").data("length"))+1;
-		$("#colors-container").data("length", newIndex)
-			.append('<div id="colorcontainer'+ newIndex +'" class="input-group col-md-12"> <span style="color: '+ object.hexCode +'; font-size: 20px;" class="input-group-addon"> <i class="fa fa-square" aria-hidden="true"></i> </span> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="'+ object.name +'" /> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="' + (imagenum) +' ảnh" /> <span class="input-group-btn"> <a onclick="handleEditColor(' + newIndex + ')" class="btn btn-warning">Sửa</a> <a onclick="removeColor(' + newIndex + ')" class="btn btn-danger">Xoá</a> </span> </div>');
-		$("#colorcontainer"+newIndex).data("color", object);
-		
-	})();
-}
-
-const handleSelectImageColor = (colorId) => {
-	const select = $("#colorImageSelect"+colorId);
-	const value = select.val();
-	const urlInput = select.data("fromUrl");
-	const uploadInput = select.data("upload");
-	if (value == "upload") {
-		$("#"+urlInput).val("").attr("disabled", true).hide();
-	    $("#"+uploadInput).attr("disabled", false).show();
+const handleChangeSelectColorImg = (sel) => {
+	const target = $( sel );
+	const uploadE = target.data("upload");
+	const urlE = target.data("url");
+	const urlBtn = target.data("uploadlink")
+	if (target.val() == "upload") {
+		$("#"+urlE).val("").attr("disabled", true).hide();
+		$("#"+uploadE).val("").attr("disabled", false).show();
+		$("#"+urlBtn).show();
 	} else {
-		$("#"+uploadInput).val("").attr("disabled", true).hide();
-	    $("#"+urlInput).attr("disabled", false).show();
+		$("#"+uploadE).val("").attr("disabled", true).hide();
+		$("#"+urlE).val("").attr("disabled", false).show();
+		$("#"+urlBtn).hide();
 	}
-		
 }
 
-const handleClickAddMoreImageColor = () => {
-	const parent = $("#colorImage-container");
-	const imageId = Number(parent.data("colorimageid"))+1;
-	parent.data("colorimageid", imageId);
-	const html = '<div class="form-group" id="imageColorContainer'+ imageId +'"> <div class="input-group col-md-12"> <select id="colorImageSelect'+ imageId +'" onchange="handleSelectImageColor('+ imageId +')" class="form-control" data-from-url="colorImageFromURL'+ imageId +'" data-upload="colorImageUpload'+ imageId +'"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL'+ imageId +'" class="form-control" placeholder="URL"> <input name="fileImage" id="colorImageUpload'+ imageId +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> <span class="input-group-btn"> <a onclick="handleClickRemoveImageColor('+ imageId +')" class="btn btn-danger">Xoá</a> </span> </div> </div>';
-	parent.append(html);
+const createNewColorImg = (sel) => {
+	const target = $( sel );
+	const parent = $(target.data("parent"));
+	const newIndex = Number(parent.data("imglen"))+1;
+	const colorId = Number(parent.data("colorid"));
+	parent.data("imglen", newIndex).append('<div id="color-' + colorId + '-img-' + newIndex +'-container" class="input-group col-md-12"> <select data-uploadlink="upload-'+ newIndex + '-color-'+ colorId +'" onchange="handleChangeSelectColorImg(this)" data-upload="imgupload-'+ newIndex + '-color-'+ colorId +'" data-url="imgurl-' + newIndex + '-color-'+ colorId +'" class="form-control"> <option value="fromURL">URL </option><option value="upload">Upload </option></select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="colors['+ colorId +'].colorImgs['+ newIndex +'].url" id="imgurl-' + newIndex + '-color-'+ colorId +'" class="form-control"  placeholder="URL"> <input id="imgupload-'+ newIndex + '-color-'+ colorId +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> <span data-select="#color-'+ colorId +'-imgs-container select" id="upload-'+ newIndex + '-color-'+ colorId +'" data-linkto="#imgupload-'+ newIndex + '-color-'+ colorId +'" class="input-group-addon btn" onclick="handleClickUpload(this)" style="display: none;color:#fff;background-color: #337ab7; border-color: #2e6da4;"> <i class="fa fa-upload" aria-hidden="true"></i></span> <span data-parent="#color-' + colorId + '-img-' + newIndex +'-container" class="input-group-addon btn" onclick="handleClickRemoveImgColor(this)"><i class="fa fa-remove " aria-hidden="true"></i></span> </div>') 
 }
 
-const handleClickRemoveImageColor = (imageColorId) => {
-	$("#imageColorContainer"+imageColorId).remove();
+const handleClickRemoveImgColor = (sel) => {
+	const target = $(sel);
+	const parent = $(target.data("parent"));
+	parent.remove();
 }
 
-const removeColor = (colorId) => {
-	$("#colorcontainer"+colorId).remove();
+const createNewTabColor = (sel) => {
+	const target  = $(sel);
+	const liElement = target.parent();
+	const parent = $("#colors-container");
+	const newColorId = Number(parent.data("colorid"))+1;
+	$("#colors-container li.col-lg-12").removeClass("active");
+	$('<li class="col-lg-12 active"><a data-toggle="tab" href="#color'+ newColorId +'" aria-expanded="false">Màu</a></li>').insertBefore(liElement);
+	parent.data("colorid", newColorId);
+	
+	$("#colors-container .tab-content .tab-pane").removeClass("active").parent().append('<div id="color'+ newColorId +'" class="tab-pane fade active in"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tên:</label> <div class="col-lg-9"> <input name="colors['+ newColorId +'].name" class="form-control" value=""> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Hex:</label> <div class="col-lg-9"> <input style="width: 80px;" class="form-control" name="colors['+ newColorId +'].hexCode" type="color"> </div> </div> <div class="form-group col-lg-12" id="color-'+ newColorId +'-imgs-container" data-colorid="'+ newColorId +'" data-imglen="1" style="padding:0 15px;"> <div class="input-group col-md-12">Ảnh:</div> <div id="color-'+ newColorId +'-img-1-container" class="input-group col-md-12"> <select onchange="handleChangeSelectColorImg(this)" data-uploadlink="upload-1-color-' + newColorId +'" data-upload="imgupload-1-color-'+ newColorId +'" data-url="imgurl-1-color-'+ newColorId +'" class="form-control"> <option value="fromURL">URL </option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="colors['+ newColorId +'].colorImgs[0].url" id="imgurl-1-color-'+ newColorId +'" class="form-control" placeholder="URL"> <input id="imgupload-1-color-'+ newColorId +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> <span data-select="#color-'+ newColorId +'-imgs-container select" id="upload-1' +'-color-' + newColorId +'" data-linkto="#imgupload-1-color-'+ newColorId +'" class="input-group-addon btn" onclick="handleClickUpload(this)" style="display: none;color:#fff;background-color: #337ab7; border-color: #2e6da4;"> <i class="fa fa-upload" aria-hidden="true"></i></span> <span data-parent="#color-'+ newColorId +'-img-1-container" class="input-group-addon btn" onclick="handleClickRemoveImgColor(this)"><i class="fa fa-remove " aria-hidden="true"></i></span> </div> </div> <div style="padding-right: 15px;" class="form-group col-lg-12 text-right"> <a data-parent="#color-'+ newColorId +'-imgs-container" onclick="createNewColorImg(this)" class="btn btn-success">+ Ảnh</a> <a class="btn btn-danger" onclick="handleRemoveColorTab()">Xoá màu</a> </div> </div>');
+	
 }
 
-const handleEditColor = (colorId) => {
-	const originColor = $("#colorcontainer"+colorId).data("color");
-	var i = 0;
-	var colorImage = "";
-	if (originColor.imageURL) 
-		colorImage += originColor.imageURL.map(e => '<div class="form-group" id="imageColorContainer'+ ++i +'"> <div class="input-group col-md-12"> <select id="colorImageSelect'+ i +'" onchange="handleSelectImageColor('+ i +')" class="form-control" data-from-url="colorImageFromURL'+ i +'" data-upload="colorImageUpload'+ i +'"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL'+ i +'" class="form-control" placeholder="URL" value="' + e +'"> <input name="fileImage" id="colorImageUpload'+ i +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> <span class="input-group-btn"> <a class="btn btn-warning" target="_blank" href="'+ e +'">Xem</a> <a onclick="handleClickRemoveImageColor('+ i +')" class="btn btn-danger">Xoá</a> </span> </div> </div>').join("");
-	if (originColor.fileImage)
-		colorImage += originColor.fileImage.map(e => '<div class="form-group" id="imageColorContainer'+ ++i +'"> <div class="input-group col-md-12"> <select id="colorImageSelect'+ i +'" onchange="handleSelectImageColor('+ i +')" class="form-control" data-from-url="colorImageFromURL'+ i +'" data-upload="colorImageUpload'+ i +'"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL'+ i +'" class="form-control" placeholder="URL" value="' + e.tempPath +'"> <input name="fileImage" id="colorImageUpload'+ i +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> <span class="input-group-btn"> <a class="btn btn-warning" target="_blank" href="/'+ e.tempPath +'">Xem</a><a onclick="handleClickRemoveImageColor('+ i +')" class="btn btn-danger">Xoá</a> </span> </div> </div>').join("");
-	const html = '<div class="panel panel-info" style="text-align: left;"> <div class="panel-heading">Sửa màu</div> <div class="panel-body"> <form id="addColorForm" class="row"> <div class="col-lg-12"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tên:</label> <div class="col-lg-9"> <input name="name" required class="form-control col-lg-6" value="' + originColor.name +'" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Mã màu:</label> <div class="col-lg-9"> <input style="width: 80px" name="hexCode" class="form-control" type="color" value="' + originColor.hexCode + '" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-12">Ảnh:</label> <div id="colorImage-container" class="col-lg-12" data-colorimageid='+ originColor.imagenum +'> ' + colorImage + ' </div> <div class="col-lg-12"> <a onclick="handleClickAddMoreImageColor()" class=" pull-right btn btn-success">+ Thêm</a> <p class="help-block">Upload ảnh hoặc nhập URL.</p> </div> </div> </div> </form> </div> </div>';
-	(async () => { 
-		const { isConfirmed, value: formValues } = await Swal.fire({
-			  html,
-			  width: "600px",
-			  focusConfirm: false,
-			  showCancelButton: true,
-			  preConfirm: () => {return new FormData($('form#addColorForm')[0])},
-			})
+const handleRemoveColorTab = () => {
+	const prevLi = $("#colors-container li.col-lg-12.active").prev()
+	$("#colors-container li.col-lg-12.active").remove();
+	prevLi.addClass("active in");
+	const prevTab = $("#colors-container .tab-content .tab-pane.active").prev();
+	$("#colors-container .tab-content .tab-pane.active").remove();
+	prevTab.addClass("active in");
+}
 
-		if (!isConfirmed)
+const handleClickUpload = (sel) => {
+	(async () => {
+		const target  = $(sel);
+		const fileElement = target.data("linkto");
+		const file = $(fileElement).prop("files")[0];
+		const select = target.data("select");
+		if (!file || file.name=="")
 			return;
-		var object = {};
-		formValues.forEach((value, key) => {
-		    if(!Reflect.has(object, key)){
-		        object[key] = value;
-		        return;
-		    }
-		    if(!Array.isArray(object[key])){
-		        object[key] = [object[key]];    
-		    }
-		    object[key].push(value);
-		});
-		if (formValues.get("fileImage")!=null) {
-			const result = await $.ajax({
-				url: '/admin/tmpUpload',
-				type: 'POST',
-				processData: false,
-			    contentType: false,
-			    data: formValues,
-				data: formValues,
-			});
-			if (!Array.isArray(object.fileImage))
-				object.fileImage = [object.fileImage];
-			object.fileImage = [...object.fileImage.map(file => (result.find(r => r.originName == file.name)))];
-		}
-		if (object.imageURL && !Array.isArray(object.imageURL))
-			object.imageURL = [object.imageURL];
-		const imagenum = (object.fileImage ? object.fileImage.length : 0) + (object.imageURL ? object.imageURL.length : 0);
-		object["imagenum"] = imagenum;
+		var formData = new FormData();
+		formData.append("fileImage",file);
 		
-		$('#colorcontainer'+colorId)[0].outerHTML = ('<div id="colorcontainer'+ colorId +'" class="input-group col-md-12"> <span style="color: '+ object.hexCode +'; font-size: 20px;" class="input-group-addon"> <i class="fa fa-square" aria-hidden="true"></i> </span> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="'+ object.name +'" /> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="' + (imagenum) +' ảnh" /> <span class="input-group-btn"> <a onclick="handleEditColor(' + colorId + ')" class="btn btn-warning">Sửa</a> <a onclick="removeColor(' + colorId + ')" class="btn btn-danger">Xoá</a> </span> </div>');
-		$("#colorcontainer"+colorId).data("color", object);
+		const result = await $.ajax({
+			url: '/admin/tmpUpload',
+			type: 'POST',
+			processData: false,
+		    contentType: false,
+			data: formData,
+		});
+		target.html('<a style="color:white" href="' + "/"+result[0].tempPath + '" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>');
+		$(fileElement).attr("disabled", true).hide().prev().show().val("/"+result[0].tempPath).attr("readonly", true).attr("disabled", false);
+		$(select+"[data-uploadlink="+ target.attr("id") +"]").attr("disabled", true);
+		
 	})();
-}
+} 
 </script>
 
 <style>
@@ -800,6 +787,25 @@ const handleEditColor = (colorId) => {
 
 .specs .label-group {
 	font-weight: 600;
+}
+.colors, .colors .col-lg-12, .colors .col-lg-2, .colors .col-lg-10 {
+	padding: 0;
+}
+.colors .panel-body {
+	padding-top: 0;
+}
+.colors .tab-content {
+	padding-top: 15px;
+	border-left: 1px solid #ddd;
+}
+.colors .nav-pills {
+	border-right: 2px solid #ddd;
+}
+.colors .nav-pills > li + li {
+    margin-left: unset;
+}
+.colors label {
+	font-weight: 500;
 }
 </style>
 </body>
