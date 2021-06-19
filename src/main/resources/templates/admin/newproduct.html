@@ -414,17 +414,6 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div id="colors-container" class="form-group">
-										<div class="input-group col-md-12">
-	    									<span style="color:blue;font-size:20px" class="input-group-addon"><i class="fa fa-square" aria-hidden="true"></i></span>
-											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
-											<input class="form-control" value="Trắng"> 
-											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>											
-											<input class="form-control" value="2 ảnh"> 
-											<span class="input-group-btn">
-												<a class="btn btn-warning">Sửa</a>
-												<a class="btn btn-danger">Xoá</a>
-											</span>							
-										</div>
 										
 									</div>
 									<div class="form-group pull-right">
@@ -660,7 +649,7 @@ $("#addNewManuBtn").click(function() {
 });
 
 const createNewColor = () => {
-	const html = '<div class="panel panel-info" style="text-align: left;"> <div class="panel-heading">Tạo màu mới</div> <div class="panel-body"> <form id="addColorForm" class="row"> <div class="col-lg-12"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tên:</label> <div class="col-lg-9"> <input name="name" required class="form-control col-lg-6" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Mã màu:</label> <div class="col-lg-9"> <input style="width: 80px" name="slug" class="form-control" type="color" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-12">Ảnh:</label> <div id="colorImage-container" class="col-lg-12" data-colorimageid=1> <div class="form-group"> <div class="input-group col-md-12"> <select id="colorImageSelect1" onchange="handleSelectImageColor(1)" class="form-control" data-from-url="colorImageFromURL1" data-upload="colorImageUpload1"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL1" class="form-control" placeholder="URL"> <input name="fileImage" id="colorImageUpload1" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> </div> </div> </div> <div class="col-lg-12"> <a onclick="handleClickAddMoreImageColor()" class=" pull-right btn btn-success">+ Thêm</a> <p class="help-block">Upload ảnh hoặc nhập URL.</p> </div> </div> </div> </form> </div> </div>';
+	const html = '<div class="panel panel-info" style="text-align: left;"> <div class="panel-heading">Tạo màu mới</div> <div class="panel-body"> <form id="addColorForm" class="row"> <div class="col-lg-12"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tên:</label> <div class="col-lg-9"> <input name="name" required class="form-control col-lg-6" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Mã màu:</label> <div class="col-lg-9"> <input style="width: 80px" name="hexCode" class="form-control" type="color" value="" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-12">Ảnh:</label> <div id="colorImage-container" class="col-lg-12" data-colorimageid=1> <div class="form-group"> <div class="input-group col-md-12"> <select id="colorImageSelect1" onchange="handleSelectImageColor(1)" class="form-control" data-from-url="colorImageFromURL1" data-upload="colorImageUpload1"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL1" class="form-control" placeholder="URL"> <input name="fileImage" id="colorImageUpload1" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> </div> </div> </div> <div class="col-lg-12"> <a onclick="handleClickAddMoreImageColor()" class=" pull-right btn btn-success">+ Thêm</a> <p class="help-block">Upload ảnh hoặc nhập URL.</p> </div> </div> </div> </form> </div> </div>';
 	(async () => { 
 		const { isConfirmed, value: formValues } = await Swal.fire({
 			  html,
@@ -694,17 +683,16 @@ const createNewColor = () => {
 			});
 			if (!Array.isArray(object.fileImage))
 				object.fileImage = [object.fileImage];
-			if (!Array.isArray(object.imageURL))
-				object.imageURL = [object.imageURL];
-			console.log("ocj", object);
 			object.fileImage = [...object.fileImage.map(file => (result.find(r => r.originName == file.name)))];
-			console.log("ccc", object);
-			const newIndex = $("#colors-container").data("length")==null?1:Number($("#colors-container").data("length"))+1;
-			$("#colors-container").data("length", newIndex)
-				.append('<div id="colorcontainer'+ newIndex +'" class="input-group col-md-12"> <span style="color: '+ object.hexCode +'; font-size: 20px;" class="input-group-addon"><i class="fa fa-square" aria-hidden="true"></i></span> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="'+ object.name +'" /> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="' + (object.fileImage.length + object.imageURL.length) +' ảnh" /> <span class="input-group-btn"> <a class="btn btn-warning">Sửa</a> <a class="btn btn-danger">Xoá</a> </span> </div>');
-			$("#colorcontainer"+newIndex).data("color", object);
 		}
-		
+		if (object.imageURL && !Array.isArray(object.imageURL))
+			object.imageURL = [object.imageURL];
+		const imagenum = (object.fileImage ? object.fileImage.length : 0) + (object.imageURL ? object.imageURL.length : 0);
+		object["imagenum"] = imagenum;
+		const newIndex = $("#colors-container").data("length")==null?1:Number($("#colors-container").data("length"))+1;
+		$("#colors-container").data("length", newIndex)
+			.append('<div id="colorcontainer'+ newIndex +'" class="input-group col-md-12"> <span style="color: '+ object.hexCode +'; font-size: 20px;" class="input-group-addon"> <i class="fa fa-square" aria-hidden="true"></i> </span> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="'+ object.name +'" /> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="' + (imagenum) +' ảnh" /> <span class="input-group-btn"> <a onclick="handleEditColor(' + newIndex + ')" class="btn btn-warning">Sửa</a> <a onclick="removeColor(' + newIndex + ')" class="btn btn-danger">Xoá</a> </span> </div>');
+		$("#colorcontainer"+newIndex).data("color", object);
 		
 	})();
 }
@@ -734,6 +722,64 @@ const handleClickAddMoreImageColor = () => {
 
 const handleClickRemoveImageColor = (imageColorId) => {
 	$("#imageColorContainer"+imageColorId).remove();
+}
+
+const removeColor = (colorId) => {
+	$("#colorcontainer"+colorId).remove();
+}
+
+const handleEditColor = (colorId) => {
+	const originColor = $("#colorcontainer"+colorId).data("color");
+	var i = 0;
+	var colorImage = "";
+	if (originColor.imageURL) 
+		colorImage += originColor.imageURL.map(e => '<div class="form-group" id="imageColorContainer'+ ++i +'"> <div class="input-group col-md-12"> <select id="colorImageSelect'+ i +'" onchange="handleSelectImageColor('+ i +')" class="form-control" data-from-url="colorImageFromURL'+ i +'" data-upload="colorImageUpload'+ i +'"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL'+ i +'" class="form-control" placeholder="URL" value="' + e +'"> <input name="fileImage" id="colorImageUpload'+ i +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> <span class="input-group-btn"> <a class="btn btn-warning" target="_blank" href="'+ e +'">Xem</a> <a onclick="handleClickRemoveImageColor('+ i +')" class="btn btn-danger">Xoá</a> </span> </div> </div>').join("");
+	if (originColor.fileImage)
+		colorImage += originColor.fileImage.map(e => '<div class="form-group" id="imageColorContainer'+ ++i +'"> <div class="input-group col-md-12"> <select id="colorImageSelect'+ i +'" onchange="handleSelectImageColor('+ i +')" class="form-control" data-from-url="colorImageFromURL'+ i +'" data-upload="colorImageUpload'+ i +'"> <option value="fromURL">Nhập URL</option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="imageURL" id="colorImageFromURL'+ i +'" class="form-control" placeholder="URL" value="' + e.tempPath +'"> <input name="fileImage" id="colorImageUpload'+ i +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;"> <span class="input-group-btn"> <a class="btn btn-warning" target="_blank" href="/'+ e.tempPath +'">Xem</a><a onclick="handleClickRemoveImageColor('+ i +')" class="btn btn-danger">Xoá</a> </span> </div> </div>').join("");
+	const html = '<div class="panel panel-info" style="text-align: left;"> <div class="panel-heading">Sửa màu</div> <div class="panel-body"> <form id="addColorForm" class="row"> <div class="col-lg-12"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tên:</label> <div class="col-lg-9"> <input name="name" required class="form-control col-lg-6" value="' + originColor.name +'" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Mã màu:</label> <div class="col-lg-9"> <input style="width: 80px" name="hexCode" class="form-control" type="color" value="' + originColor.hexCode + '" /> </div> </div> <div class="form-group col-lg-12"> <label class="col-lg-12">Ảnh:</label> <div id="colorImage-container" class="col-lg-12" data-colorimageid='+ originColor.imagenum +'> ' + colorImage + ' </div> <div class="col-lg-12"> <a onclick="handleClickAddMoreImageColor()" class=" pull-right btn btn-success">+ Thêm</a> <p class="help-block">Upload ảnh hoặc nhập URL.</p> </div> </div> </div> </form> </div> </div>';
+	(async () => { 
+		const { isConfirmed, value: formValues } = await Swal.fire({
+			  html,
+			  width: "600px",
+			  focusConfirm: false,
+			  showCancelButton: true,
+			  preConfirm: () => {return new FormData($('form#addColorForm')[0])},
+			})
+
+		if (!isConfirmed)
+			return;
+		var object = {};
+		formValues.forEach((value, key) => {
+		    if(!Reflect.has(object, key)){
+		        object[key] = value;
+		        return;
+		    }
+		    if(!Array.isArray(object[key])){
+		        object[key] = [object[key]];    
+		    }
+		    object[key].push(value);
+		});
+		if (formValues.get("fileImage")!=null) {
+			const result = await $.ajax({
+				url: '/admin/tmpUpload',
+				type: 'POST',
+				processData: false,
+			    contentType: false,
+			    data: formValues,
+				data: formValues,
+			});
+			if (!Array.isArray(object.fileImage))
+				object.fileImage = [object.fileImage];
+			object.fileImage = [...object.fileImage.map(file => (result.find(r => r.originName == file.name)))];
+		}
+		if (object.imageURL && !Array.isArray(object.imageURL))
+			object.imageURL = [object.imageURL];
+		const imagenum = (object.fileImage ? object.fileImage.length : 0) + (object.imageURL ? object.imageURL.length : 0);
+		object["imagenum"] = imagenum;
+		
+		$('#colorcontainer'+colorId)[0].outerHTML = ('<div id="colorcontainer'+ colorId +'" class="input-group col-md-12"> <span style="color: '+ object.hexCode +'; font-size: 20px;" class="input-group-addon"> <i class="fa fa-square" aria-hidden="true"></i> </span> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="'+ object.name +'" /> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input class="form-control" value="' + (imagenum) +' ảnh" /> <span class="input-group-btn"> <a onclick="handleEditColor(' + colorId + ')" class="btn btn-warning">Sửa</a> <a onclick="removeColor(' + colorId + ')" class="btn btn-danger">Xoá</a> </span> </div>');
+		$("#colorcontainer"+colorId).data("color", object);
+	})();
 }
 </script>
 
