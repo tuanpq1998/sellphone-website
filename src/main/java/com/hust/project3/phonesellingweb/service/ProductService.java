@@ -9,11 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.hust.project3.phonesellingweb.dao.ProductDao;
 import com.hust.project3.phonesellingweb.entity.Color;
+import com.hust.project3.phonesellingweb.entity.ColorImg;
+import com.hust.project3.phonesellingweb.entity.Price;
 import com.hust.project3.phonesellingweb.entity.Product;
+import com.hust.project3.phonesellingweb.entity.ProductImg;
 import com.hust.project3.phonesellingweb.utility.ConstantVariable;
 import com.hust.project3.phonesellingweb.utility.StringHandler;
 
@@ -352,7 +356,7 @@ public class ProductService {
 	}
 
 	public Page<Product> findAllForAdmin(int numPerPage, int page) {
-		Pageable pageable = PageRequest.of(page - 1, numPerPage);
+		Pageable pageable = PageRequest.of(page - 1, numPerPage, Sort.by("createAt").descending());
 			return productDao.findAll(pageable);
 	}
 
@@ -367,6 +371,28 @@ public class ProductService {
 
 	public void deleteById(int productId) {
 		productDao.updateDeleteById(productId);
+	}
+
+	public void save(Product product) {
+		List<Color> colors = product.getColors();
+		for (Color c : colors) {
+			c.setProduct(product);
+			
+			List<ColorImg> imgs = c.getColorImgs();
+			for (ColorImg img : imgs)
+				img.setColor(c);
+		}
+		
+		Price p = product.getPrice();
+		p.setCurrent(true);
+		p.setProduct(product);
+		
+		List<ProductImg> imgs = product.getProductImgs();
+		for (ProductImg img : imgs) 
+			img.setProduct(product);
+		
+		
+		productDao.save(product);
 	}
 
 }

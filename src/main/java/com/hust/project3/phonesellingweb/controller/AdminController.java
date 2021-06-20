@@ -73,12 +73,11 @@ public class AdminController {
 	}
 	
 	@PostMapping("/products/new")
-	public String createNewProduct(Product product, 
+	public String createNewProduct(Product product, @RequestParam(name="tmpImg", required = false) List<String> tmpImgs,
 			@RequestPart(name = "file4ProductImg", required = false) MultipartFile[] files,
 			@RequestPart(name="fileImage4Ava", required = false) MultipartFile avaImageFile ) throws IOException {
 		String slug = StringHandler.toSlug(product.getName());
 		product.setSlug(slug);
-		
 		if (avaImageFile != null && !avaImageFile.isEmpty()) {
 			String ext = StringUtils.getFilenameExtension(avaImageFile.getOriginalFilename());
 	        String newFileName =  slug + "." + ext;
@@ -86,14 +85,11 @@ public class AdminController {
 
 	        product.setAvaImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
 		}
-		
 		List<ProductImg> imgs = product.getProductImgs();
-		
 		for (int i = imgs.size() - 1; i >= 0; i--) {
 			if (StringHandler.isEmpty(imgs.get(i).getUrl()))
 				imgs.remove(i);
 		}
-		
 		if (files != null && !(files.length == 0)) {
 			for (int i = 0; i < files.length; i++) {
 				MultipartFile file = files[i];
@@ -109,8 +105,6 @@ public class AdminController {
 			}
 			product.setProductImgs(imgs);
 		}
-
-		System.out.println(product);
 		List<Color> colors = product.getColors();
 		for (int i = colors.size() - 1; i >= 0; i--) {
 			if (StringHandler.isEmpty(colors.get(i).getName())) {
@@ -123,18 +117,41 @@ public class AdminController {
 				ColorImg colorImg = colorImgs.get(j);
 				if (StringHandler.isEmpty(colorImg.getUrl()))
 					colorImgs.remove(j);
-				else if (colorImg.getUrl().startsWith("upload/tmp/")) {
+				else if (colorImg.getUrl().startsWith("/"+ConstantVariable.UPLOAD_TEMP_DIR)) {
 					String ext = StringUtils.getFilenameExtension(colorImg.getUrl());
-					String newname = slug + "_" + StringHandler.toSlug(colors.get(i).getName())+j+"."+ext;
-					FileHandler.move(colorImg.getUrl(), ConstantVariable.UPLOAD_DIR, newname);
+					String newname = slug + "-" + StringHandler.toSlug(colors.get(i).getName())+j+"."+ext;
+					FileHandler.move(colorImg.getUrl().substring(1), ConstantVariable.UPLOAD_DIR, newname);
 					colorImg.setUrl("/"+ConstantVariable.UPLOAD_DIR + newname);
 				}
 			}
 			color.setColorImgs(colorImgs);
 			colors.set(i, color);
 		}
-		System.out.println(product);
-		return "";
+		
+		if (tmpImgs != null && tmpImgs.size() > 0) {
+			String description = product.getSpec().getDescription();
+			for (int i = 0; i < tmpImgs.size(); i++) {
+				String tempFile = tmpImgs.get(i);
+				String ext = StringUtils.getFilenameExtension(tempFile);
+				String newname = slug + "-desciption-" + i +  "." + ext;
+				FileHandler.move(tempFile, ConstantVariable.UPLOAD_DIR, newname);
+				description.replaceAll(tempFile, "/"+ConstantVariable.UPLOAD_DIR + newname);
+			}
+		}
+		productService.save(product);
+		return "redirect:/admin/products";
+	}
+	
+	@GetMapping("/products/edit")
+	public String showEditProduct(@RequestParam("id") int productId, Model model) {
+		
+		Product product = productService.findById(productId);
+		if (product == null)
+			return "";
+		model.addAttribute("product", product);
+		model.addAttribute("manufacturers", manufacturerService.findAll());
+		
+		return "admin/editproduct";
 	}
 	
 	@PostMapping("/tmpUpload")
@@ -156,7 +173,7 @@ public class AdminController {
 				}
 			}
 		}
-		return new ResponseEntity<List<TempImageUploadItem>>(result, HttpStatus.CREATED);
+		return new ResponseEntity<List<TempImageUploadItem>>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping("/manufacturers")

@@ -31,7 +31,7 @@ public class StringHandler {
 	
 	public static String toSlug(String str) {
 		Slugify slg = new Slugify();
-		return slg.slugify(str);
+		return slg.slugify(str.replaceAll("Đ", "d").replaceAll("đ", "d"));
 	}
 	
 	private static Random RANDOM = new SecureRandom();

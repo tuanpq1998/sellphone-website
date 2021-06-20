@@ -125,7 +125,7 @@
 													</td>
 													<td class="center">
 														<a class="btn btn-link">Sửa nhanh</a>
-														<a class="btn btn-warning">Sửa</a>
+														<a th:href="${'/admin/products/edit?id='+product.id}" class="btn btn-warning">Sửa</a>
 														<a th:unless="${product.deleted}" th:onclick="'handleDelete('+${product.id}+')'" class="btn btn-danger">Xoá</a>
 													</td>
 												</tr>

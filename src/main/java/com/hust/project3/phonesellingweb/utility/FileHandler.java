@@ -29,6 +29,6 @@ public class FileHandler {
 	public static void move(String fileToMove, String targetDir, String newName) throws IOException {
 		Path fileToMovePath = Paths.get(fileToMove);
 	    Path targetPath = Paths.get(targetDir + newName);
-	    Files.move(fileToMovePath, targetPath);
+	    Files.move(fileToMovePath, targetPath,  StandardCopyOption.REPLACE_EXISTING);
 	}
 }

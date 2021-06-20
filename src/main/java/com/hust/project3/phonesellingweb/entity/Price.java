@@ -1,5 +1,7 @@
 package com.hust.project3.phonesellingweb.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+
+import com.hust.project3.phonesellingweb.utility.DateTimeHandler;
 
 @Entity
 @Table(name="price")
@@ -22,7 +27,7 @@ public class Price {
 	@Column(name="value")
 	private double value;
 	
-	@Column(name="start_date")
+	@Column(name="start_date", updatable = false)
 	private String startDate;
 	
 	@Column(name="end_date")
@@ -100,5 +105,8 @@ public class Price {
 		this.endDate = endDate;
 	}
 	
-	
+	@PrePersist
+	protected void onCreate() {
+		startDate = DateTimeHandler.datetimeToString(new Date());
+	}
 }
