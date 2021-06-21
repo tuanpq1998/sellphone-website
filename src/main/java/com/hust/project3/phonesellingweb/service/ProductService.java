@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.hust.project3.phonesellingweb.dao.ProductDao;
 import com.hust.project3.phonesellingweb.entity.Color;
 import com.hust.project3.phonesellingweb.entity.ColorImg;
+import com.hust.project3.phonesellingweb.entity.Manufacturer;
 import com.hust.project3.phonesellingweb.entity.Price;
 import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.ProductImg;
@@ -390,7 +391,11 @@ public class ProductService {
 		List<ProductImg> imgs = product.getProductImgs();
 		for (ProductImg img : imgs) 
 			img.setProduct(product);
-		
+		product.setProductImgs(imgs);
+
+		Manufacturer m = product.getManufacturer();
+		product.setManufacturerId(m.getId());
+		product.setManufacturer(null);
 		
 		productDao.save(product);
 	}

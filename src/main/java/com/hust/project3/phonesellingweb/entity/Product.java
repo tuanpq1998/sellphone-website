@@ -237,11 +237,22 @@ public class Product {
 		this.buyCount = buyCount;
 	}
 
-	@OneToOne(cascade= {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH} )
-	@JoinColumn(name="manufacturer_id")
+	@OneToOne(cascade = CascadeType.MERGE, optional = true)
+	@JoinColumn(name="manufacturer_id", insertable=false, updatable=false)
 	@JsonIgnore
 	private Manufacturer manufacturer;
 	
+	@Column(name = "manufacturer_id")
+	private int manufacturerId;
+	
+	public int getManufacturerId() {
+		return manufacturerId;
+	}
+
+	public void setManufacturerId(int manufacturerId) {
+		this.manufacturerId = manufacturerId;
+	}
+
 	@OneToOne
 	@JoinColumn(name="old_price_id")
 	private Price oldPrice;
@@ -254,20 +265,20 @@ public class Product {
 		this.oldPrice = oldPrice;
 	}
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="price_id")
 	@JsonIgnore
 	private Price price;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Color> colors = new ArrayList<>();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<ProductImg> productImgs = new ArrayList<>();
 	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnore
 	@JoinColumn(name="spec_id")
 	private ProductSpec spec;

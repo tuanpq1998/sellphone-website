@@ -76,6 +76,7 @@
 			</div>
 
 			<form enctype="multipart/form-data" class="row" th:object="${product}" method="post">
+				<input type="hidden" th:field="*{id}" />
 				<div class="col-lg-8">
 					<div class="panel panel-primary">
 						<div class="panel-heading"><a href="/admin/products" class="btn btn-sm btn-default">Quay lại</a></div>
@@ -107,23 +108,27 @@
 						<div class="panel-heading">Màu sắc</div>
 						<div class="panel-body">
 							<div class="row">
-								<div id="colors-container" th:data-colorId="${product.colors.size()-1}" class="col-lg-12">
+								<div id="colors-container" th:data-colorId="${product.colors.size()-1 == -1 ? 0 : product.colors.size()-1}" class="col-lg-12">
 									<ul class="col-lg-2 nav nav-pills nav-tabs">
-										<th:block th:each="color,status : ${product.colors}">
+										<th:block th:if="${product.colors.size()>0}" th:each="color,status : ${product.colors}">
 											<li th:class="${status.index == 0 ? 'active col-lg-12' : 'col-lg-12'} ">
 												<a data-toggle="tab" th:href="'#color' + ${status.index}">Màu</a>
 											</li>
 										</th:block>
+										<th:block th:unless="${product.colors.size()>0}">
+											<li class="col-lg-12 active"><a data-toggle="tab" href="#color0">Màu</a></li>
+										</th:block>
 										<li class="col-lg-12"><a onclick="createNewTabColor(this)" class="btn btn-lg">+</a></li>
 									</ul>
 								<div class="col-lg-10 tab-content panel-body">
-								<th:block th:each="color,status : ${product.colors}">
+								<th:block th:if="${product.colors.size()>0}" th:each="color,status : ${product.colors}">
 									<div th:id="'color' + ${status.index}" 
 										th:class=" ${ status.index==0 ? 'tab-pane fade in active' : 'tab-pane fade'}">
 										<div class="form-group col-lg-12">
 									<label class="col-lg-3">Tên:</label>
 									<div class="col-lg-9">
 										<input th:field="*{colors[__${status.index}__].name}" class="form-control" value="">
+										<input type="hidden" th:field="*{colors[__${status.index}__].id}" />
 									</div>
 								</div>
 								<div class="form-group col-lg-12">
@@ -139,6 +144,7 @@
 									<th:block th:each="colorImg,statusImg : *{colors[__${status.index}__].colorImgs}" >
 									<div th:with="colorId = ${status.index}, imgId=${statusImg.index}"
 										th:id="'color-'+ ${colorId} +'-img-' + ${imgId} +'-container'" class="input-group col-md-12">
+										<input type="hidden" th:field="*{colors[__${colorId}__].colorImgs[__${imgId}__].colorImgId}" />
 										<select onchange="handleChangeSelectColorImg(this)" th:data-uploadlink="${'upload-'+ imgId +'-color-'+colorId}" 
 											th:data-upload="${'imgupload-'+imgId+'-color-'+colorId}" th:data-url="${'imgurl-'+imgId+'-color-'+colorId}" class="form-control">
 											<option value="fromURL">URL
@@ -160,6 +166,44 @@
 								
 									</div>
 								</th:block>
+								<th:block th:unless="${product.colors.size()>0}" >
+									<div id="color0" class="tab-pane fade in active">
+											<div class="form-group col-lg-12">
+										<label class="col-lg-3">Tên:</label>
+										<div class="col-lg-9">
+											<input th:field="*{colors[0].name}" class="form-control" value="">
+										</div>
+									</div>
+									<div class="form-group col-lg-12">
+										<label class="col-lg-3">Hex:</label>
+										<div class="col-lg-9">
+											<input th:field="*{colors[0].hexCode}" style="width: 80px;" class="form-control" type="color">
+										</div>
+									</div>
+
+									<div class="form-group col-lg-12" id="color-0-imgs-container" data-colorid=0 data-imglen=0 style="padding:0 15px;"  >
+										<div class="input-group col-md-12">Ảnh:
+										</div>
+										<div id="color-0-img-0-container" class="input-group col-md-12">
+											<select onchange="handleChangeSelectColorImg(this)" data-uploadlink="upload-0-color-0" data-upload="imgupload-0-color-0" data-url="imgurl-0-color-0" class="form-control">
+												<option value="fromURL">URL
+												</option><option value="upload">Upload
+											</option></select>  
+											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+											<input name="colors[0].colorImgs[0].url" id="imgurl-0-color-0" class="form-control" placeholder="URL" > 
+											<input id="imgupload-0-color-0" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;">
+											<span data-select="#color-0-img-0-container select" id="upload-0-color-0" data-linkto="#imgupload-0-color-0" class="input-group-addon btn" onclick="handleClickUpload(this)" style="display: none;color:#fff;background-color: #337ab7; border-color: #2e6da4;"> <i class="fa fa-upload" aria-hidden="true"></i></span>										
+											<span data-parent="#color-0-img-0-container" class="input-group-addon btn" onclick="handleClickRemoveImgColor(this)"><i class="fa fa-remove " aria-hidden="true"></i></span>										
+										</div>
+										
+									</div>
+									
+									<div style="padding-right: 15px;" class="form-group col-lg-12 text-right">
+										<a data-parent="#color-0-imgs-container" onclick="createNewColorImg(this)" class="btn btn-success">+ Ảnh</a>
+									</div>
+									
+										</div>
+								</th:block>
 								</div>
 								</div>
 									
@@ -170,6 +214,7 @@
 
 					<div class="panel panel-default">
 						<div class="panel-heading">Cấu hình</div>
+						<input type="hidden" th:field="*{spec.specId}" />
 						<div class="specs">
 							<div class="row">
 								<div class="col-lg-12">
@@ -466,6 +511,7 @@
 										<div class="input-group">
 											<input type="number" th:field="*{price.value}" class="form-control">
 											<span class="input-group-addon">VNĐ</span>
+											<input type="hidden" th:field="*{price.priceId}"/>
 										</div>
 									</div>
 									<div class="form-group ">
@@ -512,7 +558,7 @@
 									<div class="form-group" th:id="${'slider'+status.index}" th:data-idSlider="${status.index}">
 										<div class="input-group col-md-12">
 	    									<span class="input-group-addon">Ảnh</span>
-	    									
+	    									<input type="hidden" th:field="*{productImgs[__${status.index}__].imgId}" />
 											<select th:onchange="'onSelectChangeSlider('+ ${status.index} +')'" th:id="${'selectSlider'+status.index}" class="form-control">
 												<option value="fromURL" selected="selected">Nhập URL
 												<option value="upload">Upload

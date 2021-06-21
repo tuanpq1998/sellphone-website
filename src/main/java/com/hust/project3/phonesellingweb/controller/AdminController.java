@@ -3,6 +3,7 @@ package com.hust.project3.phonesellingweb.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +27,7 @@ import com.hust.project3.phonesellingweb.entity.ColorImg;
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
 import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.ProductImg;
+import com.hust.project3.phonesellingweb.entity.ProductSpec;
 import com.hust.project3.phonesellingweb.model.TempImageUploadItem;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
 import com.hust.project3.phonesellingweb.service.ProductService;
@@ -139,7 +141,7 @@ public class AdminController {
 			}
 		}
 		productService.save(product);
-		return "redirect:/admin/products";
+		return "redirect:/admin/products?created";
 	}
 	
 	@GetMapping("/products/edit")
@@ -152,6 +154,79 @@ public class AdminController {
 		model.addAttribute("manufacturers", manufacturerService.findAll());
 		
 		return "admin/editproduct";
+	}
+	
+	@PostMapping("/products/edit")
+	public String handleEditProduct(Product product, @RequestParam(name="tmpImg", required = false) List<String> tmpImgs,
+			@RequestPart(name = "file4ProductImg", required = false) MultipartFile[] files,
+			@RequestPart(name="fileImage4Ava", required = false) MultipartFile avaImageFile ) throws IOException {
+		String slug = StringHandler.toSlug(product.getName());
+		product.setSlug(slug);
+		if (avaImageFile != null && !avaImageFile.isEmpty()) {
+			String ext = StringUtils.getFilenameExtension(avaImageFile.getOriginalFilename());
+	        String newFileName =  slug + "." + ext;
+	        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, avaImageFile);
+
+	        product.setAvaImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
+		}
+		List<ProductImg> imgs = product.getProductImgs();
+		for (int i = imgs.size() - 1; i >= 0; i--) {
+			if (StringHandler.isEmpty(imgs.get(i).getUrl()))
+				imgs.remove(i);
+		}
+		if (files != null && !(files.length == 0)) {
+			for (int i = 0; i < files.length; i++) {
+				MultipartFile file = files[i];
+				if (file != null && !file.isEmpty()) {
+					String ext = StringUtils.getFilenameExtension(file.getOriginalFilename());
+					String newFileName = slug + "-" + (i+1) + "." + ext;
+			        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, file);
+			        String newImg = "/"+ConstantVariable.UPLOAD_DIR + newFileName;
+			        ProductImg productImg = new ProductImg();
+			        productImg.setUrl(newImg);
+			        imgs.add(productImg);
+				}
+			}
+			product.setProductImgs(imgs);
+		}
+		List<Color> colors = product.getColors();
+		for (int i = colors.size() - 1; i >= 0; i--) {
+			if (StringHandler.isEmpty(colors.get(i).getName())) {
+				colors.remove(i);
+				continue;
+			}
+			Color color = colors.get(i);
+			List<ColorImg> colorImgs = color.getColorImgs();
+			for (int j = colorImgs.size() -1; j>= 0; j--) {
+				ColorImg colorImg = colorImgs.get(j);
+				if (StringHandler.isEmpty(colorImg.getUrl()))
+					colorImgs.remove(j);
+				else if (colorImg.getUrl().startsWith("/"+ConstantVariable.UPLOAD_TEMP_DIR)) {
+					String ext = StringUtils.getFilenameExtension(colorImg.getUrl());
+					String newname = slug + "-" + StringHandler.toSlug(colors.get(i).getName())+j+"."+ext;
+					FileHandler.move(colorImg.getUrl().substring(1), ConstantVariable.UPLOAD_DIR, newname);
+					colorImg.setUrl("/"+ConstantVariable.UPLOAD_DIR + newname);
+				}
+			}
+			color.setColorImgs(colorImgs);
+			colors.set(i, color);
+		}
+		
+		if (tmpImgs != null && tmpImgs.size() > 0) {
+			ProductSpec spec = product.getSpec();
+			String description = spec.getDescription();
+			for (int i = 0; i < tmpImgs.size(); i++) {
+				String tempFile = tmpImgs.get(i);
+				String ext = StringUtils.getFilenameExtension(tempFile);
+				String newname = slug + "-desciption-" + i +  "." + ext;
+				FileHandler.move(tempFile, ConstantVariable.UPLOAD_DIR, newname);
+				description = description.replaceAll(Pattern.quote(tempFile), ConstantVariable.UPLOAD_DIR + newname);
+			}
+			spec.setDescription(description);
+			product.setSpec(spec);
+		}
+		productService.save(product);
+		return "redirect:/admin/products?edited";
 	}
 	
 	@PostMapping("/tmpUpload")

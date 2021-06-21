@@ -67,13 +67,13 @@ public class Color {
 	@JsonIgnore
 	private Product product;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "color", cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "color", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<ColorImg> colorImgs = new ArrayList<>();
 	
 	@Override
 	public String toString() {
-		return "Color [id=" + id + ", name=" + name + ", hexCode=" + hexCode + ", product=" + product + ", colorImgs="
+		return "Color [id=" + id + ", name=" + name + ", hexCode=" + hexCode + ", product=" + (product!=null) + ", colorImgs="
 				+ colorImgs + "]";
 	}
 
