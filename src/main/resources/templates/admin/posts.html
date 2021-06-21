@@ -10,7 +10,7 @@
 			+ ((!#strings.isEmpty(param.sx)) ? 'sx='+param.sx+'&' : '')  }">
 <head>
 <th:block
-	th:replace="/admin/part/_head.html :: head(title ='Danh sách sản phẩm')" />
+	th:replace="/admin/part/_head.html :: head(title ='Danh sách bài đăng')" />
 <link href="/vendor/datatables-plugins/dataTables.bootstrap.css"
 	rel="stylesheet">
 <link href="/vendor/datatables-responsive/dataTables.responsive.css"
@@ -34,7 +34,7 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Tất cả sản phẩm</h1>
+					<h1 class="page-header">Tất cả bài đăng</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
@@ -43,7 +43,7 @@
 				<div class="col-lg-12">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
-							<a class="btn btn-default" href="/admin/products/new">Tạo mới</a>
+							<a class="btn btn-default" href="/admin/posts/new">Tạo mới</a>
 						</div>
 						<div class="panel-body">
 							<div id="dataTables-example_wrapper"
@@ -66,7 +66,7 @@
 												<label>Search:<input type="search"
 													class="form-control input-sm" name="search" placeholder=""
 													aria-controls="dataTables-example" th:value="${param.search}"></label>
-												<a th:unless="${#strings.isEmpty(param.search)}" href="/admin/products" class="btn btn-link">Reset</a>
+												<a th:unless="${#strings.isEmpty(param.search)}" href="/admin/posts" class="btn btn-link">Reset</a>
 												<input type="submit" class="btn btn-info" />
 											</form>
 											
@@ -84,61 +84,48 @@
 												<tr role="row">
 													<th class="sorting_asc" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 150px;" aria-sort="ascending">Tên sản
-														phẩm</th>
-													<th class="sorting" tabindex="0"
-														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 70px;">Hãng sản xuất</th>
+														style="width: 150px;" aria-sort="ascending">Tiêu đề</th>
 													<th class="sorting" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
 														style="width: 70px;">Ngày đăng</th>
 													<th class="sorting" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 30px;">Giá</th>
+														style="width: 30px;">Ngày cập nhật</th>
 													<th class="sorting" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 84px;">Loại màu</th>
+														style="width: 84px;">Lượt xem</th>
 													<th class="sorting" tabindex="0"
 														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 50px;">Tình trạng</th>
-													<th class="sorting" tabindex="0"
-														aria-controls="dataTables-example" rowspan="1" colspan="1"
-														style="width: 130px;">Hành động</th>
+														style="width: 84px;">Thao tác</th>
 												</tr>
 											</thead>
 											<tbody>
 
-												<tr role="row" th:unless="${products.getContent().size() == 0}" 
-													th:each="product,iter : ${products.getContent()}" th:data-id="${product.id}"
+												<tr role="row" th:unless="${posts.getContent().size() == 0}" 
+													th:each="post,iter : ${posts.getContent()}" th:data-id="${post.id}"
 													th:class="${iter.index%2==0 ? 'gradeA odd' : 'gradeA even'}">
 
-													<td><a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]</a> <th:block  th:if="${product.deleted}"><span class="badge danger">đã xoá</span></th:block></td>
-													<td><a th:href="${'/hang-dt/'+product.manufacturer.slug+'.'+product.manufacturer.id}">[[${product.manufacturer.name}]]</a> <a th:href="${'/admin/manufacturers/edit?id='+product.manufacturer.id}" class="btn btn-xs btn-link">Sửa </a></td>
-													<td class="datetime">[[${product.createAt}]]</td>
-													<td class="center currency">[[${product.price.value}]]</td>
-													<td class="center"><span
-														th:each="color : ${product.colors}">[[${color.name}]],
-													</span></td>
-													<td class="center">
-														<span th:unless="${product.available}" class="badge danger">hết hàng</span> 
-														<span th:if="${product.available}" class="success badge ">còn hàng</span> 
-													</td>
+													<td><a th:href="${'/bai-viet/'+post.slug+'.'+post.id+'.html'}">[[${post.title}]]</a> 
+													<th:block  th:if="${post.draft}"><span class="badge danger">bài nháp</span></th:block></td>
+													<td class="datetime">[[${post.createAt}]]</td>
+													<td class="datetime" th:text="${#strings.isEmpty(post.updateAt) ? '(trống)' : post.updateAt}"/>
+													<td class="center">[[${post.viewCount}]]</td>
 													<td class="center">
 														<a class="btn btn-link">Sửa nhanh</a>
-														<a th:href="${'/admin/products/edit?id='+product.id}" class="btn btn-warning">Sửa</a>
-														<a th:unless="${product.deleted}" th:onclick="'handleDelete('+${product.id}+')'" class="btn btn-danger">Xoá</a>
+														<a th:href="${'/admin/posts/edit?id='+post.id}" class="btn btn-warning">Sửa</a>
+														<a th:onclick="'handleDelete('+${post.id}+')'" class="btn btn-danger">Xoá</a>
 													</td>
 												</tr>
 												
 											</tbody>
 										</table>
-										<p class="text-center"role="row" th:if="${products.getContent().size() == 0}">
+										<p class="text-center"role="row" th:if="${posts.getContent().size() == 0}">
 											Không có kết quả nào!
 										</p>
 									</div>
 								</div>
-								<div class="row" th:if="${products.getContent().size() > 0}"
-									th:with="total = ${products.getTotalPages()}, current = ${products.getNumber()+1}">
+								<div class="row" th:if="${posts.getContent().size() > 0}"
+									th:with="total = ${posts.getTotalPages()}, current = ${posts.getNumber()+1}">
 									<div class="col-sm-6">
 									</div>
 									<div class="col-sm-6">
@@ -201,7 +188,7 @@ $('.currency').html(function () {
 	});
 $('.datetime').html(function() {
 	const time = new Date(($(this).html()));
-	return time.toLocaleString();
+	return time.toLocaleString() == "Invalid Date" ? ($(this).html()) : time.toLocaleString();
 })
 
 const handleDelete = (productId) => {
@@ -218,7 +205,7 @@ const handleDelete = (productId) => {
 			  
 				  
 			  $.ajax({
-				    url: '/admin/products/'+productId,
+				    url: '/admin/posts/'+productId,
 				    type: 'DELETE',
 				    success: function(result) {
 				    	Swal.fire(

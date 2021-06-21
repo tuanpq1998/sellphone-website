@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,17 +18,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hust.project3.phonesellingweb.entity.Color;
 import com.hust.project3.phonesellingweb.entity.ColorImg;
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
+import com.hust.project3.phonesellingweb.entity.Post;
 import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.ProductImg;
 import com.hust.project3.phonesellingweb.entity.ProductSpec;
 import com.hust.project3.phonesellingweb.model.TempImageUploadItem;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
+import com.hust.project3.phonesellingweb.service.PostService;
 import com.hust.project3.phonesellingweb.service.ProductService;
 import com.hust.project3.phonesellingweb.utility.ConstantVariable;
 import com.hust.project3.phonesellingweb.utility.FileHandler;
@@ -44,6 +44,9 @@ public class AdminController {
 	
 	@Autowired
 	private ManufacturerService manufacturerService;
+	
+	@Autowired
+	private PostService postService;
 	
 	@GetMapping({"", "/"})
 	public String showIndex() {
@@ -137,7 +140,7 @@ public class AdminController {
 				String ext = StringUtils.getFilenameExtension(tempFile);
 				String newname = slug + "-desciption-" + i +  "." + ext;
 				FileHandler.move(tempFile, ConstantVariable.UPLOAD_DIR, newname);
-				description.replaceAll(tempFile, "/"+ConstantVariable.UPLOAD_DIR + newname);
+				description = description.replaceAll(Pattern.quote(tempFile), ConstantVariable.UPLOAD_DIR + newname);
 			}
 		}
 		productService.save(product);
@@ -227,6 +230,59 @@ public class AdminController {
 		}
 		productService.save(product);
 		return "redirect:/admin/products?edited";
+	}
+	
+	@GetMapping("/posts")
+	public String showAllPosts(Model model,
+			@RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+			@RequestParam(name = "search", required = false) String searchKey) {
+		if (StringHandler.isEmpty(searchKey))
+			model.addAttribute("posts", postService.findAll(20, page));
+		else model.addAttribute("posts", postService.findAllLike(searchKey, 20, page));
+		
+		return "/admin/posts";
+	}
+	
+	@GetMapping("/posts/new")
+	public String showCreatePost(Model model) {
+		model.addAttribute("post", new Post());
+		
+		return "/admin/formpost";
+	}
+	
+	@PostMapping("/posts/new")
+	public String createNewPost(Post post, @RequestParam(name="tmpImg", required = false) List<String> tmpImgs,
+			@RequestPart(name = "file4BannerImg", required = false) MultipartFile bannerImageFile,
+			@RequestPart(name="fileImage4Ava", required = false) MultipartFile avaImageFile ) throws IOException {
+		String slug = StringHandler.toSlug(post.getTitle());
+		post.setSlug(slug);
+		if (avaImageFile != null && !avaImageFile.isEmpty()) {
+			String ext = StringUtils.getFilenameExtension(avaImageFile.getOriginalFilename());
+	        String newFileName =  slug + "-ava-img." + ext;
+	        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, avaImageFile);
+	        post.setAvaImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
+		}
+		
+		if (bannerImageFile != null && !bannerImageFile.isEmpty()) {
+			String ext = StringUtils.getFilenameExtension(bannerImageFile.getOriginalFilename());
+	        String newFileName =  slug + "-banner-img." + ext;
+	        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, avaImageFile);
+	        post.setBannerImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
+		}
+		
+		if (tmpImgs != null && tmpImgs.size() > 0) {
+			String body = post.getBody();
+			for (int i = 0; i < tmpImgs.size(); i++) {
+				String tempFile = tmpImgs.get(i);
+				String ext = StringUtils.getFilenameExtension(tempFile);
+				String newname = slug + "-body-" + i +  "." + ext;
+				FileHandler.move(tempFile, ConstantVariable.UPLOAD_DIR, newname);
+				body = body.replaceAll(Pattern.quote(tempFile), ConstantVariable.UPLOAD_DIR + newname);
+			}
+		}
+		postService.save(post);
+		return "redirect:/admin/posts?created";
+		
 	}
 	
 	@PostMapping("/tmpUpload")

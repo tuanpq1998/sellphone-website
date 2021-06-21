@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.hust.project3.phonesellingweb.dao.PostRepository;
 import com.hust.project3.phonesellingweb.entity.Post;
-import com.hust.project3.phonesellingweb.entity.Product;
 
 @Service
 public class PostService {
@@ -62,6 +61,20 @@ public class PostService {
 	
 	public List<Post> getHotPosts() {
 		return postRepository.findTop5ByOrderByViewCountDesc();
+	}
+
+	public Page<Post> findAll(int i, Integer page) {
+		Pageable pageable = PageRequest.of(page - 1, i);
+		return postRepository.findByOrderByUpdateAtDescCreateAtDesc(pageable);
+	}
+
+	public Page<Post> findAllLike(String searchKey, int i, Integer page) {
+		Pageable pageable = PageRequest.of(page - 1, i);
+		return postRepository.findByTitleContainingOrderByUpdateAtDescCreateAtDesc(searchKey, pageable);
+	}
+
+	public void save(Post post) {
+		postRepository.save(post);
 	}
 	
 	

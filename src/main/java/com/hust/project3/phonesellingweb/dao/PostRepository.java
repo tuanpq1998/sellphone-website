@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +31,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
 	public Slice<Post> findByOrderByCreateAtDesc(Pageable pageable);
 
+	public Page<Post> findByOrderByUpdateAtDescCreateAtDesc(Pageable pageable);
+
+	public Page<Post> findByTitleContainingOrderByUpdateAtDescCreateAtDesc(String searchKey, Pageable pageable);
 }

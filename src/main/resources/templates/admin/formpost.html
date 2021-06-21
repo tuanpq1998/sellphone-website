@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block
+	th:replace="/admin/part/_head.html :: head(title ='Tạo bài viết mới')" />
+<link href="/vendor/datatables-plugins/dataTables.bootstrap.css"
+	rel="stylesheet">
+<link href="/vendor/datatables-responsive/dataTables.responsive.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.tiny.cloud/1/oho7g9paamw0neh86dlw9oze73tomb42811s1vaocsvw457x/tinymce/5/tinymce.min.js"
+	referrerpolicy="origin"></script>
+<script>
+      tinymce.init({
+        selector: '#post-content',
+        toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | link",
+        toolbar2: " styleselect formatselect fontselect fontsizeselect",
+        toolbar3: "cut copy paste | bullist numlist | outdent indent blockquote | undo redo | forecolor backcolor | image media | fullscreen",
+        plugins: 'media image lists fullscreen link',
+        menubar: false,
+        toolbar_items_size: 'small',
+        image_title: true,
+        automatic_uploads: true,
+        relative_urls : false,
+        file_picker_types: 'image',
+        images_upload_handler: function (blobInfo, success, failure) {
+            var xhr, formData;
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = false;
+            xhr.open('POST', '/admin/tmpUpload');
+            xhr.onload = function() {
+              var json;
+
+              if (xhr.status != 200) {
+                failure('HTTP Error: ' + xhr.status);
+                return;
+              }
+              json = JSON.parse(xhr.responseText);
+
+              if (!json) {
+                failure('Invalid JSON: ' + xhr.responseText);
+                return;
+              }
+              success("/"+json[0].tempPath);
+              $("form").append('<input type="hidden" name="tmpImg" value="' + json[0].tempPath + '" />');
+            };
+            formData = new FormData();
+            formData.append('fileImage', blobInfo.blob(), blobInfo.filename());
+            xhr.send(formData);
+          }
+      });
+      
+    </script>
+</head>
+<body>
+
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		<nav class="navbar navbar-default navbar-static-top" role="navigation"
+			style="margin-bottom: 0">
+
+			<th:block th:replace="/admin/part/_nav.html :: header" />
+
+			<th:block th:replace="/admin/part/_nav.html :: slideMenu" />
+
+			<!-- /.navbar-static-side -->
+		</nav>
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Tao mới</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+
+			<form enctype="multipart/form-data" class="row" th:object="${post}" method="post">
+				<div class="col-lg-8">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><a href="/admin/products" class="btn btn-sm btn-default">Quay lại</a></div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group">
+										<label>Tiêu đề: </label> <input th:field="*{title}" class="form-control">
+									</div>
+									<div class="form-group">
+										<label>Slug</label> <input disabled="disabled" th:field="*{slug}"
+											class="form-control">
+										<p class="help-block">URL bài đăng có dạng <code>'/bai-viet/{slug}.{id}.html'</code>.</p>
+									</div>
+
+									<div class="form-group">
+										<textarea cols="100" rows="30" id="post-content" th:field="*{body}"
+											class="form-control"></textarea>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="panel panel-info">
+						<div class="panel-heading">Mô tả</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group ">
+										<label>Đoạn tóm tắt ngắn:</label> 
+										<div class="input-group">
+											<textarea cols="100" rows="5" th:field="*{description}" class="form-control"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+					
+					
+				</div>
+
+				<div class="col-lg-4">
+
+					<div class="panel panel-info">
+						<div class="panel-heading">Banner</div>
+						<div class="panel-body">
+							<div class="row">
+								<div id="slider-container" data-sliderlen=1 class="col-lg-12">
+									
+									<div class="form-group" id="slider1" data-idSlider=1>
+									<label >Ảnh bìa bài viết</label>
+										<div class="input-group col-md-12">
+	    									
+											<select onchange="onSelectChangeSlider(1)" id="selectSlider1" class="form-control">
+												<option value="fromURL">Nhập URL
+												<option value="upload">Upload
+											</select>  
+											<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+											<input th:field="*{bannerImage}" id="urlSlider1" class="form-control" placeholder="URL"> 
+											<input id="uploadSlider1" class="form-control" name="file4BannerImg" type="file"
+												accept="image/png, image/jpeg, image/jpg" />
+											
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-12">
+									<p class="help-block">Upload ảnh hoặc nhập URL.</p>
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+
+					<div class="panel panel-default">
+						<div class="panel-heading">Ảnh đại diện</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group ">
+										<div class="input-group">
+										<select class="form-control" id="imageAvaType" onchange="onSelectChangeAva()">
+											<option value="fromURL">Nhập URL
+											<option value="upload">Upload
+										</select> 
+										<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+										<input th:field="*{avaImage}" id="urlAva" class="form-control" placeholder="URL"> 
+										<input
+											id="uploadAva" class="form-control" name="fileImage4Ava" type="file"
+											accept="image/png, image/jpeg, image/jpg" />
+										</div>
+										<p class="help-block">Upload ảnh hoặc nhập URL.</p>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+					
+					<div class="panel panel-warning">
+						<div class="panel-heading">Đăng</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="pull-right form-group">
+										<button  class="btn btn-link">Lưu vào nháp</button>
+										<button type="submit" class="btn btn-primary">Đăng</button>
+										<button type="reset" class="btn btn-default">Reset</button>
+									</div>
+								</div>
+							</div>
+							<!-- /.panel-body -->
+						</div>
+					</div>
+
+				</div>
+			</form>
+
+		</div>
+
+	</div>
+
+
+	<th:block th:replace="/admin/part/_js.html" />
+	<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+	<script src="/vendor/datatables-responsive/dataTables.responsive.js"></script>
+	<script>
+const formatCurrency = (num) => {
+	  return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(num);
+} 
+
+$('.currency').html(function () {
+		const num = Number($(this).html());
+		return formatCurrency(num);
+	});
+$('.datetime').html(function() {
+	const time = new Date(($(this).html()));
+	return time.toLocaleString();
+})
+
+function string_to_slug (string) {
+	const a = 'àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;'
+	const b = 'aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------'
+	const p = new RegExp(a.split('').join('|'), 'g')
+	return string.toString().toLowerCase()
+		.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a')
+		.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e')
+		.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i')
+		.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o')
+		.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u')
+		.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y')
+		.replace(/đ/gi, 'd')
+		.replace(/\s+/g, '-') 
+		.replace(p, c => b.charAt(a.indexOf(c)))
+		.replace(/&/g, '-and-')
+		.replace(/[^\w\-]+/g, '')
+		.replace(/\-\-+/g, '-')
+		.replace(/^-+/, '')
+		.replace(/-+$/, '')
+}
+
+$('#title').on("change", function () {
+	const name = $(this).val();
+	$("#slug").val(string_to_slug(name));
+})
+
+
+onSelectChangeAva();
+function onSelectChangeAva() {
+    var selectedValue = $('#imageAvaType').val();    
+    selectedValue == "upload" ? uploadAva() : linkAva();
+}
+
+function uploadAva() {
+	$("#urlAva").val("").attr("disabled", true).hide();
+    $("#uploadAva").attr("disabled", false).show();
+}
+
+function linkAva() {    
+	$("#uploadAva").val("").attr("disabled", true).hide();
+	$("#urlAva").attr("disabled", false).show();
+}
+
+
+
+const onSelectChangeSlider = (sliderIndex) => {
+	const selectedVal = $('#selectSlider'+sliderIndex).val();
+	selectedVal == "upload" ? uploadSlider(sliderIndex) : linkSlider(sliderIndex);
+}
+
+const templateSlider = (sliderId) => '<div class="form-group" id="slider'+ sliderId +'" data-idSlider='+ sliderId +'> <div class="input-group"> <span class="input-group-addon">Ảnh</span> <select onchange="onSelectChangeSlider('+ sliderId +')" id="selectSlider'+ sliderId +'" class="form-control"> <option value="fromURL">Nhập URL <option value="upload">Upload </select> <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <input name="productImgs['+ sliderId +'].url" id="urlSlider'+ sliderId +'" class="form-control" placeholder="URL"> <input id="uploadSlider'+ sliderId +'" class="form-control" name="file4ProductImg" type="file" accept="image/png, image/jpeg, image/jpg" /> '+
+	'<span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span> <a onclick="return removeSlider('+ sliderId +')" class="form-control btn btn-danger">Xoá</a>'
+	+'</div> </div>';
+
+const uploadSlider = (sliderIndex) => {
+	$("#urlSlider"+ sliderIndex).val("").attr("disabled", true).hide();
+    $("#uploadSlider"+ sliderIndex).attr("disabled", false).show();
+}
+
+const linkSlider = (sliderIndex) => {
+	$("#uploadSlider"+ sliderIndex).val("").attr("disabled", true).hide();
+    $("#urlSlider"+ sliderIndex).attr("disabled", false).show();
+}
+
+
+
+onSelectChangeSlider(1);
+
+</script>
+
+<style>
+.specs ul li {
+	padding: 0;
+}
+
+.specs ul {
+	border-right: 1px solid #ddd;
+    padding: 0;
+    border-bottom: 0;
+}
+
+.specs label {
+	font-weight: 500;
+}
+
+.specs .label-group {
+	font-weight: 600;
+}
+.colors, .colors .col-lg-12, .colors .col-lg-2, .colors .col-lg-10 {
+	padding: 0;
+}
+.colors .panel-body {
+	padding-top: 0;
+}
+.colors .tab-content {
+	padding-top: 15px;
+	border-left: 1px solid #ddd;
+}
+.colors .nav-pills {
+	border-right: 2px solid #ddd;
+}
+.colors .nav-pills > li + li {
+    margin-left: unset;
+}
+.colors label {
+	font-weight: 500;
+}
+</style>
+</body>
+
+</html>
