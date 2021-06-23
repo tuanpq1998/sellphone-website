@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hust.project3.phonesellingweb.utility.DateTimeHandler;
 
 @Entity
@@ -29,6 +30,7 @@ public class User {
 	
 	private String username;
 	
+	@JsonIgnore
 	private String password;
 	
 	private String email;
@@ -158,6 +160,7 @@ public class User {
 	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@JsonIgnore
 	private List<Bill> bills = new ArrayList<Bill>();
 
 	public List<Bill> getBills() {

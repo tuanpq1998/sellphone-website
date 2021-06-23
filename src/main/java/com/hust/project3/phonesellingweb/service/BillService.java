@@ -2,8 +2,12 @@ package com.hust.project3.phonesellingweb.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hust.project3.phonesellingweb.dao.BillRepository;
@@ -24,7 +28,7 @@ public class BillService {
 
 	public Bill createAndSave(User user, Cart cart) {
 		Bill bill = new Bill();
-		
+		bill.setStatus("Chưa xác nhận");
 		bill.setUser(user);
 		bill.setTotalMoney(cart.getTotalMoney());
 		bill.setTotalQuantity(cart.getTotalQuantity());
@@ -60,6 +64,28 @@ public class BillService {
 	
 	public List<Bill> findTop5ByUserId(int userId) {
 		return billRepository.findTop5ByUser_IdOrderByIdDesc(userId);
+	}
+
+	public Page<Bill> findAll(int numperpage, Integer page) {
+		Pageable pageable = PageRequest.of(page-1, numperpage);
+		return billRepository.findByOrderByCreateAtDesc(pageable);
+	}
+
+	public Bill findById(int billId) {
+		Optional<Bill> result = billRepository.findById(billId);
+		Bill b = null;
+		if (result.isPresent())
+			b = result.get();
+		return b;
+	}
+
+	public void update(Bill bill) {
+		billRepository.save(bill);
+	}
+
+	public Page<Bill> findAllLike(int numperpage, Integer page, int id) {
+		Pageable pageable = PageRequest.of(page-1, numperpage);
+		return billRepository.findByIdOrderByCreateAtDesc(id, pageable);
 	}
 	
 }

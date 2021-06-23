@@ -28,7 +28,7 @@ public class Bill {
 	@Column(name="id")
 	private int id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="user_id")
 	private User user;
 	

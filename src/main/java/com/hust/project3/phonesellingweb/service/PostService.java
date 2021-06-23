@@ -70,11 +70,15 @@ public class PostService {
 
 	public Page<Post> findAllLike(String searchKey, int i, Integer page) {
 		Pageable pageable = PageRequest.of(page - 1, i);
-		return postRepository.findByTitleContainingOrderByUpdateAtDescCreateAtDesc(searchKey, pageable);
+		return postRepository.findByTitleContainingOrderByCreateAtDescUpdateAtDesc(searchKey, pageable);
 	}
 
 	public void save(Post post) {
 		postRepository.save(post);
+	}
+
+	public void deleteById(int postId) {
+		postRepository.deleteById(postId);
 	}
 	
 	

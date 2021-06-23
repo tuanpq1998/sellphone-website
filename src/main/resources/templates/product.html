@@ -77,7 +77,13 @@
 								<div class="single-price">
 									<ul>
 										<li class="dgkm currency" th:text="${product.price.value}"></li>
-										
+										<th:block th:if="${product.oldPrice != null && product.oldPrice.value > product.price.value}"><br/>
+											<li><del class="currency">[[${product.oldPrice.value}]]</del></li>
+											<li>
+											<span th:with="off = ${(product.oldPrice.value - product.price.value)/product.oldPrice.value * 100}" 
+												class="w3off"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> [[${#numbers.formatDecimal(off,1,1)}]]% OFF</span>
+										</li>
+										</th:block>
 										<hr />
 										<li><i class="fa fa-bell text-danger" aria-hidden="true"></i>
 											Bảo hành chính hãng: <strong>12</strong> tháng</li>

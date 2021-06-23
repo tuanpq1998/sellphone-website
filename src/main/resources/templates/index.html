@@ -86,10 +86,13 @@
 							<a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]</a>
 						</h4>
 						<h5>
-							<div class="dgkm currency">[[${product.price.value}]]</div>
+							<div th:if="${product.oldPrice != null 
+								&& product.oldPrice.value > product.price.value }"	>
+								<del class="currency">[[${product.oldPrice.value}]]</del>
+								<div class="dgkm currency">[[${product.price.value}]]</div>
+							</div>
+							<div class="currency" th:unless="${product.oldPrice != null}">[[${product.price.value}]]</div>	
 						</h5>
-
-
 					</div>
 
 					<div class="clearfix"></div>

@@ -28,7 +28,7 @@
 
 		<div class="post-container container">
 			<h1>[[${post.title}]]</h1>
-			<div class="container text-right">
+			<div class="container text-left">
 				<span class="info-item"><i class="fa fa-folder"></i> <a href="/bai-viet">Tin tức</a></span>
 				<span class="info-item"><i class="fa fa-calendar"></i> <span class="ago">[[${post.createAt}]]</span></span>
 				<span class="info-item"><i class="fa fa-eye"></i> [[${post.viewCount}]] luợt
@@ -37,9 +37,8 @@
 			<hr />
 			<div class="post-container container row">
 				<article class="col-md-8 text-justify">[(${post.body})]</article>
-
-
-				<div class="col-md-4">
+				<aside class="col-md-4" >
+					<div id="newposts">
 					<h3>Bài viết mới</h3>
 					<th:block th:each="post : ${newestPosts}" >
 					<div class="row post">
@@ -64,7 +63,9 @@
 							thêm <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
 						</a>
 					</div>
-				</div>
+					</div>
+					
+				</aside>
 			</div>
 
 
@@ -144,10 +145,7 @@
 		});
 	</script>
 	<th:block th:replace="part/_footer.html :: newsletter" />
-
-
 	<th:block th:replace="part/_footer.html :: footer" />
-
 	<style>
 		article img {
 			width: unset;

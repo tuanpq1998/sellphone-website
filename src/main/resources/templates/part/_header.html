@@ -52,6 +52,8 @@
 				<ul class="dropdown-menu">
 					<li><a href="/thong-tin">Thông tin &amp; đơn hàng</a></li>
 					<li role="separator" class="divider"></li>
+					<li sec:authorize="hasRole('ADMIN')"><a href="/admin">Trang quản trị</a></li>
+					<li role="separator" class="divider"></li>
 					<li><a href="/dang-xuat">Đăng xuất <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
 				</ul>
 			</div>

@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="bill_detail")
 public class BillDetail {
@@ -23,6 +25,7 @@ public class BillDetail {
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="bill_id")
+	@JsonIgnore
 	private Bill bill;
 	
 	@Override

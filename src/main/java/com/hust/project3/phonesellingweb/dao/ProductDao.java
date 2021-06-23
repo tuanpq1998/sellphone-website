@@ -176,5 +176,4 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 
 	public Optional<Product> findByIdAndDeletedIsFalse(int productIdNumber);
 
-	
 }

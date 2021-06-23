@@ -2,6 +2,7 @@ package com.hust.project3.phonesellingweb.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import com.hust.project3.phonesellingweb.entity.Price;
 import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.ProductImg;
 import com.hust.project3.phonesellingweb.utility.ConstantVariable;
+import com.hust.project3.phonesellingweb.utility.DateTimeHandler;
 import com.hust.project3.phonesellingweb.utility.StringHandler;
 
 @Service
@@ -398,6 +400,27 @@ public class ProductService {
 		product.setManufacturer(null);
 		
 		productDao.save(product);
+	}
+
+	public void updatePriceAndAvailable(Double price, boolean available, int productId) {
+		Product p = findById(productId);
+		if (p == null)
+			return;
+		Price oldPrice = p.getPrice();
+		if (oldPrice.getValue() != price) {
+			oldPrice.setCurrent(false);
+			oldPrice.setEndDate(DateTimeHandler.datetimeToString(new Date()));
+			p.setOldPrice(oldPrice);
+			
+			Price newPrice = new Price();
+			newPrice.setStartDate(DateTimeHandler.datetimeToString(new Date()));
+			newPrice.setCurrent(true);
+			newPrice.setValue(price);
+			newPrice.setProduct(p);
+			p.setPrice(newPrice);
+		} 
+		p.setAvailable(available);
+		productDao.save(p);
 	}
 
 }

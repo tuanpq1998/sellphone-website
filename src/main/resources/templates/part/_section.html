@@ -22,11 +22,13 @@
 				</a>
 			</h4>
 			<h5>
-				<!--  <del>7,990,000 VNĐ</del>-->
-				<div class="dgkm currency" th:text="${product.price.value}"></div>
-			</h5>
-
-
+							<div th:if="${product.oldPrice != null 
+								&& product.oldPrice.value > product.price.value }"	>
+								<del class="currency">[[${product.oldPrice.value}]]</del>
+								<div class="dgkm currency">[[${product.price.value}]]</div>
+							</div>
+							<div class="currency" th:unless="${product.oldPrice != null}">[[${product.price.value}]]</div>	
+						</h5>
 		</div>
 
 

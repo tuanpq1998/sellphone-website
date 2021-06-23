@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hust.project3.phonesellingweb.entity.Bill;
 import com.hust.project3.phonesellingweb.entity.Color;
 import com.hust.project3.phonesellingweb.entity.ColorImg;
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
@@ -28,6 +29,8 @@ import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.ProductImg;
 import com.hust.project3.phonesellingweb.entity.ProductSpec;
 import com.hust.project3.phonesellingweb.model.TempImageUploadItem;
+import com.hust.project3.phonesellingweb.service.BillService;
+import com.hust.project3.phonesellingweb.service.FeedbackService;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
 import com.hust.project3.phonesellingweb.service.PostService;
 import com.hust.project3.phonesellingweb.service.ProductService;
@@ -48,6 +51,12 @@ public class AdminController {
 	@Autowired
 	private PostService postService;
 	
+	@Autowired
+	private FeedbackService feedbackService;
+	
+	@Autowired
+	private BillService billService;
+	
 	@GetMapping({"", "/"})
 	public String showIndex() {
 		return "admin/index.html";
@@ -63,6 +72,14 @@ public class AdminController {
 		return "admin/products.html";
 	}
 	
+	@PostMapping("/products/ajax")
+	public ResponseEntity<String> handleFastEdit(@RequestParam("productId") int productId,
+			@RequestParam("price") Double price, @RequestParam("available") boolean available) {
+		productService.updatePriceAndAvailable(price, available, productId);
+		
+		return ResponseEntity.ok("Done!");
+	}
+	
 	@DeleteMapping("/products/{productId}")
 	public ResponseEntity<String> handleDeleteProduct(@PathVariable int productId) {
 		productService.deleteById(productId);
@@ -74,7 +91,7 @@ public class AdminController {
 		model.addAttribute("product", new Product());
 		model.addAttribute("manufacturers", manufacturerService.findAll());
 		
-		return "/admin/newproduct";
+		return "admin/newproduct";
 	}
 	
 	@PostMapping("/products/new")
@@ -134,7 +151,8 @@ public class AdminController {
 		}
 		
 		if (tmpImgs != null && tmpImgs.size() > 0) {
-			String description = product.getSpec().getDescription();
+			ProductSpec spec = product.getSpec();
+			String description = spec.getDescription();
 			for (int i = 0; i < tmpImgs.size(); i++) {
 				String tempFile = tmpImgs.get(i);
 				String ext = StringUtils.getFilenameExtension(tempFile);
@@ -142,6 +160,8 @@ public class AdminController {
 				FileHandler.move(tempFile, ConstantVariable.UPLOAD_DIR, newname);
 				description = description.replaceAll(Pattern.quote(tempFile), ConstantVariable.UPLOAD_DIR + newname);
 			}
+			spec.setDescription(description);
+			product.setSpec(spec);
 		}
 		productService.save(product);
 		return "redirect:/admin/products?created";
@@ -240,14 +260,14 @@ public class AdminController {
 			model.addAttribute("posts", postService.findAll(20, page));
 		else model.addAttribute("posts", postService.findAllLike(searchKey, 20, page));
 		
-		return "/admin/posts";
+		return "admin/posts";
 	}
 	
 	@GetMapping("/posts/new")
 	public String showCreatePost(Model model) {
 		model.addAttribute("post", new Post());
 		
-		return "/admin/formpost";
+		return "admin/formpost";
 	}
 	
 	@PostMapping("/posts/new")
@@ -279,10 +299,69 @@ public class AdminController {
 				FileHandler.move(tempFile, ConstantVariable.UPLOAD_DIR, newname);
 				body = body.replaceAll(Pattern.quote(tempFile), ConstantVariable.UPLOAD_DIR + newname);
 			}
+			post.setBody(body);
 		}
 		postService.save(post);
 		return "redirect:/admin/posts?created";
+	}
+	
+	@GetMapping("/posts/edit")
+	public String showEditPost(Model model, @RequestParam("id") int postId) {
+		Post post = postService.findById(postId);
+		if (post == null)
+			return "";
+		model.addAttribute("post", post);
+		return "admin/formpost";
+	}
+	
+	@PostMapping("/posts/edit")
+	public String handleEditPost(Post post,  @RequestParam(name="tmpImg", required = false) List<String> tmpImgs,
+			@RequestPart(name = "file4BannerImg", required = false) MultipartFile bannerImageFile,
+			@RequestPart(name="fileImage4Ava", required = false) MultipartFile avaImageFile ) throws IOException {
 		
+		String slug = StringHandler.toSlug(post.getTitle());
+		post.setSlug(slug);
+		if (avaImageFile != null && !avaImageFile.isEmpty()) {
+			String ext = StringUtils.getFilenameExtension(avaImageFile.getOriginalFilename());
+	        String newFileName =  slug + "-ava-img." + ext;
+	        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, avaImageFile);
+	        post.setAvaImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
+		}
+		
+		if (bannerImageFile != null && !bannerImageFile.isEmpty()) {
+			String ext = StringUtils.getFilenameExtension(bannerImageFile.getOriginalFilename());
+	        String newFileName =  slug + "-banner-img." + ext;
+	        FileHandler.save(ConstantVariable.UPLOAD_DIR, newFileName, avaImageFile);
+	        post.setBannerImage("/"+ConstantVariable.UPLOAD_DIR + newFileName);
+		}
+		
+		if (tmpImgs != null && tmpImgs.size() > 0) {
+			String body = post.getBody();
+			for (int i = 0; i < tmpImgs.size(); i++) {
+				String tempFile = tmpImgs.get(i);
+				String ext = StringUtils.getFilenameExtension(tempFile);
+				String newname = slug + "-body-" + i +  "." + ext;
+				FileHandler.move(tempFile, ConstantVariable.UPLOAD_DIR, newname);
+				body = body.replaceAll(Pattern.quote(tempFile), ConstantVariable.UPLOAD_DIR + newname);
+			}
+			post.setBody(body);
+		}
+		postService.save(post);
+
+		return "redirect:/admin/posts?edited";
+	}
+	
+	@DeleteMapping("/posts/{postId}")
+	public ResponseEntity<String> handleDeletePost(@PathVariable int postId) {
+		postService.deleteById(postId);
+		return ResponseEntity.ok("Deleted!");
+	}
+	
+	@GetMapping("/feedbacks")
+	public String showAllFeedbacks(Model model,
+			@RequestParam(name = "page", required = false, defaultValue = "1") Integer page) {
+		model.addAttribute("feedbacks", feedbackService.findAll(20, page));
+		return "admin/feedbacks";
 	}
 	
 	@PostMapping("/tmpUpload")
@@ -366,4 +445,41 @@ public class AdminController {
 		manufacturerService.deleteById(manufacturerId);
 		return ResponseEntity.ok("Deleted!");
 	}
+	
+	@GetMapping("/bills")
+	public String showAllBills(Model model,
+			@RequestParam(name = "page", required = false, defaultValue = "1") Integer page,
+			@RequestParam(name = "search", required = false) String billIdStr) {
+		if (StringHandler.isEmpty(billIdStr))
+			model.addAttribute("bills", billService.findAll(20, page));
+		else {
+			int billId = Integer.parseInt(billIdStr);
+			model.addAttribute("bills", billService.findAllLike(20, page, billId));
+		}
+		return "admin/bills";
+	}
+	
+	@GetMapping("/bills/{billId}")
+	public ResponseEntity<Bill> showBillDetail(@PathVariable("billId") int billId) {
+		return new ResponseEntity<Bill>(billService.findById(billId), HttpStatus.OK);
+	}
+	
+	@PostMapping("/bills/{billId}")
+	public ResponseEntity<String> handleEditBill(@PathVariable("billId") int billId,
+		@RequestParam("note") String note, @RequestParam("address") String address,
+		@RequestParam("phone") String phone, @RequestParam("status") String status,
+		@RequestParam(name="done", required = false) boolean done) {
+			Bill bill = billService.findById(billId);
+			if (bill== null)
+				return new ResponseEntity<String>("", HttpStatus.NOT_FOUND);
+			bill.setCustomAddress(address);
+			bill.setCustomPhone(phone);
+			bill.setNote(note);
+			bill.setStatus(status);
+			if (done)
+				bill.setDone(done);
+			
+			billService.update(bill);
+			return ResponseEntity.ok("Updated!");
+		}
 }

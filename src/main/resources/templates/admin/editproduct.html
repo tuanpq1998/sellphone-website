@@ -769,7 +769,6 @@ $("#addNewManuBtn").click(function() {
 		    contentType: false,
 		    data: formValues,
 			async: false,
-			data: formValues,
 			success: function(dataBack){
 				const newList = dataBack.map(e => '<option value="'+ e.id +'">'+ e.name +'</option>').join("");
 				$("#manufacturerSelect").html(newList);

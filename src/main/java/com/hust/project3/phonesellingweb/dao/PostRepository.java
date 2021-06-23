@@ -33,5 +33,5 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
 	public Page<Post> findByOrderByUpdateAtDescCreateAtDesc(Pageable pageable);
 
-	public Page<Post> findByTitleContainingOrderByUpdateAtDescCreateAtDesc(String searchKey, Pageable pageable);
+	public Page<Post> findByTitleContainingOrderByCreateAtDescUpdateAtDesc(String searchKey, Pageable pageable);
 }
