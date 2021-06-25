@@ -3,7 +3,7 @@ package com.hust.project3.phonesellingweb.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hust.project3.phonesellingweb.entity.Product;
+import com.hust.project3.phonesellingweb.entity.product.Product;
 
 public class Cart {
 	

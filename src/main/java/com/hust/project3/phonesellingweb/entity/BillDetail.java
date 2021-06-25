@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hust.project3.phonesellingweb.entity.product.Product;
 
 @Entity
 @Table(name="bill_detail")

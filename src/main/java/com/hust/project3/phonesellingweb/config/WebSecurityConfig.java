@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.hust.project3.phonesellingweb.service.UserService;
+import com.hust.project3.phonesellingweb.utility.StringHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.rememberMe().key(StringHandler.generateRandomString(10)).tokenValiditySeconds(1296000).userDetailsService(userService);
 		http
 			.authorizeRequests()
 				.antMatchers("/thong-tin**", "/updatePhoneAndAddress**", "/don-hang**").authenticated()

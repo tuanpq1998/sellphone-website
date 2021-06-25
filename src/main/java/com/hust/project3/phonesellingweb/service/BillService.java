@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import com.hust.project3.phonesellingweb.dao.BillRepository;
 import com.hust.project3.phonesellingweb.entity.Bill;
 import com.hust.project3.phonesellingweb.entity.BillDetail;
-import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.User;
+import com.hust.project3.phonesellingweb.entity.product.Product;
 import com.hust.project3.phonesellingweb.model.Cart;
 
 @Service
@@ -86,6 +86,10 @@ public class BillService {
 	public Page<Bill> findAllLike(int numperpage, Integer page, int id) {
 		Pageable pageable = PageRequest.of(page-1, numperpage);
 		return billRepository.findByIdOrderByCreateAtDesc(id, pageable);
+	}
+
+	public int countAll() {
+		return (int) billRepository.count();
 	}
 	
 }

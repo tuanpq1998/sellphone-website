@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hust.project3.phonesellingweb.entity.Color;
-import com.hust.project3.phonesellingweb.entity.Product;
+import com.hust.project3.phonesellingweb.entity.product.Color;
+import com.hust.project3.phonesellingweb.entity.product.Product;
 import com.hust.project3.phonesellingweb.model.Cart;
 import com.hust.project3.phonesellingweb.service.CartService;
 

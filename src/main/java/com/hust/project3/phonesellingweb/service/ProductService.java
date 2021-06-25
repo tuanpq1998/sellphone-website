@@ -14,12 +14,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.hust.project3.phonesellingweb.dao.ProductDao;
-import com.hust.project3.phonesellingweb.entity.Color;
-import com.hust.project3.phonesellingweb.entity.ColorImg;
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
-import com.hust.project3.phonesellingweb.entity.Price;
-import com.hust.project3.phonesellingweb.entity.Product;
-import com.hust.project3.phonesellingweb.entity.ProductImg;
+import com.hust.project3.phonesellingweb.entity.product.Color;
+import com.hust.project3.phonesellingweb.entity.product.ColorImg;
+import com.hust.project3.phonesellingweb.entity.product.Price;
+import com.hust.project3.phonesellingweb.entity.product.Product;
+import com.hust.project3.phonesellingweb.entity.product.ProductImg;
 import com.hust.project3.phonesellingweb.utility.ConstantVariable;
 import com.hust.project3.phonesellingweb.utility.DateTimeHandler;
 import com.hust.project3.phonesellingweb.utility.StringHandler;

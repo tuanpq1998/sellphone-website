@@ -1,5 +1,7 @@
 package com.hust.project3.phonesellingweb.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,4 +25,13 @@ public class FeedbackService {
 		Pageable pageable = PageRequest.of(page-1, numperpage);
 		return feedbackRepository.findByOrderByCreateAtDesc(pageable);
 	}
+
+	public int countAll() {
+		return (int) feedbackRepository.count();
+	}
+
+	public List<Feedback> findTop3Newest() {
+		return feedbackRepository.findTop3ByOrderByCreateAtDesc();
+	}
+
 }

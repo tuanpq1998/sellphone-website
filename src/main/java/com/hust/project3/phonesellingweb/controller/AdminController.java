@@ -21,19 +21,20 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hust.project3.phonesellingweb.entity.Bill;
-import com.hust.project3.phonesellingweb.entity.Color;
-import com.hust.project3.phonesellingweb.entity.ColorImg;
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
 import com.hust.project3.phonesellingweb.entity.Post;
-import com.hust.project3.phonesellingweb.entity.Product;
-import com.hust.project3.phonesellingweb.entity.ProductImg;
-import com.hust.project3.phonesellingweb.entity.ProductSpec;
+import com.hust.project3.phonesellingweb.entity.product.Color;
+import com.hust.project3.phonesellingweb.entity.product.ColorImg;
+import com.hust.project3.phonesellingweb.entity.product.Product;
+import com.hust.project3.phonesellingweb.entity.product.ProductImg;
+import com.hust.project3.phonesellingweb.entity.product.ProductSpec;
 import com.hust.project3.phonesellingweb.model.TempImageUploadItem;
 import com.hust.project3.phonesellingweb.service.BillService;
 import com.hust.project3.phonesellingweb.service.FeedbackService;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
 import com.hust.project3.phonesellingweb.service.PostService;
 import com.hust.project3.phonesellingweb.service.ProductService;
+import com.hust.project3.phonesellingweb.service.SlideService;
 import com.hust.project3.phonesellingweb.utility.ConstantVariable;
 import com.hust.project3.phonesellingweb.utility.FileHandler;
 import com.hust.project3.phonesellingweb.utility.StringHandler;
@@ -57,8 +58,18 @@ public class AdminController {
 	@Autowired
 	private BillService billService;
 	
+	@Autowired
+	private SlideService slideService;
+	
 	@GetMapping({"", "/"})
-	public String showIndex() {
+	public String showIndex(Model model) {
+		
+		model.addAttribute("feedbackCount", feedbackService.countAll());
+		model.addAttribute("productCount", productService.countAll());
+		model.addAttribute("billCount", billService.countAll());
+		model.addAttribute("postCount", postService.countAll());
+		
+		model.addAttribute("newfeedBacks", feedbackService.findTop3Newest());
 		return "admin/index.html";
 	}
 	
@@ -481,5 +492,13 @@ public class AdminController {
 			
 			billService.update(bill);
 			return ResponseEntity.ok("Updated!");
-		}
+	}
+	
+	@GetMapping("/customized")
+	public String showSetting(Model model) {
+		model.addAttribute("slides", slideService.findAll());
+		return "admin/customized";
+	}
+	
+	
 }

@@ -1,4 +1,4 @@
-package com.hust.project3.phonesellingweb.entity;
+package com.hust.project3.phonesellingweb.entity.product;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

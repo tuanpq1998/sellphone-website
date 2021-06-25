@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:with="searchUrl = ${(#strings.isEmpty(param.search)) ?  '' : '?search='+param.search} , 
+		resetSortUrl = ${  searchUrl + ((#strings.isEmpty(searchUrl) ? '?' : '&') 
+			+ (#strings.isEmpty(param.price) ? '' : 'price='+param.price+'&') + ('sx='))  },
+		filterUrl = ${ searchUrl + ( !#strings.isEmpty(searchUrl) ? '&' : '?' )
+			+ ((!#strings.isEmpty(param.sx)) ? 'sx='+param.sx+'&' : '')  },
+		paginationUrl = ${ searchUrl + ( !#strings.isEmpty(searchUrl) ? '&' : '?' )
+			+ (#strings.isEmpty(param.price) ? '' : 'price='+param.price+'&')
+			+ ((!#strings.isEmpty(param.sx)) ? 'sx='+param.sx+'&' : '')  }">
+<head>
+<th:block
+	th:replace="/admin/part/_head.html :: head(title ='Tuỳ chỉnh')" />
+<link href="/vendor/datatables-plugins/dataTables.bootstrap.css"
+	rel="stylesheet">
+<link href="/vendor/datatables-responsive/dataTables.responsive.css"
+	rel="stylesheet">
+</head>
+<body>
+
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		<nav class="navbar navbar-default navbar-static-top" role="navigation"
+			style="margin-bottom: 0">
+
+			<th:block th:replace="/admin/part/_nav.html :: header" />
+
+			<th:block th:replace="/admin/part/_nav.html :: slideMenu" />
+
+			<!-- /.navbar-static-side -->
+		</nav>
+
+		<div id="page-wrapper">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header">Bố cục trang chủ</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+
+			<div class="row">
+				<form class="col-lg-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Slider</div>
+						<div class="panel-body">
+							<div class="panel panel-info" th:id-slidelen="${slides.size()}">
+								<th:block th:each="slide,iter : ${slides}" th:with="index = ${iter.index}">
+								<div class="panel-heading">Slide</div>
+								<div class="panel-body">
+									<div class="form-group col-lg-12">
+								        <label class="col-lg-3">Tiêu đề:</label>
+								        <div class="col-lg-9"><input class="form-control" th:field="${slides[__index__].title}"/></div>
+								    </div>
+								    <div class="form-group col-lg-12">
+								        <label class="col-lg-3">Liên kết URL:</label>
+								        <div class="col-lg-9"><input class="form-control" th:field="${slides[__index__].anchorUrl}"/></div>
+								    </div>
+								    <div class="form-group col-lg-12" id="color-3-imgs-container" data-colorid="3" data-imglen="1">
+								        <label class="col-lg-3">Ảnh:</label>
+								        <div id="color-3-img-1-container" class="col-lg-9">
+								        <div class="input-group">
+								            <select style="width:100px" onchange="handleChangeSelectSlider(this)" data-upload="imgupload-1" data-url="imgurl-1" class="form-control">
+								                <option value="fromURL">URL </option>
+								                <option value="upload">Upload</option>
+								            </select>
+								            <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> 
+								            <input  size="100" id="imgurl-1-color-3" class="form-control" placeholder="URL" th:field="${slides[__index__].imageUrl}" />
+								            <input size="100" id="imgupload-1-color-3" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;" />
+								        </div></div>
+								    </div>
+								    <div style="padding-right: 15px;" class="form-group col-lg-12 text-right">
+								        <a class="btn btn-danger" onclick="handleRemoveColorTab()">Xoá slide</a>
+								    </div>
+								</div>
+								</th:block>
+								
+							</div>
+						</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+
+
+	<th:block th:replace="/admin/part/_js.html" />
+	<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script src="/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+	<script src="/vendor/datatables-responsive/dataTables.responsive.js"></script>
+	<style>
+.badge.warning {
+	color: #fff;
+	background-color: #f0ad4e;
+	border-color: #eea236;
+}
+</style>
+</body>
+
+</html>

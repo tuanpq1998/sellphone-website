@@ -1,4 +1,4 @@
-package com.hust.project3.phonesellingweb.entity;
+package com.hust.project3.phonesellingweb.entity.product;
 
 import java.util.ArrayList;
 import java.util.List;

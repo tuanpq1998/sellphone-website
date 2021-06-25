@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.hust.project3.phonesellingweb.entity.Feedback;
 import com.hust.project3.phonesellingweb.entity.Manufacturer;
-import com.hust.project3.phonesellingweb.entity.Product;
 import com.hust.project3.phonesellingweb.entity.User;
+import com.hust.project3.phonesellingweb.entity.product.Product;
+import com.hust.project3.phonesellingweb.entity.setting.Slide;
 import com.hust.project3.phonesellingweb.service.FeedbackService;
 import com.hust.project3.phonesellingweb.service.ManufacturerService;
 import com.hust.project3.phonesellingweb.service.PostService;
 import com.hust.project3.phonesellingweb.service.ProductService;
+import com.hust.project3.phonesellingweb.service.SlideService;
 import com.hust.project3.phonesellingweb.service.UserService;
 
 
@@ -39,8 +41,13 @@ public class PageController extends BaseController {
 	@Autowired
 	private PostService postService;
 	
+	@Autowired
+	private SlideService slideService;
+	
 	@GetMapping({"/","" })
 	public String showIndex(Model model) {
+		List<Slide> slides = slideService.findAll(); 
+		
 		List<Product> topBuyProducts = productService.findTop4Buy();
 		List<Product> samsungProducts = productService.findTop6ByManufacturerId(1);
 		List<Product> appleProducts = productService.findTop6ByManufacturerId(2);
@@ -57,6 +64,7 @@ public class PageController extends BaseController {
 		
 		model.addAttribute("posts", postService.findNewest(4));
 		
+		model.addAttribute("slides", slides);
 		model.addAttribute("isHomepage", true);
 		return "index";
 	}

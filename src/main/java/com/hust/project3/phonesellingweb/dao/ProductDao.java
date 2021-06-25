@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.hust.project3.phonesellingweb.entity.Product;
+import com.hust.project3.phonesellingweb.entity.product.Product;
 
 @Repository
 public interface ProductDao extends JpaRepository<Product, Integer> {

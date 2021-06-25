@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.hust.project3.phonesellingweb.entity.Color;
-import com.hust.project3.phonesellingweb.entity.Product;
+import com.hust.project3.phonesellingweb.entity.product.Color;
+import com.hust.project3.phonesellingweb.entity.product.Product;
 import com.hust.project3.phonesellingweb.model.Cart;
 
 @Service

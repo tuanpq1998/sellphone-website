@@ -27,34 +27,20 @@
 			<div class="single-page-row">
 				<div class="flexslider">
 					<ul class="slides">
-						<li
-							data-thumb="https://cdn.tgdd.vn/2021/06/banner/euro-samsung-830-300-830x300.png">
+						<li th:each="slide : ${slides}"
+							th:data-thumb="${slide.imageUrl}">
 							<div class="thumb-image detail_images">
-								<img
-									src="https://cdn.tgdd.vn/2021/06/banner/euro-samsung-830-300-830x300.png"
-									class="img-responsive1" alt="">
-								<p class="flex-caption">Samsung Trên Tay Giảm Đến 6,7 Triệu</p>
+								<a th:unless="${#strings.isEmpty(slide.anchorUrl)}" th:title="${slide.title}"
+									th:href="${slide.anchorUrl}">
+									<img th:src="${slide.imageUrl}" th:title="${slide.title}"
+										class="img-responsive1" th:alt="${slide.title}"/>
+								</a>
+								<img th:if="${#strings.isEmpty(slide.anchorUrl)}"
+									th:src="${slide.imageUrl}"
+									class="img-responsive1" th:title="${slide.title}" th:alt="${slide.title}"/>
+								<p class="flex-caption">[[${slide.title}]]</p>
 							</div>
 						</li>
-						<li data-colorid="1"
-							data-thumb="https://cdn.tgdd.vn/2021/06/banner/830-300-830x300-2.png">
-							<div class="thumb-image detail_images">
-								<img
-									src="https://cdn.tgdd.vn/2021/06/banner/830-300-830x300-2.png"
-									class="img-responsive1" alt="">
-								<p class="flex-caption">Vivo V21 5G Trả Góp 0%</p>
-							</div>
-						</li>
-						<li data-colorid="1"
-							data-thumb="https://cdn.tgdd.vn/2021/06/banner/hotsale-830-300-830x300-1.png">
-							<div class="thumb-image detail_images">
-								<img
-									src="https://cdn.tgdd.vn/2021/06/banner/hotsale-830-300-830x300-1.png"
-									class="img-responsive1" alt="">
-								<p class="flex-caption">Hỗ Trợ Mùa Dịch Giao Hàng Miễn Phí</p>
-							</div>
-						</li>
-
 
 					</ul>
 				</div>

@@ -1,4 +1,4 @@
-package com.hust.project3.phonesellingweb.entity;
+package com.hust.project3.phonesellingweb.entity.product;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hust.project3.phonesellingweb.entity.Manufacturer;
 import com.hust.project3.phonesellingweb.utility.DateTimeHandler;
 
 @Entity
