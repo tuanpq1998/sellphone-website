@@ -22,9 +22,9 @@ public class Slide {
 	
 	private String title;
 	
-	private int index;
+	private int indexNum;
 	
-	private boolean show;
+	private boolean display;
 
 	public int getId() {
 		return id;
@@ -58,40 +58,40 @@ public class Slide {
 		this.title = title;
 	}
 
-	@Override
-	public String toString() {
-		return "Slide [id=" + id + ", imageUrl=" + imageUrl + ", anchorUrl=" + anchorUrl + ", title=" + title + "]";
+	public int getIndexNum() {
+		return indexNum;
+	}
+
+	public void setIndexNum(int indexNum) {
+		this.indexNum = indexNum;
+	}
+
+	public boolean isDisplay() {
+		return display;
+	}
+
+	public void setDisplay(boolean display) {
+		this.display = display;
+	}
+
+	public Slide(int id, String imageUrl, String anchorUrl, String title, int indexNum, boolean display) {
+		super();
+		this.id = id;
+		this.imageUrl = imageUrl;
+		this.anchorUrl = anchorUrl;
+		this.title = title;
+		this.indexNum = indexNum;
+		this.display = display;
 	}
 
 	public Slide() {
 		super();
 	}
 
-	public int getIndex() {
-		return index;
+	@Override
+	public String toString() {
+		return "Slide [id=" + id + ", imageUrl=" + imageUrl + ", anchorUrl=" + anchorUrl + ", title=" + title
+				+ ", indexNum=" + indexNum + ", display=" + display + "]";
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
-	}
-
-	public boolean isShow() {
-		return show;
-	}
-
-	public void setShow(boolean show) {
-		this.show = show;
-	}
-
-	public Slide(int id, String imageUrl, String anchorUrl, String title, int index, boolean show) {
-		super();
-		this.id = id;
-		this.imageUrl = imageUrl;
-		this.anchorUrl = anchorUrl;
-		this.title = title;
-		this.index = index;
-		this.show = show;
-	}
-	
-	
 }

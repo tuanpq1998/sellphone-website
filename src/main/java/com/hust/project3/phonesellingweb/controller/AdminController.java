@@ -28,6 +28,8 @@ import com.hust.project3.phonesellingweb.entity.product.ColorImg;
 import com.hust.project3.phonesellingweb.entity.product.Product;
 import com.hust.project3.phonesellingweb.entity.product.ProductImg;
 import com.hust.project3.phonesellingweb.entity.product.ProductSpec;
+import com.hust.project3.phonesellingweb.entity.setting.Slide;
+import com.hust.project3.phonesellingweb.model.Slides;
 import com.hust.project3.phonesellingweb.model.TempImageUploadItem;
 import com.hust.project3.phonesellingweb.service.BillService;
 import com.hust.project3.phonesellingweb.service.FeedbackService;
@@ -496,9 +498,29 @@ public class AdminController {
 	
 	@GetMapping("/customized")
 	public String showSetting(Model model) {
-		model.addAttribute("slides", slideService.findAll());
+		model.addAttribute("slides", new Slides(slideService.findAll()));
 		return "admin/customized";
 	}
 	
+	@PostMapping("/customized")
+	public String updateSlides(Slides slides, Model model) throws IOException {
+		List<Slide> ls = slides.getListSlides();
+		for (int i = ls.size()-1; i >= 0; i--) {
+			Slide s = ls.get(i);
+			if (StringHandler.isEmpty(s.getImageUrl()))
+				ls.remove(i);
+			else if (s.getImageUrl().startsWith("/"+ConstantVariable.UPLOAD_TEMP_DIR)) {
+				String slug = StringHandler.toSlug(s.getTitle());
+				String ext = StringUtils.getFilenameExtension(s.getImageUrl());
+				String newname = slug + "-" +i+"."+ext;
+				FileHandler.move(s.getImageUrl().substring(1), ConstantVariable.UPLOAD_DIR, newname);
+				s.setImageUrl("/"+ConstantVariable.UPLOAD_DIR + newname);
+			}
+		}
+		slides.setListSlides(ls);
+		System.out.println(ls);
+		slideService.save(slides);
+		return showSetting(model);
+	}
 	
 }

@@ -34,48 +34,61 @@
 		<div id="page-wrapper">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Bố cục trang chủ</h1>
+					<h1 class="page-header">Bố cục</h1>
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
 
 			<div class="row">
-				<form class="col-lg-12">
+				<form method="post" th:object="${slides}" class="col-lg-12">
 					<div class="panel panel-primary">
-						<div class="panel-heading">Slider</div>
-						<div class="panel-body">
-							<div class="panel panel-info" th:id-slidelen="${slides.size()}">
-								<th:block th:each="slide,iter : ${slides}" th:with="index = ${iter.index}">
-								<div class="panel-heading">Slide</div>
-								<div class="panel-body">
+						<div class="panel-heading">Slider Trang chủ</div>
+						<div class="panel-body panel-group" id="accordion" th:data-slidelen="*{listSlides.size()}" >
+							<div class="panel panel-info"  th:each="slide,iter : *{listSlides}" 
+								th:with="index = ${iter.index}" th:id="${'img-'+index+'-container'}">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+					          			<a data-toggle="collapse" th:href="'#slide-'+${index}">Slide</a>
+					          			<button th:data-container="${'img-'+index+'-container'}" th:data-display="'listSlides' + ${index} + '.display'"
+					          				type="button" onclick="handleRemoveSlide(this)" class="btn close">×</button>
+					        		</h4>
+								</div>
+								<div th:id="'slide-'+${index}" 
+									th:class="'panel-collapse collapse panel-body ' + (${index==0 ? 'in' : null})">
+									<input type="hidden" th:field="*{listSlides[__${index}__].id}" />
+									<input type="hidden" th:field="*{listSlides[__${index}__].display}" />
+									<input type="hidden" th:field="*{listSlides[__${index}__].indexNum}" />
 									<div class="form-group col-lg-12">
 								        <label class="col-lg-3">Tiêu đề:</label>
-								        <div class="col-lg-9"><input class="form-control" th:field="${slides[__index__].title}"/></div>
+								        <div class="col-lg-9">
+								        	<input class="form-control" th:field="*{listSlides[__${index}__].title}"/></div>
 								    </div>
 								    <div class="form-group col-lg-12">
 								        <label class="col-lg-3">Liên kết URL:</label>
-								        <div class="col-lg-9"><input class="form-control" th:field="${slides[__index__].anchorUrl}"/></div>
+								        <div class="col-lg-9"><input class="form-control" th:field="*{listSlides[__${index}__].anchorUrl}"/></div>
 								    </div>
-								    <div class="form-group col-lg-12" id="color-3-imgs-container" data-colorid="3" data-imglen="1">
+								    <div class="form-group col-lg-12">
 								        <label class="col-lg-3">Ảnh:</label>
-								        <div id="color-3-img-1-container" class="col-lg-9">
+								        <div class="col-lg-9">
 								        <div class="input-group">
-								            <select style="width:100px" onchange="handleChangeSelectSlider(this)" data-upload="imgupload-1" data-url="imgurl-1" class="form-control">
+								            <select style="width:100px" th:id="${'slide-'+ index  +'-select'}"
+								            	onchange="handleChangeSelectSlider(this)" th:data-uploadbtn="'upload-slide-'+${index}"
+								            	th:data-upload="'imgupload-'+${index}" th:data-url="'imgurl-' + ${index}" class="form-control">
 								                <option value="fromURL">URL </option>
 								                <option value="upload">Upload</option>
 								            </select>
 								            <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> 
-								            <input  size="100" id="imgurl-1-color-3" class="form-control" placeholder="URL" th:field="${slides[__index__].imageUrl}" />
-								            <input size="100" id="imgupload-1-color-3" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;" />
+								            <input size="100" th:id="'imgurl-'+${index}" class="form-control" placeholder="URL" th:field="*{listSlides[__${index}__].imageUrl}" />
+								            <input size="100" th:id="'imgupload-'+${index}" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" disabled="disabled" style="display: none;" />
+								        	<span th:data-select="${'slide-'+ index  +'-select'}" th:id="'upload-slide-'+${index}" th:data-linkto="'imgupload-'+${index}" class="input-group-addon btn" onclick="handleClickUpload(this)" style="color: rgb(255, 255, 255); background-color: rgb(51, 122, 183);display:none; border-color: rgb(46, 109, 164);"> <i class="fa fa-upload" aria-hidden="true"></i></span>
 								        </div></div>
 								    </div>
-								    <div style="padding-right: 15px;" class="form-group col-lg-12 text-right">
-								        <a class="btn btn-danger" onclick="handleRemoveColorTab()">Xoá slide</a>
-								    </div>
 								</div>
-								</th:block>
-								
 							</div>
+						</div>
+						<div style="padding-top: 0" class="panel-body text-right">
+							<a data-container="#accordion" onclick="createNewSlide(this)" class="btn btn-success">+ Slide</a>
+							<input type="submit" class="btn btn-primary" value="Lưu" />
 						</div>
 						</div>
 					</form>
@@ -90,6 +103,69 @@
 	<script src="/vendor/datatables/js/jquery.dataTables.min.js"></script>
 	<script src="/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
 	<script src="/vendor/datatables-responsive/dataTables.responsive.js"></script>
+	
+	<script>
+		const handleChangeSelectSlider = (sel) => {
+			const target = $(sel);
+			const upload = target.data("upload");
+			const url = target.data("url");
+			const uploadBtn = target.data("uploadbtn");
+			if (target.val() == "upload") {
+				$('#'+upload).val("").show().attr("disabled", false);
+				$('#'+uploadBtn).attr("disabled", false).show();
+				$('#'+url).val("").hide().attr("disabled", true);
+			} else {
+				$('#'+url).val("").show().attr("disabled", false);
+				$('#'+uploadBtn).attr("disabled", true).hide();
+				$('#'+upload).val("").hide().attr("disabled", true);
+			}
+		}
+		
+		const handleRemoveSlide = (sel) => {
+			const target = $(sel);
+			const parent = target.data("container");
+			if ($("#"+parent).hasClass("new")) 
+				$("#"+parent).remove();
+			else {
+				$("#"+parent).hide();
+				$('[id="'+target.data("display")+'"]').val(false);
+			}
+		}
+		
+		const createNewSlide = (sel) => {
+			const target = $(sel);
+			const parent = target.data("container");
+			const newIndex = Number($(parent).data("slidelen"))+1;
+			const html = '<div class="panel panel-info new" id="img-'+ newIndex +'-container"> <div class="panel-heading"> <h4 class="panel-title"> <a data-toggle="collapse" href="#slide-'+ newIndex +'" aria-expanded="false" class="collapsed">Slide</a> <button data-container="img-'+ newIndex +'-container" type="button" onclick="handleRemoveSlide(this)" class="btn close">×</button> </h4> </div> <div id="slide-'+ newIndex +'" class="panel-collapse panel-body collapse" aria-expanded="false" style="height: 30px;"> <div class="form-group col-lg-12"> <label class="col-lg-3">Tiêu đề:</label> <div class="col-lg-9"> <input class="form-control" id="listSlides'+ newIndex +'.title" name="listSlides['+ newIndex +'].title"></div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Liên kết URL:</label> <div class="col-lg-9"><input class="form-control" id="listSlides'+ newIndex +'.anchorUrl" name="listSlides['+ newIndex +'].anchorUrl" value=""></div> </div> <div class="form-group col-lg-12"> <label class="col-lg-3">Ảnh:</label> <div class="col-lg-9"> <div class="input-group"> <select id="slide-'+ newIndex +'-select" style="width:100px" data-uploadbtn="upload-slide-'+newIndex+'" onchange="handleChangeSelectSlider(this)" data-upload="imgupload-'+ newIndex +'" data-url="imgurl-'+ newIndex +'" class="form-control"> <option value="fromURL">URL </option> <option value="upload">Upload</option> </select> <span class="input-group-addon" style="width: 0px; padding-left: 0px; padding-right: 0px; border: none;"></span> <input size="100" id="imgurl-'+ newIndex +'" class="form-control" placeholder="URL" name="listSlides['+ newIndex +'].imageUrl"> <input size="100" id="imgupload-'+ newIndex +'" class="form-control" type="file" accept="image/png, image/jpeg, image/jpg" style="display: none;" disabled="disabled"> <span data-select="slide-'+ newIndex +'-select" id="upload-slide-'+ newIndex +'" data-linkto="imgupload-'+ newIndex +'" class="input-group-addon btn" onclick="handleClickUpload(this)" style="color: rgb(255, 255, 255); background-color: rgb(51, 122, 183); border-color: rgb(46, 109, 164); display: none;" disabled="disabled"> <i class="fa fa-upload" aria-hidden="true"></i></span> </div></div> </div> </div> </div>';
+			$(parent).append(html);
+			$(parent).data("slidelen", newIndex);
+		}
+		
+		const handleClickUpload = (sel) => {
+			(async () => {
+				const target  = $(sel);
+				const fileElement = target.data("linkto");
+				const file = $('#'+fileElement).prop("files")[0];
+				const select = target.data("select");
+				if (!file || file.name=="")
+					return;
+				var formData = new FormData();
+				formData.append("fileImage",file);
+				
+				const result = await $.ajax({
+					url: '/admin/tmpUpload',
+					type: 'POST',
+					processData: false,
+				    contentType: false,
+					data: formData,
+				});
+				target.html('<a style="color:white" href="' + "/"+result[0].tempPath + '" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i></a>');
+				$('#'+fileElement).attr("disabled", true).hide().prev().show().val("/"+result[0].tempPath).attr("readonly", true).attr("disabled", false);
+				$('#'+select).attr("disabled", true);
+				
+			})();
+		} 
+	</script>
 	<style>
 .badge.warning {
 	color: #fff;
