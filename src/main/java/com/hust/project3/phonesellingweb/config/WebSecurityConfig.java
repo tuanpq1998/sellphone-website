@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.and().logout()
 					.logoutRequestMatcher(new AntPathRequestMatcher("/dang-xuat"))
-					.logoutSuccessUrl("/dang-nhap?dang-xuat").permitAll()
+					.logoutSuccessUrl("/dang-nhap?out").permitAll()
 				.and().exceptionHandling().accessDeniedPage("/error")
 				.and()
         .csrf().disable().cors();

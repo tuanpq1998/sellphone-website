@@ -30,11 +30,27 @@
 							<h2>
 								Đăng nhập vào <strong>QLMobile</strong>
 							</h2>
+							
+							<div th:if="${param.out != null}" class="alert alert-dismissible  alert-success">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<strong>Đã đăng xuất.</strong> Đăng nhập lại để tiếp tục mua sắm!
+							</div>
+							
+							<div th:if="${param.error != null}" class="alert alert-dismissible  alert-danger">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<strong>Lỗi.</strong> Tên đăng nhập hoặc mật khẩu sai!
+							</div>
+							
+							<div th:if="${param.name != null}" class="alert alert-dismissible  alert-success">
+							<button type="button" class="close" data-dismiss="alert">×</button>
+							<strong>Đã đăng ký.</strong> Đăng nhập để tiếp tục!
+							</div>
+							
 							<hr class="colorgraph">
 							<div class="form-group">
 								<input type="text" name="username" id="username"
 									class="form-control input-lg" placeholder="Tên tài khoản"
-									value="">
+									th:value="${param.name!=null ? param.name : ''}">
 							</div>
 							<div class="form-group">
 								<input type="password" name="password" id="password"

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.hust.project3.phonesellingweb.config.CustomUserDetail;
 import com.hust.project3.phonesellingweb.dao.UserRepository;
+import com.hust.project3.phonesellingweb.entity.Role;
 import com.hust.project3.phonesellingweb.entity.User;
 
 @Service
@@ -19,6 +20,9 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleService roleService;
 	
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
@@ -31,6 +35,18 @@ public class UserService implements UserDetailsService {
 			throw new UsernameNotFoundException("Username " + username
 				+ "not found!");
 		return new CustomUserDetail(user);
+	}
+
+	public boolean isUsernameExisted(String username) {
+		User user = findByUsername(username);
+		return user!=null;
+	}
+
+	public void registerNew(User user) {
+		Role role = roleService.findRoleUser();
+		user.setRole(role);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		userRepository.save(user);
 	}
 
 }

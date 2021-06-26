@@ -16,4 +16,6 @@ public class ConstantVariable {
 	
 	public static final String IMAGE_METHOD_UPLOAD = "upload";
 	public static final String IMAGE_METHOD_FROMURL = "fromURL";
+	
+	public static final String ROLE_USER_NAME = "USER";
 }

@@ -8,7 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.hust.project3.phonesellingweb.entity.Bill;
@@ -16,6 +19,7 @@ import com.hust.project3.phonesellingweb.entity.User;
 import com.hust.project3.phonesellingweb.model.Cart;
 import com.hust.project3.phonesellingweb.service.BillService;
 import com.hust.project3.phonesellingweb.service.UserService;
+import com.hust.project3.phonesellingweb.validation.ValidationGroup.OnRegister;
 
 @Controller
 public class AccountController extends BaseController {
@@ -34,10 +38,22 @@ public class AccountController extends BaseController {
 	}
 	
 	@GetMapping({"/dang-ky/", "/dang-ky"})
-	public String showRegister(Principal principal) {
+	public String showRegister(Principal principal, Model model) {
 		if (isLoggedIn(principal))
 			return "redirect:/";
+		model.addAttribute("user", new User());
 		return "account/signup";
+	}
+	
+	@PostMapping({"/dang-ky", "/dang-ky/"})
+	public String registerNew(Principal principal, @ModelAttribute @Validated(OnRegister.class) User user,
+			BindingResult result) {
+		if (isLoggedIn(principal))
+			return "redirect:/";
+		if (result.hasErrors()) 
+			return "account/signup";
+		userService.registerNew(user);
+		return "redirect:/dang-nhap?name="+user.getUsername();
 	}
 	
 	@GetMapping({"/xac-thuc/", "/xac-thuc"})

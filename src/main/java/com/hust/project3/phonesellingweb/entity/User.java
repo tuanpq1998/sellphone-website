@@ -15,9 +15,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hust.project3.phonesellingweb.utility.DateTimeHandler;
+import com.hust.project3.phonesellingweb.validation.UniqueUsername;
+import com.hust.project3.phonesellingweb.validation.ValidationGroup.OnLogin;
+import com.hust.project3.phonesellingweb.validation.ValidationGroup.OnRegister;
 
 @Entity
 @Table(name="user")
@@ -28,16 +36,34 @@ public class User {
 	@Column(name="id")
 	private int id;
 	
+	@NotBlank(message = "Nhập tên đăng nhập!", groups = {OnLogin.class, OnRegister.class, Default.class})
+	@UniqueUsername(message = "Tên đăng nhập đã được đăng kí!", groups = {OnRegister.class, Default.class})
 	private String username;
 	
 	@JsonIgnore
+	@NotBlank(message = "Nhập mật khẩu!",  groups = {OnLogin.class, OnRegister.class, Default.class})
+	@Size(min=6, message="Mật khẩu phải chứa hơn 6 kí tự!",  groups = {OnLogin.class, OnRegister.class, Default.class})
 	private String password;
 	
+	@Email(message = "Email không hợp lệ!",  groups = {OnRegister.class, Default.class})
+	@NotBlank(message = "Nhập email!")
 	private String email;
 	
+	@NotBlank(message = "Nhập tên đầy đủ!", groups = {OnRegister.class, Default.class})
 	private String fullname;
 	
+	@Pattern(regexp="^[0-9]{8,}$",
+			message="Số điện thoại chỉ gồm số!", groups = {OnRegister.class, Default.class})
 	private String phone;
+	
+	@Column(updatable = false)
+	private String joinDate;
+	
+	private boolean disable;
+	
+	private String address;
+	
+	private String city;
 	
 	public User(int id, String username, String password, String email, String fullname, String phone, String joinDate,
 			boolean disable, String address, String city) {
@@ -61,15 +87,6 @@ public class User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
-	@Column(updatable = false)
-	private String joinDate;
-	
-	private boolean disable;
-	
-	private String address;
-	
-	private String city;
 
 	public int getId() {
 		return id;

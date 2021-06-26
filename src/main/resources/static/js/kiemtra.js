@@ -13,11 +13,26 @@ function Kiemtradulieu()
 			return false;
 		}
 	}
-
-	var tai_khoan = document.getElementById("fullname");
-	if(tai_khoan.value.length < 6)
+	
+	var fullname = document.getElementById("fullname");
+	if(fullname.value.length < 6)
 	{
 		Swal.fire("Error", "Tên phải có ít nhất 6 ký tự", "error");
+		setTimeout(function() { tai_khoan }, 1000);
+		return false;
+	}
+
+	if(fullname.value.match(/[^a-zA-Z ]/))
+	{
+		Swal.fire("Error", "Tên không được đặt các ký tự đặc biệt nha!", "error");
+		setTimeout(function() { tai_khoan }, 1000);
+		return false;
+	}
+
+	var tai_khoan = document.getElementById("username");
+	if(tai_khoan.value.length < 5)
+	{
+		Swal.fire("Error", "Tên phải có ít nhất 5 ký tự", "error");
 		setTimeout(function() { tai_khoan }, 1000);
 		return false;
 	}
@@ -35,7 +50,7 @@ function Kiemtradulieu()
 		return false;
 	}
 
-	/*var dien_thoai = document.getElementById("dien_thoai");
+	var dien_thoai = document.getElementById("phone");
 	if(isNaN(dien_thoai.value)) //nếu nó là chuỗi => sai
 	{
 		Swal.fire("Error", "Vui lòng nhập số điện thoại thực tế", "error");
@@ -43,15 +58,20 @@ function Kiemtradulieu()
 		return false;
 	}
 
-	var t_and_c = document.getElementById("t_and_c");
+	/*var t_and_c = document.getElementById("t_and_c");
 	if(!(t_and_c.checked))
 	{
 		Swal.fire("Error", "Bạn chưa đồng ý với điều khoản kìa!", "error");
 		setTimeout(function() { t_and_c }, 1000);
 		return false;
 	}*/
-
-	return false;
+	
+	var password = document.getElementById("password");
+	if (password.value.length < 6) {
+		Swal.fire("Error", "Mật khẩu phải có hơn 6 kí tự", "error");
+		return false;
+	}
+	return true;
 }
 
 function isEmail(email) 
