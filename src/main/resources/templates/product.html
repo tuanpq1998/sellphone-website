@@ -154,23 +154,43 @@
 
 					</div>
 
-					<div id="lien-he-quang-cao">
+					<div id="lien-he-quang-cao" class=" text-center" >
 						<a href="/huong-dan-mua-hang" target="_blank"><img
 							style="width: 300px" th:src="@{/image/hdmh.png}" alt="Hướng dẫn mua hàng"></a>
 						<hr />
-						<img style="width: 300px"
-							th:src="@{/image/qc.png}" alt="Quảng cáo">
-						<hr />
+						<th:block th:if="${sideBanners != null && sideBanners.size() > 0}" th:each="banner : ${sideBanners}">
+							<a th:unless="${#strings.isEmpty(banner.anchorUrl)}" th:href="${banner.anchorUrl}"
+								th:title="${banner.title}" >
+								<img th:src="${banner.imageUrl}" th:title="${banner.title}" th:alt="${banner.title}" />
+							</a>
+							<img th:if="${#strings.isEmpty(banner.anchorUrl)}" th:src="${banner.imageUrl}" th:title="${banner.title}" th:alt="${banner.title}" />
+							<hr />
+						</th:block>
 						
 					</div>
 
+				</div>
+			</div>
+			
+			<div th:if="${bottomBanners != null && bottomBanners.size() > 0}" class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<th:block th:each="banner : ${bottomBanners}">
+							<a th:unless="${#strings.isEmpty(banner.anchorUrl)}" th:href="${banner.anchorUrl}"
+								th:title="${banner.title}" >
+								<img style="width:unset; max-width:800px;margin: 15px 0" th:src="${banner.imageUrl}" th:title="${banner.title}" th:alt="${banner.title}" />
+							</a>
+							<img style="width:unset; max-width:800px;margin: 15px 0" th:if="${#strings.isEmpty(banner.anchorUrl)}" th:src="${banner.imageUrl}" th:title="${banner.title}" th:alt="${banner.title}" />
+							<hr />
+						</th:block>
+					</div>
 				</div>
 			</div>
 
 
 			<!--Item text-->
 			<div class="container">
-				<div class="row" id="slider-text">
+				<div class="row">
 					<div class="col-md-6">
 						<h2>Có thể bạn thích</h2>
 					</div>
@@ -186,10 +206,10 @@
 							
 								<div th:each="product : ${randomProducts}" class="item active">
 									<div class="col-xs-12 col-sm-6 col-md-2">
-										<a th:href="${'dtdd/'+product.slug+'.'+product.id+'.html'}">
+										<a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">
 											<img th:src="${product.avaImage}" class="img-responsive center-block">
 										</a>
-										<h4 class="text-center">[[${product.name}]]</h4>
+										<h4 class="text-center"><a th:href="${'/dtdd/'+product.slug+'.'+product.id+'.html'}">[[${product.name}]]</a></h4>
 										<h5 class="text-center currency">[[${product.price.value}]]</h5>
 									</div>
 								</div>

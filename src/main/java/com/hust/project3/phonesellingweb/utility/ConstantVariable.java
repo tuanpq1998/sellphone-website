@@ -18,4 +18,9 @@ public class ConstantVariable {
 	public static final String IMAGE_METHOD_FROMURL = "fromURL";
 	
 	public static final String ROLE_USER_NAME = "USER";
+	
+	public static final String POS_BANNER_POST_SIDE = "POST_SIDE";
+	public static final String POS_BANNER_POST_BOTTOM = "POST_BOTTOM";
+	public static final String POS_BANNER_PRODUCT_SIDE = "PRODUCT_SIDE";
+	public static final String POS_BANNER_PRODUCT_BOTTOM = "PRODUCT_BOTTOM";
 }

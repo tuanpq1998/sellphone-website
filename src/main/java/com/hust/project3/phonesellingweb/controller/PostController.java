@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hust.project3.phonesellingweb.entity.Post;
+import com.hust.project3.phonesellingweb.service.BannerService;
 import com.hust.project3.phonesellingweb.service.PostService;
 
 @Controller
@@ -26,6 +27,9 @@ public class PostController extends BaseController {
 		return "post/category";
 	}
 	
+	@Autowired
+	private BannerService bannerService;
+	
 	@GetMapping("/{postSlug}.{postId}.html")
 	public String showPost(@PathVariable("postSlug") String postSlug, @PathVariable("postId") int postId
 			, Model model) {
@@ -39,6 +43,9 @@ public class PostController extends BaseController {
 			model.addAttribute("post", post);
 			model.addAttribute("newestPosts", postService.findNewest(4));
 			model.addAttribute("randomPosts", postService.getRandomPosts());
+			
+			model.addAttribute("sideBanners", bannerService.getPostSideBanner());
+			model.addAttribute("bottomBanners", bannerService.getPostBottomBanner());
 			
 			return "post/post";	
 		} else return "redirect:/bai-viet/"+rootPostSlug+"."+postId + ".html";
